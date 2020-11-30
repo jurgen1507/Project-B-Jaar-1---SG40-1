@@ -1,6 +1,5 @@
 import json
 from tkinter import *
-import time
 
 with open('steam.json') as steamdata:
     data = json.load(steamdata)
@@ -32,7 +31,7 @@ def callback(event):
         index = selection[0]
         widgetdata = event.widget.get(index)
         game = list(getgameinfo(widgetdata).values())
-        gameinfo.set(f'Name: {widgetdata}\nPrice: {game[17]}\nPositive ratings: {game[12]}\nNegative ratings: {game[13]}\nRelease date: {game[2]}')
+        gameinfo.set(f'Name: {widgetdata}\nPrice: ${game[17]}\nPositive ratings: {game[12]}\nNegative ratings: {game[13]}\nRelease date: {game[2]}\nAverage playtime: {game[14]}')
     else:
         gameinfo.set("")
 
@@ -41,6 +40,8 @@ OptionList = [
     'Positive Ratings',
     'Negative Ratings',
     'Name',
+    'Release Date',
+    'Average Playtime'
 
 ]
 
