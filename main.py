@@ -9,59 +9,32 @@ sortedlist = sorted(data, key=lambda l: l['price'])
 
 def main(*args):
     search_term = search_var.get()
-    option = optionvariable.get()
+    option = optionvariable.get().lower().replace(' ', '_')
+    gamelijst.delete(0, 'end')
+    if ascdesc.get() == 'Descending':
+        sortedlist = sorted(data, key=lambda l: l[option], reverse=True)
+    else:
+        sortedlist = sorted(data, key=lambda l: l[option])
+    for i in sortedlist:
+        if search_term.lower() in i['name'].lower():
+            gamelijst.insert(END, i['name'])
 
-    if option == 'Price':
-        gamelijst.delete(0, 'end')
-        if ascdesc.get() == 'Descending':
-            sortedlist = sorted(data, key=lambda l: l['price'], reverse=True)
-        else:
-            sortedlist = sorted(data, key=lambda l: l['price'])
-        j = 1
-        for i in sortedlist:
-            if search_term.lower() in i['name'].lower():
-                gamelijst.insert(END, i['name'])
+    mainFrame.update()
 
-        mainFrame.update()
+def getgameinfo(valuetofind):
+    for i in data:
+        if valuetofind == i['name']:
+            return i
 
-    if option == 'Positive Ratings':
-        gamelijst.delete(0, 'end')
-        if ascdesc.get() == 'Descending':
-            sortedlist = sorted(data, key=lambda l: l['positive_ratings'], reverse=True)
-        else:
-            sortedlist = sorted(data, key=lambda l: l['positive_ratings'])
-
-        j=1
-        for i in sortedlist:
-            if search_term.lower() in i['name'].lower():
-                gamelijst.insert(END, i['name'])
-        mainFrame.update()
-
-    if option == 'Negative Ratings':
-        gamelijst.delete(0, 'end')
-        if ascdesc.get() == 'Descending':
-            sortedlist = sorted(data, key=lambda l: l['negative_ratings'], reverse=True)
-        else:
-            sortedlist = sorted(data, key=lambda l: l['negative_ratings'])
-
-        j=1
-        for i in sortedlist:
-            if search_term.lower() in i['name'].lower():
-                gamelijst.insert(END, i['name'])
-        mainFrame.update()
-
-    if option == 'Name':
-        gamelijst.delete(0, 'end')
-        if ascdesc.get() == 'Descending':
-            sortedlist = sorted(data, key=lambda l: l['name'], reverse=True)
-        else:
-            sortedlist = sorted(data, key=lambda l: l['name'])
-
-        j=1
-        for i in sortedlist:
-            if search_term.lower() in i['name'].lower():
-                gamelijst.insert(END, i['name'])
-        mainFrame.update()
+def callback(event):
+    selection = event.widget.curselection()
+    if selection:
+        index = selection[0]
+        widgetdata = event.widget.get(index)
+        game = list(getgameinfo(widgetdata).values())
+        gameinfo.set(f'Name: {widgetdata}\nPrice: {game[17]}\nPositive ratings: {game[12]}\nNegative ratings: {game[13]}\nRelease date: {game[2]}')
+    else:
+        gameinfo.set("")
 
 OptionList = [
     'Price',
@@ -97,22 +70,6 @@ sortByLabel.place(relx=0.05, rely=0.05, anchor=CENTER)
 
 gamelijst = Listbox(master=mainFrame, width=30, height=20)
 gamelijst.place(relx=0.03, rely=0.15, anchor=NW)
-
-def getgameinfo(valuetofind):
-    for i in data:
-        if valuetofind == i['name']:
-            return i
-
-def callback(event):
-    selection = event.widget.curselection()
-    if selection:
-        index = selection[0]
-        widgetdata = event.widget.get(index)
-        game = list(getgameinfo(widgetdata).values())
-        gameinfo.set(f'Name: {widgetdata}\nPrice: {game[17]}\nPositive ratings: {game[12]}\nNegative ratings: {game[13]}\nRelease date: {game[2]}')
-    else:
-        gameinfo.set("")
-
 gamelijst.bind("<<ListboxSelect>>", callback)
 
 search_var = StringVar()
