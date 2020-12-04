@@ -1,10 +1,12 @@
 import json
 from tkinter import *
-
+from operator import itemgetter
 with open('steam.json') as steamdata:
     data = json.load(steamdata)
 
-sortedlist = sorted(data, key=lambda l: l['price'])
+# sortedlist = {k: data[0]['appid'][k] for k in sorted(data[0]['appid'])}
+#
+# sortedlist = {k: v for k,v in sorted(data[0]['appid'].items(), key=itemgetter(1))}
 
 def main(*args):
     search_term = search_var.get()
@@ -31,7 +33,14 @@ def callback(event):
         index = selection[0]
         widgetdata = event.widget.get(index)
         game = list(getgameinfo(widgetdata).values())
-        gameinfo.set(f'Name: {widgetdata}\nPrice: ${game[17]}\nPositive ratings: {game[12]}\nNegative ratings: {game[13]}\nRelease date: {game[2]}\nAverage playtime: {game[14]}')
+        gameinfo.set(
+            f'Name: {widgetdata}\n'
+            f'Price: ${game[17]}\n'
+            f'Positive ratings: {game[12]}\n'
+            f'Negative ratings: {game[13]}\n'
+            f'Release date: {game[2]}\n'
+            f'Average playtime: {game[14]}'
+        )
     else:
         gameinfo.set("")
 
