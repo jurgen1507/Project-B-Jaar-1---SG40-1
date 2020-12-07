@@ -10,10 +10,10 @@ steamID = '76561198272503503'
 # sortedlist = {k: data[0]['appid'][k] for k in sorted(data[0]['appid'])}
 #
 # sortedlist = {k: v for k,v in sorted(data[0]['appid'].items(), key=itemgetter(1))}
-
-response = urllib.request.urlopen(f'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={steamAPIkey}&steamid={steamID}')
+appid = 730
+response = urllib.request.urlopen(f'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid={appid}&key={steamAPIkey}&steamid={steamID}')
 steamnews = json.loads(response.read())
-print(steamnews)
+
 
 def main(*args):
     search_term = search_var.get()
@@ -37,19 +37,44 @@ def getgameinfo(valuetofind):
 def callback(event):
     selection = event.widget.curselection()
     if selection:
+        # Maakt de lijst weer leeg om de nieuwe informatie toe te voegen
+        textLabel.delete(0, END)
+        # Vraagt op welk spel is aangeklikt in de lijst met spellen
         index = selection[0]
         widgetdata = event.widget.get(index)
         game = list(getgameinfo(widgetdata).values())
-        gameinfo.set(
-            f'Name: {widgetdata}\n'
-            f'Price: ${game[17]}\n'
-            f'Positive ratings: {game[12]}\n'
-            f'Negative ratings: {game[13]}\n'
-            f'Release date: {game[2]}\n'
-            f'Average playtime: {game[14]}'
+        # Pakt de appid van het aangeklikte spel om zo statistieken van de speler te kunnen krijgen
+        appid = game[0]
+        try:
+            response = urllib.request.urlopen(
+                f'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid={appid}&key={steamAPIkey}&steamid={steamID}')
+            player_stats = json.loads(response.read())
+        # Als er geen statistieken zijn, dan gebeurt er niks
+        except:
+            pass
+
+        # Voegt standaard informatie van het spel toe in de infolijst
+        textLabel.insert(END,
+            f'Name: {widgetdata}\n')
+        textLabel.insert(END,
+            f'Price: ${game[17]}\n')
+        textLabel.insert(END,
+            f'Positive ratings: {game[12]}\n')
+        textLabel.insert(END,
+            f'Negative ratings: {game[13]}\n')
+        textLabel.insert(END,
+            f'Release date: {game[2]}\n')
+        textLabel.insert(END,
+            f'Average playtime: {game[14]}\n'
         )
-    else:
-        gameinfo.set("")
+        # Als er statistieken zijn, dan voegt dit het toe in de infolijst
+        try:
+            for i in range(len(player_stats["playerstats"]["stats"])):
+                text = gameinfo.get() + f'{player_stats["playerstats"]["stats"][i]["name"].replace("_", " ")}: {player_stats["playerstats"]["stats"][i]["value"]}\n'
+                textLabel.insert(END, text)
+        # Als er geen statistieken zijn, print dan "No player stats"
+        except:
+            textLabel.insert(END, 'No Player Stats')
 
 OptionList = [
     'Price',
@@ -98,8 +123,8 @@ searchentry.place(relx=0.7, rely=0.05, anchor=CENTER)
 
 gameinfo = StringVar()
 gameinfo.set('')
-textLabel = Textbox(master=mainFrame, textvariable=gameinfo, justify=LEFT)
-textLabel.place(relx=0.35, rely=0.15)
+textLabel = Listbox(master=mainFrame, width=45, height=20)
+textLabel.place(relx=0.35, rely=0.15, anchor=NW)
 
 mainFrame.pack()
 main()
