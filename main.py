@@ -1,12 +1,19 @@
 import json
 from tkinter import *
 from operator import itemgetter
+import urllib.request
 with open('steam.json') as steamdata:
     data = json.load(steamdata)
 
+steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
+steamID = '76561198272503503'
 # sortedlist = {k: data[0]['appid'][k] for k in sorted(data[0]['appid'])}
 #
 # sortedlist = {k: v for k,v in sorted(data[0]['appid'].items(), key=itemgetter(1))}
+
+response = urllib.request.urlopen(f'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key={steamAPIkey}&steamid={steamID}')
+steamnews = json.loads(response.read())
+print(steamnews)
 
 def main(*args):
     search_term = search_var.get()
@@ -91,7 +98,7 @@ searchentry.place(relx=0.7, rely=0.05, anchor=CENTER)
 
 gameinfo = StringVar()
 gameinfo.set('')
-textLabel = Label(master=mainFrame, textvariable=gameinfo, justify=LEFT)
+textLabel = Textbox(master=mainFrame, textvariable=gameinfo, justify=LEFT)
 textLabel.place(relx=0.35, rely=0.15)
 
 mainFrame.pack()
