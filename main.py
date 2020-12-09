@@ -1,4 +1,6 @@
 import json
+import kivy
+import test
 from tkinter import *
 from operator import itemgetter
 import urllib.request
@@ -17,9 +19,11 @@ def main(*args):
 
     # Sorteert volgens de python functie sorted oplopend of aflopend
     if ascdesc.get() == 'Descending':
-        sortedlist = sorted(data, key=lambda l: l[option], reverse=True)
+        test.merge_sort(data, 0, len(data) - 1, option)
+        sortedlist = data[::-1]
     else:
-        sortedlist = sorted(data, key=lambda l: l[option])
+        test.merge_sort(data, 0, len(data) - 1, option)
+        sortedlist = data
 
     # Kijkt of het checkbutton knopje is aangekruisd, als dat zo is dan worden alleen de spellen in de speler library getoond
     if CheckVar.get() == 1:
