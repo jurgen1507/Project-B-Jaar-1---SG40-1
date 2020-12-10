@@ -74,8 +74,8 @@ def callback(event):
         textLabel.insert(END,
             f'Release date: {game[2]}\n')
         textLabel.insert(END,
-            f'Average playtime: {game[14]}\n'
-        )
+            f'Average playtime: {game[14]}\n')
+
         # Als er statistieken zijn, dan voegt dit het toe in de infolijst
         try:
             for i in range(len(player_stats["playerstats"]["stats"])):
@@ -91,7 +91,7 @@ OptionList = [
     'Negative Ratings',
     'Name',
     'Release Date',
-    'Average Playtime'
+    'Average Playtime',
 
 ]
 

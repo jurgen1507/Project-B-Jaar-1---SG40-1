@@ -1,0 +1,108 @@
+<SteamBoardWindow>:
+    anim_type: 'slide_above_anim'
+    id: main_win
+
+    BoxLayout:
+        canvas:
+            Color:
+                rgba: (43/255, 71/255, 93/255, 1)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        orientation: 'vertical'
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (50, 50)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    source: '.\icons\menu.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (50, 50)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    source: '.\icons\Home.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (50, 50)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    source: '.\icons\profiel.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (50, 50)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    source: '.\icons\games.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (50, 50)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    source: '.\icons\Stats.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (50, 50)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    source: '.\icons\settings.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+
+
+    BoxLayout:
+        orientation: 'vertical'
+        canvas.before:
+            Color:
+                rgba: (27/255, 40/255, 56/255, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+            Color:
+                rgba: (43/255, 71/255, 93/255, 1)
+            Rectangle:
+                pos: self.pos
+                size: 80, root.height
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (50, 50)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    source: '.\icons\menu.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, 80)
+            on_release: main_win.toggle_state()
+        Label:
+            text: 'Nav Demo'
+            color: 0,0,0, 1
