@@ -14,9 +14,21 @@
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
-                    size: (50, 50)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
-                    source: '.\icons\menu.png'
+                    size: (225, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 225/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\menu_unfolded.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+            on_release: main_win.toggle_state()
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (225, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 225/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\home_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -25,9 +37,9 @@
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
-                    size: (50, 50)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
-                    source: '.\icons\Home.png'
+                    size: (225, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 225/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\profile_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -36,9 +48,9 @@
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
-                    size: (50, 50)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
-                    source: '.\icons\profiel.png'
+                    size: (225, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 225/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\games_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -47,9 +59,9 @@
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
-                    size: (50, 50)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
-                    source: '.\icons\games.png'
+                    size: (225, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 225/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\stats_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -58,20 +70,9 @@
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
-                    size: (50, 50)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
-                    source: '.\icons\Stats.png'
-            on_release: self.background_color = (0,0,0,0)
-            on_press: self.background_color = (1,1,1,1)
-            size_hint_y: None
-            height: root.height/6
-        Button:
-            background_color: (43/255, 71/255, 93/255, 0)
-            canvas:
-                Rectangle:
-                    size: (50, 50)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
-                    source: '.\icons\settings.png'
+                    size: (225, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 225/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\settings_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -95,13 +96,73 @@
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
-                    size: (50, 50)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 50/2.0, (self.pos[1]+self.size[1]/2.0) - 50/2.0
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\menu.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
-            size: (80, 80)
+            size: (80, root.height/6)
+            on_release: main_win.toggle_state()
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\home.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+            on_release: main_win.toggle_state()
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\profile.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+            on_release: main_win.toggle_state()
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\games.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+            on_release: main_win.toggle_state()
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\stats.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+            on_release: main_win.toggle_state()
+        Button:
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\settings.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
             on_release: main_win.toggle_state()
         Label:
             text: 'Nav Demo'

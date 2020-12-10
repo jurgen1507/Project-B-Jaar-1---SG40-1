@@ -6,7 +6,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 from kivy.garden.navigationdrawer import NavigationDrawer as ND
 from kivy.properties import StringProperty
-
+Window.size = (700, 600)
+Window.minimum_width, Window.minimum_height = 600, 400
 class SteamBoardWindow(ND):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
