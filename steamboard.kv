@@ -1,3 +1,12 @@
+<MainWindow>:
+    size: self.size
+    SteamBoardNavBar:
+        id: Navigationbar
+
+    Games:
+        id: GamesWindow
+
+
 <SteamBoardNavBar>
     anim_type: 'slide_above_simple'
     id: main_win
@@ -127,8 +136,7 @@
                 size_hint: (None, None)
                 size: (80, root.height/6)
 
-                on_release: root.ids.Main_Window.pos = 80, 0
-                on_release: self.ids.Test.ids.Games.pos = -100000, -100000
+
             Button: #Profile
                 background_color: (43/255, 71/255, 93/255, 0)
                 canvas:
@@ -149,7 +157,7 @@
                         pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
                         source: '.\icons\games.png'
                 on_press: self.background_color = (1,1,1,1)
-                on_release: self.ids.test.ids.Games.pos = 80, 0
+                on_release: root.ChangeGamesWindow()
                 on_release: root.ids.Main_Window.pos = -100000, -100000
                 on_release: self.background_color = (0,0,0,0)
                 size_hint: (None, None)
@@ -210,8 +218,7 @@
                         height: 80
                     Label:
                         text: 'rrrrreeee'
-            Test:
-                id: test
+
 
 
         BoxLayout: #Friendlist
@@ -221,9 +228,10 @@
             pos_hint: None, None
             Button:
 
-<Test>:
+<Games>:
+    games_window: gw
     BoxLayout:
-        id: Games
+        id: gw
         pos: 80,0
 
         RecycleBoxLayout:
