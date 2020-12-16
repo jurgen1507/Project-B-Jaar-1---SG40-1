@@ -1,8 +1,8 @@
-<SteamBoardWindow>:
-    anim_type: 'slide_above_anim'
+<SteamBoardNavBar>
+    anim_type: 'slide_above_simple'
     id: main_win
 
-    BoxLayout:
+    BoxLayout: # Unfolded Nav
         canvas:
             Color:
                 rgba: (43/255, 71/255, 93/255, 1)
@@ -10,7 +10,7 @@
                 size: self.size
                 pos: self.pos
         orientation: 'vertical'
-        Button:
+        Button: #Menu
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
@@ -22,7 +22,7 @@
             size_hint_y: None
             height: root.height/6
             on_release: main_win.toggle_state()
-        Button:
+        Button: #Home
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
@@ -33,7 +33,10 @@
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
-        Button:
+            on_release: root.ids.Main_Window.pos = 80, 0
+            on_release: root.ids.Games.pos = -100000, -100000
+            on_release: main_win.toggle_state()
+        Button: #Profiel
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
@@ -44,7 +47,7 @@
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
-        Button:
+        Button: #Games
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
@@ -55,7 +58,10 @@
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
-        Button:
+            on_release: root.ids.Games.pos = 80, 0
+            on_release: root.ids.Main_Window.pos = -100000, -100000
+            on_release: main_win.toggle_state()
+        Button: #Stats
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
@@ -66,7 +72,8 @@
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
-        Button:
+            on_release: main_win.toggle_state()
+        Button: #Settings
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
                 Rectangle:
@@ -78,92 +85,150 @@
             size_hint_y: None
             height: root.height/6
 
+    GridLayout:
+        cols:3
+        BoxLayout: #Folded Navbar
+            size_hint_x: None
+            width: 80
 
+            orientation: 'vertical'
+            canvas.before:
+                Color:
+                    rgba: (27/255, 40/255, 56/255, 1)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: (43/255, 71/255, 93/255, 1)
+                Rectangle:
+                    pos: self.pos
+                    size: 80, root.height
+            Button: # Menu
+                background_color: (43/255, 71/255, 93/255, 0)
+                canvas:
+                    Rectangle:
+                        size: (75, 75)
+                        pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                        source: '.\icons\menu.png'
+                on_press: self.background_color = (1,1,1,1)
+                on_release: self.background_color = (0,0,0,0)
+                size_hint: (None, None)
+                size: (80, root.height/6)
+                on_release: main_win.toggle_state()
+            Button: # Home
+                background_color: (43/255, 71/255, 93/255, 0)
+                canvas:
+                    Rectangle:
+                        size: (75, 75)
+                        pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                        source: '.\icons\home.png'
+                on_press: self.background_color = (1,1,1,1)
+                on_release: self.background_color = (0,0,0,0)
+                size_hint: (None, None)
+                size: (80, root.height/6)
+
+                on_release: root.ids.Main_Window.pos = 80, 0
+                on_release: self.ids.Test.ids.Games.pos = -100000, -100000
+            Button: #Profile
+                background_color: (43/255, 71/255, 93/255, 0)
+                canvas:
+                    Rectangle:
+                        size: (75, 75)
+                        pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                        source: '.\icons\profile.png'
+                on_press: self.background_color = (1,1,1,1)
+                on_release: self.background_color = (0,0,0,0)
+                size_hint: (None, None)
+                size: (80, root.height/6)
+                on_release: main_win.toggle_state()
+            Button: # Games
+                background_color: (43/255, 71/255, 93/255, 0)
+                canvas:
+                    Rectangle:
+                        size: (75, 75)
+                        pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                        source: '.\icons\games.png'
+                on_press: self.background_color = (1,1,1,1)
+                on_release: self.ids.test.ids.Games.pos = 80, 0
+                on_release: root.ids.Main_Window.pos = -100000, -100000
+                on_release: self.background_color = (0,0,0,0)
+                size_hint: (None, None)
+                size: (80, root.height/6)
+
+            Button: # stats
+                background_color: (43/255, 71/255, 93/255, 0)
+                canvas:
+                    Rectangle:
+                        size: (75, 75)
+                        pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                        source: '.\icons\stats.png'
+                on_press: self.background_color = (1,1,1,1)
+                on_release: self.background_color = (0,0,0,0)
+                size_hint: (None, None)
+                size: (80, root.height/6)
+                on_release: main_win.toggle_state()
+            Button: # Settings
+                background_color: (43/255, 71/255, 93/255, 0)
+                canvas:
+                    Rectangle:
+                        size: (75, 75)
+                        pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                        source: '.\icons\settings.png'
+                on_press: self.background_color = (1,1,1,1)
+                on_release: self.background_color = (0,0,0,0)
+                size_hint: (None, None)
+                size: (80, root.height/6)
+                on_release: main_win.toggle_state()
+        Widget:
+            BoxLayout: #
+                id: Main_Window
+                pos: -1000, -1000
+                size_hint: None, None
+                height: root.height
+                width: root.width-160
+                BoxLayout: # links
+                    orientation: 'vertical'
+                    Label: #Dashboard window
+                        text: 'Dashboard'
+                        size_hint_y: None
+                        height: 80
+                    RelativeLayout:
+                        Label:
+                            text: 'stats1'
+                    RelativeLayout:
+                        canvas:
+                            Color:
+                                rgba: (199/255, 213/255, 224/255, 1)
+                        Label:
+                            text: 'stats2'
+
+                BoxLayout: #rechts
+                    orientation: 'vertical'
+                    Label: #Naam,Atavar,Loguit
+                        text: 'Naam'
+                        size_hint_y: None
+                        height: 80
+                    Label:
+                        text: 'rrrrreeee'
+            Test:
+                id: test
+
+
+        BoxLayout: #Friendlist
+            size_hint_x: None
+            width: 80
+            pos: root.width - 80, 0
+            pos_hint: None, None
+            Button:
+
+<Test>:
     BoxLayout:
-        orientation: 'vertical'
-        canvas.before:
-            Color:
-                rgba: (27/255, 40/255, 56/255, 1)
-            Rectangle:
-                pos: self.pos
-                size: self.size
-            Color:
-                rgba: (43/255, 71/255, 93/255, 1)
-            Rectangle:
-                pos: self.pos
-                size: 80, root.height
-        Button:
-            background_color: (43/255, 71/255, 93/255, 0)
-            canvas:
-                Rectangle:
-                    size: (75, 75)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\menu.png'
-            on_press: self.background_color = (1,1,1,1)
-            on_release: self.background_color = (0,0,0,0)
-            size_hint: (None, None)
-            size: (80, root.height/6)
-            on_release: main_win.toggle_state()
-        Button:
-            background_color: (43/255, 71/255, 93/255, 0)
-            canvas:
-                Rectangle:
-                    size: (75, 75)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\home.png'
-            on_press: self.background_color = (1,1,1,1)
-            on_release: self.background_color = (0,0,0,0)
-            size_hint: (None, None)
-            size: (80, root.height/6)
-            on_release: main_win.toggle_state()
-        Button:
-            background_color: (43/255, 71/255, 93/255, 0)
-            canvas:
-                Rectangle:
-                    size: (75, 75)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\profile.png'
-            on_press: self.background_color = (1,1,1,1)
-            on_release: self.background_color = (0,0,0,0)
-            size_hint: (None, None)
-            size: (80, root.height/6)
-            on_release: main_win.toggle_state()
-        Button:
-            background_color: (43/255, 71/255, 93/255, 0)
-            canvas:
-                Rectangle:
-                    size: (75, 75)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\games.png'
-            on_press: self.background_color = (1,1,1,1)
-            on_release: self.background_color = (0,0,0,0)
-            size_hint: (None, None)
-            size: (80, root.height/6)
-            on_release: main_win.toggle_state()
-        Button:
-            background_color: (43/255, 71/255, 93/255, 0)
-            canvas:
-                Rectangle:
-                    size: (75, 75)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\stats.png'
-            on_press: self.background_color = (1,1,1,1)
-            on_release: self.background_color = (0,0,0,0)
-            size_hint: (None, None)
-            size: (80, root.height/6)
-            on_release: main_win.toggle_state()
-        Button:
-            background_color: (43/255, 71/255, 93/255, 0)
-            canvas:
-                Rectangle:
-                    size: (75, 75)
-                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\settings.png'
-            on_press: self.background_color = (1,1,1,1)
-            on_release: self.background_color = (0,0,0,0)
-            size_hint: (None, None)
-            size: (80, root.height/6)
-            on_release: main_win.toggle_state()
-        Label:
-            text: 'Nav Demo'
-            color: 0,0,0, 1
+        id: Games
+        pos: 80,0
+
+        RecycleBoxLayout:
+            default_size: None, dp(56)
+            default_size_hint: 1, None
+            size_hint_y: None
+            height: self.minimum_height
+            orientation: 'vertical'
