@@ -1,0 +1,353 @@
+<MainWindow>:
+    canvas:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 0.6)
+        Rectangle:
+            size: root.size
+    Games:
+        pos: 100, 0
+        size: root.width-180, root.height-root.ids.placeholder.height-root.ids.GamesKnoppen.height
+        id: GamesTabel
+
+    GamesKnoppen:
+        pos: 80, GamesTabel.height
+        size: root.width -160, 60
+        id: GamesKnoppen
+
+    PlaceHolder:
+        id: placeholder
+        pos: 80, root.height-60
+        size: root.width-80, 60
+
+    Friendlist: #List of friends (prio 2)
+        pos_hint: None, None
+        pos: root.width-80, 0
+        size: 80, root.height-60
+
+    SteamBoardNavBar: #Navigation bar on front position (prio 1)
+        pos_hint: None, None
+        pos: -255, 0
+        size: 225, root.height
+        id: Navigationbar
+
+
+<SteamBoardNavBar>:
+
+    BoxLayout: #Folded Navbar
+        size_hint_x: None
+        width: 80
+        id: fnb
+        orientation: 'vertical'
+        canvas.before:
+
+            Color:
+                rgba: (43/255, 71/255, 93/255, 1)
+            Rectangle:
+                pos: self.pos
+                size: 80, root.height
+        Button: # Menu
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\menu.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+            on_release: root.UnFold()
+        Button: # Home
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\home.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+
+
+        Button: #Profile
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\profile.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+
+        Button: # Games
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\games.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: root.ChangeGamesWindow()
+            on_release: root.ids.Main_Window.pos = -100000, -100000
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+
+        Button: # stats
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\stats.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+
+        Button: # Settings
+            background_color: (43/255, 71/255, 93/255, 0)
+            canvas:
+                Rectangle:
+                    size: (75, 75)
+                    pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\settings.png'
+            on_press: self.background_color = (1,1,1,1)
+            on_release: self.background_color = (0,0,0,0)
+            size_hint: (None, None)
+            size: (80, root.height/6)
+    BoxLayout: #Unfolded Navbar
+        pos:root.pos
+        # Unfolded Nav
+        canvas:
+            Color:
+                rgba: (43/255, 71/255, 93/255, 1)
+            Rectangle:
+                size: 225, root.height
+                pos: self.pos
+        orientation: 'vertical'
+        Button: #Menu
+            size_hint: None, None
+            size: 225, root.height/6
+            background_color: 0, 0, 0, 0
+            canvas:
+                Rectangle:
+                    size: (225, 75)
+                    pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\menu_unfolded.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+            on_release: root.Fold()
+        Button: #Home
+            size_hint: None, None
+            size: 225, root.height/6
+            background_color: 0, 0, 0, 0
+            canvas:
+                Rectangle:
+                    size: (225, 75)
+                    pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\home_unfolded.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+            on_release: root.ids.Main_Window.pos = 80, 0
+            on_release: root.ids.Games.pos = -100000, -100000
+
+        Button: #Profiel
+            background_color: 0, 0, 0, 0
+            size_hint: None, None
+            size: 225, root.height/6
+            canvas:
+                Rectangle:
+                    size: (225, 75)
+                    pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\profile_unfolded.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+        Button: #Games
+            background_color: 0, 0, 0, 0
+            size_hint: None, None
+            size: 225, root.height/6
+            canvas:
+                Rectangle:
+                    size: (225, 75)
+                    pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\games_unfolded.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+            on_release: root.ids.Games.pos = 80, 0
+            on_release: root.ids.Main_Window.pos = -100000, -100000
+
+        Button: #Stats
+            background_color: 0, 0, 0, 0
+            size_hint: None, None
+            size: 225, root.height/6
+            canvas:
+                Rectangle:
+                    size: (225, 75)
+                    pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\stats_unfolded.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+
+        Button: #Settings
+            background_color: 0, 0, 0, 0
+            size_hint: None, None
+            size: 225, root.height/6
+            canvas:
+                Rectangle:
+                    size: (225, 75)
+                    pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
+                    source: '.\icons\settings_unfolded.png'
+            on_release: self.background_color = (0,0,0,0)
+            on_press: self.background_color = (1,1,1,1)
+            size_hint_y: None
+            height: root.height/6
+
+
+<Friendlist>:
+    canvas.before:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+
+    viewclass: 'Label'
+    RecycleBoxLayout:
+        background_color: 0, 0, 0, 0
+        id: gw
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+<PlaceHolder>:
+    canvas.before:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Tabel>:
+    orientation: 'horizontal'
+    name: 'name'
+    price: 'price'
+    positiveratings: 'positive_ratings'
+    negativeratings: 'negative_ratings'
+    releasedate: 'release_date'
+    spacing: 10
+    Label:
+        id: name
+        size_hint_x: 0.46
+        text: root.name
+        text_size: self.size
+        halign: 'left'
+        valign: 'top'
+
+    Label:
+        id: price
+        size_hint_x: 0.08
+        text: root.price
+        text_size: self.size
+        halign: 'left'
+        valign: 'top'
+    Label:
+        id: postiveratings
+        size_hint_x: 0.13
+        text: root.positiveratings
+        text_size: self.size
+        halign: 'left'
+        valign: 'top'
+
+    Label:
+        id: negativeratings
+        size_hint_x: 0.13
+        text: root.negativeratings
+        text_size: self.size
+        halign: 'left'
+        valign: 'top'
+
+    Label:
+        id: releasedate
+        border:
+        size_hint_x: 0.2
+        text: root.releasedate
+        text_size: self.size
+        halign: 'left'
+        valign: 'top'
+
+<GamesKnoppen>
+    canvas.before:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 0.6)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'horizontal'
+        pos: root.pos
+        size: root.size
+        Button:
+            size_hint_x: 0.40
+            text: 'name'
+            on_release: root.sorting('name')
+
+
+        Button:
+            size_hint_x: 0.10
+            text: 'price'
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+            on_release: root.sorting('price')
+        Button:
+            size_hint_x: 0.15
+            text: 'positive ratings'
+            on_release: root.sorting('positive_ratings')
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+        Button:
+            size_hint_x: 0.15
+            text: 'negative ratings'
+            on_release: root.sorting('negative_ratings')
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+        Button:
+            size_hint_x: 0.2
+            text: 'release date'
+            on_release: root.sorting('release_date')
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+
+
+<Games>:
+    viewclass: 'Tabel'
+    RecycleBoxLayout:
+        touch_multiselect: True
+        id: gw
+        default_size: None, dp(25)
+        default_size_hint: 1, None
+
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
