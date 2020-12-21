@@ -6,12 +6,17 @@
             size: root.size
     Games:
         pos: 100, 0
-        size: root.width-180, root.height-root.ids.placeholder.height-root.ids.GamesKnoppen.height
+        size: root.width-180, root.height-root.ids.placeholder.height-root.ids.GamesKnoppen.height-root.ids.gamessearch.height
         id: GamesTabel
+
+    GamesSearch:
+        id: gamessearch
+        pos: 80, GamesTabel.height+GamesKnoppen.height
+        size: root.width - 160, 45
 
     GamesKnoppen:
         pos: 80, GamesTabel.height
-        size: root.width -160, 60
+        size: root.width -160, 45
         id: GamesKnoppen
 
     PlaceHolder:
@@ -291,8 +296,51 @@
         text_size: self.size
         halign: 'left'
         valign: 'top'
+    Button:
+        text: 'Details'
+        size_hint_x: 0.2
 
-<GamesKnoppen>
+<GamesSearch>:
+    FloatLayout:
+        pos_hint: None, None
+        orientation: 'horizontal'
+        pos: root.pos
+        size: root.size
+        Label:
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            width: 70
+            size_hint_x: None
+            text: 'Search:'
+            pos: root.x + 20, root.y
+        TextInput:
+            id: search
+            multiline: False
+            pos: root.x + 80, root.y + 7
+            size: 200, 30
+            size_hint: None, None
+            on_text: root.search_bar()
+        Label:
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+            width: 100
+            size_hint_x: None
+            text: 'Owned games:'
+            pos: root.width - 130, root.y
+        Switch:
+            id: OwnedGamesSwitch
+            on_active: root.search_bar()
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+            width: 100
+            size_hint_x: None
+            pos: root.width -30, root.y
+
+
+<GamesKnoppen>:
     canvas.before:
         Color:
             rgba: (43/255, 71/255, 93/255, 0.6)
@@ -304,11 +352,9 @@
         pos: root.pos
         size: root.size
         Button:
-            size_hint_x: 0.40
+            size_hint_x: 0.35
             text: 'name'
             on_release: root.sorting('name')
-
-
         Button:
             size_hint_x: 0.10
             text: 'price'
@@ -337,7 +383,6 @@
             text_size: self.size
             halign: 'center'
             valign: 'center'
-
 
 <Games>:
     viewclass: 'Tabel'
