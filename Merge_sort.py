@@ -46,8 +46,11 @@ def merge(array, left_index, right_index, middle, option):
 
 
 
-def sort_list(list, option):
-    merge_sort(list, 0, len(list) - 1, option)
-
-lijst = [{'nummer': 1}, {'nummer': 2}, {'nummer': 9}, {'nummer': 6}, {'nummer': -3}]
+def sort_list(list, option, order):
+    if order == 'up':
+        merge_sort(list, 0, len(list) - 1, option)
+        return list
+    else: #down
+        merge_sort(list, 0, len(list) - 1, option)
+        return list[::-1]
 
