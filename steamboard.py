@@ -1,3 +1,8 @@
+from kivy.uix.behaviors import FocusBehavior
+from kivy.uix.label import Label
+from kivy.uix.recycleboxlayout import RecycleBoxLayout
+from kivy.uix.recycleview.layout import LayoutSelectionBehavior
+from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
@@ -7,10 +12,10 @@ from kivy.uix.recycleview import RecycleView
 from kivy.properties import ObjectProperty
 from kivy.config import Config
 from kivy.uix.recycleview import RecycleViewBehavior
+from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from Merge_sort import *
 import json
 import urllib.request
-
 
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 Window.size = (700, 600)
@@ -26,7 +31,6 @@ with open('steam.json') as steamdata:
     test = json.load(steamdata)
 sort_list(test, 'price', 'up')
 lijst_kopie = test.copy()
-
 
 class MainWindow(Widget):
     def __init__(self, **kwargs):
@@ -82,7 +86,8 @@ class GamesKnoppen(Widget):
     def sorting(self, button):
         if self.current_button == button:
             descending = sort_list(test, button, 'down')
-            root = App.get_running_app().root
+            root = self.manager.ids.Games
+            print(root)
             root.ids.GamesTabel.data = [
                 {'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in descending]
@@ -91,25 +96,53 @@ class GamesKnoppen(Widget):
         else:
             global ascending
             ascending = sort_list(test, button, 'up')
-            root = App.get_running_app().root
+            root = self.manager.ids.Games
+            print(root)
             root.ids.GamesTabel.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
                           'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in ascending]
             root.ids.GamesTabel.refresh_from_data()
             self.current_button = button
 
 
-class Games(RecycleView):
+class GamesTabel(RecycleView):
     def __init__(self, **kwargs):
-        super(Games, self).__init__(**kwargs)
+        super(GamesTabel, self).__init__(**kwargs)
         self.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
               'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in test]
 
 
 
-class SteamBoardApp(App):
+class CustomScreen(Screen):
+    pass
 
+class Games(Screen):
+    pass
+class Stats(Screen):
+    pass
+
+class Home(Screen):
+    pass
+
+class Profile(Screen):
+    pass
+
+class Settings(Screen):
+    pass
+
+root = ScreenManager(transition=NoTransition())
+
+class ScreenManagerApp(App):
     def build(self):
-        return MainWindow()
+
+        root.add_widget(Games(name='Games'))
+        root.add_widget(CustomScreen(name='CustomScreen'))
+        root.add_widget(Home(name='Home'))
+        root.add_widget(Profile(name='Profile'))
+        root.add_widget(Settings(name='Settings'))
+        root.add_widget(Stats(name='Stats'))
+
+        return root
+
 
 if __name__ == '__main__':
-    SteamBoardApp().run()
+    ScreenManagerApp().run()

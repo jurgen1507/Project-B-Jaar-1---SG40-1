@@ -1,39 +1,46 @@
-<MainWindow>:
+<Games>:
     canvas:
         Color:
             rgba: (43/255, 71/255, 93/255, 0.6)
         Rectangle:
             size: root.size
-    Games:
-        pos: 100, 0
-        size: root.width-180, root.height-root.ids.placeholder.height-root.ids.GamesKnoppen.height-root.ids.gamessearch.height
-        id: GamesTabel
 
-    GamesSearch:
-        id: gamessearch
-        pos: 80, GamesTabel.height+GamesKnoppen.height
-        size: root.width - 160, 45
+    GamesTabel:
+
+        pos: 100, 0
+        size: root.width - 180, root.height -150
+
+        size_hint: None, None
 
     GamesKnoppen:
-        pos: 80, GamesTabel.height
-        size: root.width -160, 45
-        id: GamesKnoppen
+
+        pos: 100, root.height-150
+        size: root.width -180, 45
+        size_hint: None, None
 
     PlaceHolder:
-        id: placeholder
+
         pos: 80, root.height-60
-        size: root.width-80, 60
+        size: root.width - 80, 60
 
-    Friendlist: #List of friends (prio 2)
-        pos_hint: None, None
-        pos: root.width-80, 0
-        size: 80, root.height-60
+        size_hint: None, None
 
-    SteamBoardNavBar: #Navigation bar on front position (prio 1)
-        pos_hint: None, None
+    SteamBoardNavBar:
+
         pos: -255, 0
         size: 225, root.height
-        id: Navigationbar
+        size_hint: None, None
+
+
+<Profile>:
+
+<Stats>:
+
+<Settings>:
+
+<Home>:
+
+<CustomScreen>:
 
 
 <SteamBoardNavBar>:
@@ -384,7 +391,7 @@
             halign: 'center'
             valign: 'center'
 
-<Games>:
+<GamesTabel>:
     viewclass: 'Tabel'
     RecycleBoxLayout:
         touch_multiselect: True
