@@ -13,7 +13,7 @@ from kivy.properties import ObjectProperty
 from kivy.config import Config
 from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
-from Merge_sort import *
+from friendlist import *
 import json
 import urllib.request
 
@@ -36,12 +36,6 @@ class MainWindow(Widget):
     def __init__(self, **kwargs):
         super(MainWindow, self).__init__(**kwargs)
 
-
-class Friendlist(RecycleView):
-    def __init__(self, **kwargs):
-        super(Friendlist, self).__init__(**kwargs)
-        self.data = [{'text': str(x)} for x in range(100)]
-
 class PlaceHolder(Widget):
     pass
 
@@ -59,6 +53,24 @@ class SteamBoardNavBar(Widget):
 class Tabel(BoxLayout):
     pass
 
+class GamesKnoppen(Widget):
+    current_button = ''
+    def sorting(self, button, GK):
+        if self.current_button == button and GK:
+            descending = sort_list(test, button, 'down')
+            self.parent.ids.GT.data = [
+                {'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+                 'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in descending]
+            self.parent.ids.GT.refresh_from_data()
+            self.current_button = ''
+        else:
+            global ascending
+            ascending = sort_list(test, button, 'up')
+            self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+                          'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in ascending]
+            self.parent.ids.GT.refresh_from_data()
+            self.current_button = button
+
 
 class GamesSearch(Widget):
     def search_bar(self):
@@ -71,37 +83,14 @@ class GamesSearch(Widget):
                         if self.ids.search.text.lower() in term['name'].lower():
                             searched_games.append(term)
             test = searched_games
-            GamesKnoppen.sorting(GamesKnoppen, 'name')
+            GamesKnoppen.sorting(self.parent.ids.GK, 'name', False)
         else:
             searched_games = []
             for term in lijst_kopie:
                 if self.ids.search.text.lower() in term['name'].lower():
                     searched_games.append(term)
             test = searched_games
-            GamesKnoppen.sorting(GamesKnoppen, 'name')
-
-
-class GamesKnoppen(Widget):
-    current_button = ''
-    def sorting(self, button):
-        if self.current_button == button:
-            descending = sort_list(test, button, 'down')
-            root = self.manager.ids.Games
-            print(root)
-            root.ids.GamesTabel.data = [
-                {'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
-                 'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in descending]
-            root.ids.GamesTabel.refresh_from_data()
-            self.current_button = ''
-        else:
-            global ascending
-            ascending = sort_list(test, button, 'up')
-            root = self.manager.ids.Games
-            print(root)
-            root.ids.GamesTabel.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
-                          'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in ascending]
-            root.ids.GamesTabel.refresh_from_data()
-            self.current_button = button
+            GamesKnoppen.sorting(self.parent.ids.GK, 'name', False)
 
 
 class GamesTabel(RecycleView):
@@ -109,8 +98,12 @@ class GamesTabel(RecycleView):
         super(GamesTabel, self).__init__(**kwargs)
         self.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
               'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in test]
-
-
+class Friends(Widget):
+    pass
+class Friendlist(RecycleView):
+    def __init__(self, **kwargs):
+        super(Friendlist, self).__init__(**kwargs)
+        self.data = [{'atavar': str(x), 'status': str('.\icons\status' +str(y)+'.png' )} for x, y in friendsavatar]
 
 class CustomScreen(Screen):
     pass
@@ -132,10 +125,10 @@ class Settings(Screen):
 root = ScreenManager(transition=NoTransition())
 
 class ScreenManagerApp(App):
-    def build(self):
 
-        root.add_widget(Games(name='Games'))
+    def build(self):
         root.add_widget(CustomScreen(name='CustomScreen'))
+        root.add_widget(Games(name='Games'))
         root.add_widget(Home(name='Home'))
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))

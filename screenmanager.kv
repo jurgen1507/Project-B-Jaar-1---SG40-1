@@ -6,41 +6,54 @@
             size: root.size
 
     GamesTabel:
-
+        id: GT
         pos: 100, 0
         size: root.width - 180, root.height -150
+        size_hint: None, None
 
+    GamesSearch:
+        id: GS
+        pos: 80, root.height - 100
+        size: root.width - 180, 45
         size_hint: None, None
 
     GamesKnoppen:
-
+        id: GK
         pos: 100, root.height-150
         size: root.width -180, 45
         size_hint: None, None
 
     PlaceHolder:
-
         pos: 80, root.height-60
         size: root.width - 80, 60
+        size_hint: None, None
 
+    Friendlist:
+        pos: root.width-80, 0
+        size: 80, root.height-60
         size_hint: None, None
 
     SteamBoardNavBar:
-
         pos: -255, 0
         size: 225, root.height
         size_hint: None, None
 
 
 <Profile>:
-
+    Button:
+        on_release: app.root.current = 'Games'
 <Stats>:
-
+    Button:
+        on_release: app.root.current = 'Games'
 <Settings>:
-
-<Home>:
-
+    Button:
+        on_release: app.root.current = 'Games'
 <CustomScreen>:
+    Button:
+        on_release: app.root.current = 'Games'
+<Home>:
+    Button:
+        on_release: app.root.current = 'Games'
 
 
 <SteamBoardNavBar>:
@@ -155,6 +168,7 @@
             size_hint_y: None
             height: root.height/6
             on_release: root.Fold()
+
         Button: #Home
             size_hint: None, None
             size: 225, root.height/6
@@ -165,11 +179,11 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\home_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Home'
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
-            on_release: root.ids.Main_Window.pos = 80, 0
-            on_release: root.ids.Games.pos = -100000, -100000
+
 
         Button: #Profiel
             background_color: 0, 0, 0, 0
@@ -181,9 +195,12 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\profile_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Profile'
+
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
+
         Button: #Games
             background_color: 0, 0, 0, 0
             size_hint: None, None
@@ -194,12 +211,10 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\games_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Games'
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
-            on_release: root.ids.Games.pos = 80, 0
-            on_release: root.ids.Main_Window.pos = -100000, -100000
-
         Button: #Stats
             background_color: 0, 0, 0, 0
             size_hint: None, None
@@ -210,6 +225,7 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\stats_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Stats'
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
@@ -224,29 +240,40 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\settings_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Settings'
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
 
+<Friends>:
+    atavar: 'atavar'
+    status: 'status'
+    FloatLayout:
+        size: root.size
+        pos: root.pos
+        AsyncImage:
+            source: root.atavar
+            pos: root.pos
+            size: root.size
+
+        Image:
+            source: root.status
+            pos: root.x + 48, root.y +2
+            size_hint: None, None
+            size: 20, 20
+
 
 <Friendlist>:
-    canvas.before:
-        Color:
-            rgba: (43/255, 71/255, 93/255, 1)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
-
-    viewclass: 'Label'
+    viewclass: 'Friends'
     RecycleBoxLayout:
         background_color: 0, 0, 0, 0
-        id: gw
+        id: friends
         default_size: None, dp(56)
         default_size_hint: 1, None
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
+
 
 <PlaceHolder>:
     canvas.before:
@@ -361,32 +388,32 @@
         Button:
             size_hint_x: 0.35
             text: 'name'
-            on_release: root.sorting('name')
+            on_release: root.sorting('name', True)
         Button:
             size_hint_x: 0.10
             text: 'price'
             text_size: self.size
             halign: 'center'
             valign: 'center'
-            on_release: root.sorting('price')
+            on_release: root.sorting('price', True)
         Button:
             size_hint_x: 0.15
             text: 'positive ratings'
-            on_release: root.sorting('positive_ratings')
+            on_release: root.sorting('positive_ratings', True)
             text_size: self.size
             halign: 'center'
             valign: 'center'
         Button:
             size_hint_x: 0.15
             text: 'negative ratings'
-            on_release: root.sorting('negative_ratings')
+            on_release: root.sorting('negative_ratings', True)
             text_size: self.size
             halign: 'center'
             valign: 'center'
         Button:
             size_hint_x: 0.2
             text: 'release date'
-            on_release: root.sorting('release_date')
+            on_release: root.sorting('release_date', True)
             text_size: self.size
             halign: 'center'
             valign: 'center'
