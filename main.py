@@ -19,7 +19,7 @@ def main(*args):
     print(ownedgames)
 
     # Sorteert volgens de python functie sorted oplopend of aflopend
-    if ascdesc.get() == 'Descending':
+    if ascdesc.get () == 'Descending':
         merge_sort(data, 0, len(data) - 1, option)
         sortedlist = data[::-1]
     else:
