@@ -1,6 +1,6 @@
 import json
 import kivy
-from test import merge_sort
+from Merge_sort import merge_sort
 from tkinter import *
 from operator import itemgetter
 import urllib.request
@@ -16,6 +16,7 @@ def main(*args):
     gamelijst.delete(0, 'end')
     response = urllib.request.urlopen(f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
     ownedgames = json.loads(response.read())
+    print(ownedgames)
 
     # Sorteert volgens de python functie sorted oplopend of aflopend
     if ascdesc.get() == 'Descending':

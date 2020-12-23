@@ -1,12 +1,26 @@
+<AsyncImage>:
+    nocache: True
+
 <MainWindow>:
+    canvas:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 0.6)
+        Rectangle:
+            size: root.size
     Games:
-        pos: 80, 0
-        size: root.width-160, root.height-root.ids.placeholder.height-root.ids.GamesKnoppen.height
+        pos: 100, 0
+        size: root.width-180, root.height-root.ids.placeholder.height-root.ids.GamesKnoppen.height-root.ids.gamessearch.height
         id: GamesTabel
+
+    GamesSearch:
+        id: gamessearch
+
+        pos: 80, GamesTabel.height+GamesKnoppen.height
+        size: root.width - 160, 45
 
     GamesKnoppen:
         pos: 80, GamesTabel.height
-        size: GamesTabel.width, 80
+        size: root.width -160, 45
         id: GamesKnoppen
 
     PlaceHolder:
@@ -74,6 +88,7 @@
                     source: '.\icons\profile.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
+            on_release: root.removeGames()
             size_hint: (None, None)
             size: (80, root.height/6)
 
@@ -85,11 +100,10 @@
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\games.png'
             on_press: self.background_color = (1,1,1,1)
-            on_release: root.ChangeGamesWindow()
-            on_release: root.ids.Main_Window.pos = -100000, -100000
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
             size: (80, root.height/6)
+            on_release: root.addGames()
 
         Button: # stats
             background_color: (43/255, 71/255, 93/255, 0)
@@ -180,8 +194,7 @@
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
-            on_release: root.ids.Games.pos = 80, 0
-            on_release: root.ids.Main_Window.pos = -100000, -100000
+
 
         Button: #Stats
             background_color: 0, 0, 0, 0
@@ -211,8 +224,44 @@
             size_hint_y: None
             height: root.height/6
 
+<Friends>:
+    atavar: 'atavar'
+    status: 'status'
+    FloatLayout:
+        size: root.size
+        pos: root.pos
+        AsyncImage:
+            source: root.atavar
+            pos: root.pos
+            size: root.size
+
+        Image:
+            source: root.status
+            pos: root.x + 48, root.y +2
+            size_hint: None, None
+            size: 20, 20
+
+
+
+
+
 
 <Friendlist>:
+
+    viewclass: 'Friends'
+    RecycleBoxLayout:
+        background_color: 0, 0, 0, 0
+        id: friends
+        default_size: None, dp(56)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+
+
+
+<PlaceHolder>:
     canvas.before:
         Color:
             rgba: (43/255, 71/255, 93/255, 1)
@@ -220,26 +269,8 @@
             pos: self.pos
             size: self.size
 
-
-    viewclass: 'Label'
-    RecycleBoxLayout:
-        background_color: 0, 0, 0, 0
-        id: gw
-        default_size: None, dp(56)
-        default_size_hint: 1, None
-        size_hint_y: None
-        height: self.minimum_height
-        orientation: 'vertical'
-
-<PlaceHolder>:
-    canvas.before:
-        Color:
-            rgba: (43/255, 71/255, 93/255, 0.8)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
 <Tabel>:
+
     orientation: 'horizontal'
     name: 'name'
     price: 'price'
@@ -248,6 +279,7 @@
     releasedate: 'release_date'
     spacing: 10
     Label:
+        id: name
         size_hint_x: 0.46
         text: root.name
         text_size: self.size
@@ -255,45 +287,126 @@
         valign: 'top'
 
     Label:
+        id: price
         size_hint_x: 0.08
         text: root.price
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'middle'
     Label:
+        id: postiveratings
         size_hint_x: 0.13
         text: root.positiveratings
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'middle'
 
     Label:
+        id: negativeratings
         size_hint_x: 0.13
         text: root.negativeratings
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'middle'
 
     Label:
+        id: releasedate
         border:
         size_hint_x: 0.2
         text: root.releasedate
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'middle'
+    Button:
+        text: 'Details'
+        size_hint_x: 0.2
 
-<GamesKnoppen>
+<GamesSearch>:
+    FloatLayout:
+        pos_hint: None, None
+        orientation: 'horizontal'
+        pos: root.pos
+        size: root.size
 
-<Games>:
+        Label:
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            width: 70
+            size_hint_x: None
+            text: 'Search:'
+            pos: root.x + 20, root.y
+        TextInput:
+            id: search
+            multiline: False
+            pos: root.x + 80, root.y + 7
+            size: 200, 30
+            size_hint: None, None
+            on_text: root.search_bar()
+        Label:
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+            width: 100
+            size_hint_x: None
+            text: 'Owned games:'
+            pos: root.width - 130, root.y
+        Switch:
+            id: OwnedGamesSwitch
+            on_active: root.search_bar()
+            halign: 'right'
+            valign: 'middle'
+            text_size: self.size
+            width: 100
+            size_hint_x: None
+            pos: root.width -30, root.y
+
+
+<GamesKnoppen>:
     canvas.before:
         Color:
             rgba: (43/255, 71/255, 93/255, 0.6)
         Rectangle:
             pos: self.pos
             size: self.size
-    games_window: gw
+    BoxLayout:
+        orientation: 'horizontal'
+        pos: root.pos
+        size: root.size
+        Button:
+            size_hint_x: 0.35
+            text: 'name'
+            on_release: root.sorting('name')
+        Button:
+            size_hint_x: 0.10
+            text: 'price'
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+            on_release: root.sorting('price')
+        Button:
+            size_hint_x: 0.15
+            text: 'positive ratings'
+            on_release: root.sorting('positive_ratings')
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+        Button:
+            size_hint_x: 0.15
+            text: 'negative ratings'
+            on_release: root.sorting('negative_ratings')
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
+        Button:
+            size_hint_x: 0.2
+            text: 'release date'
+            on_release: root.sorting('release_date')
+            text_size: self.size
+            halign: 'center'
+            valign: 'center'
 
-
+<Games>:
     viewclass: 'Tabel'
     RecycleBoxLayout:
         touch_multiselect: True
