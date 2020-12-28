@@ -14,8 +14,11 @@ from kivy.config import Config
 from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from friendlist import *
+from dashboard_recommended import *
+from dashboard_percentages import *
 import json
 import urllib.request
+
 
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 Window.size = (700, 600)
@@ -104,6 +107,17 @@ class Friendlist(RecycleView):
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
         self.data = [{'atavar': str(x), 'status': str('.\icons\status' +str(y)+'.png' )} for x, y in friendsavatar]
+
+
+
+class Dashboard(Widget):
+    def __init__(self, **kwargs):
+        super(Dashboard, self).__init__(**kwargs)
+        self.angle = total_percentage_angle
+        self.percentage = str(round(total_percentage,2))+'%'
+        self.game1 = games[0]
+        self.game2 = games[3]
+        self.game3 = games[6]
 
 class CustomScreen(Screen):
     pass

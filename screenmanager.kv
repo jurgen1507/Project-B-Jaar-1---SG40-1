@@ -1,3 +1,6 @@
+<AsyncImage>:
+    nocache: True
+
 <Games>:
     canvas:
         Color:
@@ -52,8 +55,198 @@
     Button:
         on_release: app.root.current = 'Games'
 <Home>:
-    Button:
-        on_release: app.root.current = 'Games'
+    canvas:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 0.6)
+        Rectangle:
+            size: root.size
+
+    PlaceHolder:
+        pos: 80, root.height-60
+        size: root.width - 80, 60
+        size_hint: None, None
+
+    Friendlist:
+        pos: root.width-80, 0
+        size: 80, root.height-60
+        size_hint: None, None
+
+    Dashboard:
+
+    SteamBoardNavBar:
+        pos: -255, 0
+        size: 225, root.height
+        size_hint: None, None
+
+
+
+
+<Dashboard>
+
+    BoxLayout:
+        pos: 100, 0
+        size: root.width - 180, root.height -60
+        size_hint: None, None
+        orientation: 'horizontal'
+        BoxLayout:
+            orientation: 'vertical'
+            RelativeLayout:
+                angle: 'angle'
+                percentage: 'percentage'
+                canvas:
+                    Color:
+                        rgba: 0.4, 0.4, 0.4, 1
+                    Line:
+                        width: 10
+                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3)
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Line:
+                        width: 10
+                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3, 0, root.angle)
+                Label:
+                    text_size: self.size
+                    pos: 0, 25
+                    halign: 'center'
+                    valign: 'center'
+                    text: root.percentage
+                Label:
+                    text_size: self.size
+                    pos: 0, - self.height/2 +25
+                    halign: 'center'
+                    valign: 'center'
+                    text: 'Achievements completed of most played game'
+
+
+
+
+            RelativeLayout:
+                canvas:
+                    Color:
+                        rgba: 0.4, 0.4, 0.4, 1
+                    Line:
+                        width: 10
+                        circle: (self.width/2, self.height/2, min(self.width, self.height) / 3)
+                    Color:
+                        rgba: 1, 0, 0, 1
+                    Line:
+                        width: 10
+                        circle: (self.width/2, self.height/2, min(self.width, self.height) / 3, 0, root.angle)
+
+
+        BoxLayout:
+            orientation: 'vertical'
+            RelativeLayout:
+                size: root.width/2, 40
+                size_hint: None, None
+                Label:
+                    text_size: self.size
+                    halign: 'justify'
+                    valign: 'middle'
+                    font_size: 20
+                    text: 'Recommended games:'
+            RelativeLayout:
+                game1: 'game1'
+                game1_price: 'game1_price'
+                AsyncImage:
+                    source: root.game1[5]
+                    pos_hint: {'left':1, 'top':1}
+                    size_hint: 0.5, 0.5
+
+
+                Label:
+                    text: root.game1[0]
+                    pos_hint: {'right':1, 'top':1}
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    font_size: 17 + self.width * 0.03
+                Label:
+                    text: 'Price: $' + str(root.game1[2])+'\nGenre: '+root.game1[3]
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    font_size: 15 + self.width * 0.025
+
+                Label:
+                    text: 'Rating: '+str(round(root.game1[1]*100,2))+'%'
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    pos_hint: {'right':1, 'middle':1}
+                    halign: 'right'
+                    valign: 'middle'
+                    font_size: 15 + self.width * 0.025
+
+
+            RelativeLayout:
+                game2: 'game2'
+                AsyncImage:
+                    source: root.game2[5]
+                    size_hint: 0.5, 0.5
+                    pos_hint: {'left':1, 'top':1}
+
+                Label:
+                    text: root.game2[0]
+                    pos_hint: {'right':1, 'top':1}
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    font_size: 17 + self.width * 0.03
+                Label:
+                    text: 'Price: $' + str(root.game2[2])+'\nGenre: '+root.game2[3]
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    font_size: 15 + self.width * 0.025
+
+                Label:
+                    text: 'Rating: '+str(round(root.game2[1]*100,2))+'%'
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    pos_hint: {'right':1, 'middle':1}
+                    halign: 'right'
+                    valign: 'middle'
+                    font_size: 15 + self.width * 0.025
+
+            RelativeLayout:
+                game3: 'game3'
+                AsyncImage:
+                    source: root.game3[5]
+                    size_hint: 0.5, 0.5
+                    pos_hint: {'left':1, 'top':1}
+                Label:
+                    text: root.game3[0]
+                    pos_hint: {'right':1, 'top':1}
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    font_size: 17 + self.width * 0.03
+                Label:
+                    text: 'Price: $' + str(root.game3[2])+'\nGenre: '+root.game3[3]
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'middle'
+                    font_size: 15 + self.width * 0.025
+
+                Label:
+                    text: 'Rating: '+str(round(root.game3[1]*100,2))+'%'
+                    size_hint: 0.45, 0.5
+                    text_size: self.size
+                    pos_hint: {'right':1, 'middle':1}
+                    halign: 'right'
+                    valign: 'middle'
+                    font_size: 15 + self.width * 0.025
+
+
+
+
+
 
 
 <SteamBoardNavBar>:

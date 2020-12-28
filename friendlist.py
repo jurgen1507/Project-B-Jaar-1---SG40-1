@@ -13,7 +13,6 @@ def getfriendlist():
     friendsinfo = []
     urls = []
     for friend in friends:
-
         urls.append(f'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={steamAPIkey}&steamids={friend["steamid"]}')
 
     import threading
