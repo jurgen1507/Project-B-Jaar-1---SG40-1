@@ -15,8 +15,12 @@ from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from friendlist import *
 from dashboard_recommended import *
+
+from Stats_achievements import *
+
 import profile_stats
 import dashboard_percentages
+
 import json
 import urllib.request
 
@@ -26,7 +30,7 @@ Window.size = (700, 600)
 Window.minimum_width, Window.minimum_height = 600, 400
 
 steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
-steamID = '76561198272503503'
+steamID = '76561198020792284'
 response = urllib.request.urlopen(
     f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
 
@@ -102,6 +106,7 @@ class GamesTabel(RecycleView):
         super(GamesTabel, self).__init__(**kwargs)
         self.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
               'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in test]
+
 class Friends(Widget):
     pass
 class Friendlist(RecycleView):
@@ -138,8 +143,17 @@ class CustomScreen(Screen):
 
 class Games(Screen):
     pass
+
 class Stats(Screen):
     pass
+class AchievementTabel(BoxLayout):
+    pass
+
+class Achievements(RecycleView):
+    def __init__(self, **kwargs):
+        super(Achievements, self).__init__(**kwargs)
+        self.data = [{'gamename':str(x[0]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x[0]["appid"]}/header.jpg') } for x in player_achievements]
+
 
 class Home(Screen):
     pass
@@ -153,7 +167,6 @@ class Settings(Screen):
 root = ScreenManager(transition=NoTransition())
 
 class ScreenManagerApp(App):
-
     def build(self):
         root.add_widget(CustomScreen(name='CustomScreen'))
         root.add_widget(Games(name='Games'))
@@ -161,9 +174,7 @@ class ScreenManagerApp(App):
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
-
         return root
-
 
 if __name__ == '__main__':
     ScreenManagerApp().run()
