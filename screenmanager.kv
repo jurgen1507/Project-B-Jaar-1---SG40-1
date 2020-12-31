@@ -45,9 +45,36 @@
 <Profile>:
     Button:
         on_release: app.root.current = 'Games'
+
+
 <Stats>:
-    Button:
-        on_release: app.root.current = 'Games'
+    canvas:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 0.6)
+        Rectangle:
+            size: root.size
+
+    Achievements:
+        pos: 100, 0
+        size: root.width - 180, root.height -60
+        size_hint: None, None
+
+    PlaceHolder:
+        pos: 80, root.height-60
+        size: root.width - 80, 60
+        size_hint: None, None
+
+    Friendlist:
+        pos: root.width-80, 0
+        size: 80, root.height-60
+        size_hint: None, None
+
+    SteamBoardNavBar:
+        pos: -255, 0
+        size: 225, root.height
+        size_hint: None, None
+
+
 <Settings>:
     Button:
         on_release: app.root.current = 'Games'
@@ -77,7 +104,6 @@
         pos: -255, 0
         size: 225, root.height
         size_hint: None, None
-
 
 
 
@@ -242,11 +268,6 @@
                     halign: 'right'
                     valign: 'middle'
                     font_size: 15 + self.width * 0.025
-
-
-
-
-
 
 
 <SteamBoardNavBar>:
@@ -617,6 +638,35 @@
         touch_multiselect: True
         id: gw
         default_size: None, dp(25)
+        default_size_hint: 1, None
+
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+<AchievementTabel>:
+    orientation: 'horizontal'
+    gamename: 'gamename'
+    banner: 'banner'
+    spacing: 10
+    AsyncImage:
+        source: root.banner
+    Label:
+        id: gamename
+        text: root.gamename
+        text_size: self.size
+        halign: 'left'
+        valign: 'center'
+    Button:
+        text: 'Details'
+        on_release:
+
+<Achievements>:
+    viewclass: 'AchievementTabel'
+    RecycleBoxLayout:
+        touch_multiselect: True
+        id: gw
+        default_size: None, dp(root.height * 0.12)
         default_size_hint: 1, None
 
         size_hint_y: None
