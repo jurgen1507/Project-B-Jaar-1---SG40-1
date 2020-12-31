@@ -43,8 +43,30 @@
 
 
 <Profile>:
-    Button:
-        on_release: app.root.current = 'Games'
+    canvas:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 0.6)
+        Rectangle:
+            size: root.size
+
+    PlaceHolder:
+        pos: 80, root.height-60
+        size: root.width - 80, 60
+        size_hint: None, None
+
+    Friendlist:
+        pos: root.width-80, 0
+        size: 80, root.height-60
+        size_hint: None, None
+
+    ProfileStats:
+
+    SteamBoardNavBar:
+        pos: -255, 0
+        size: 225, root.height
+        size_hint: None, None
+
+
 <Stats>:
     Button:
         on_release: app.root.current = 'Games'
@@ -79,9 +101,240 @@
         size_hint: None, None
 
 
+<ProfileStats>:
+    ScrollView:
+        pos: 100, 0
+        size: root.width - 180, root.height -60
+        size_hint: None, None
+        do_scroll_x: False
+        do_scroll_y: True
+        Widget:
+            pos: 100, 0
+            size: root.width - 180, root.height -60
+            size_hint: None, None
+            RelativeLayout:
+                pos: 0, root.height - root.height/6 - 60
+                size_hint: None, None
+                profilepic: 'profilepic'
+                steamid: 'steamid'
+                username: 'username'
+                size:root.width - 180, root.height/6 - 10
+                AsyncImage:
+                    pos: -self.width/2 + self.height/2,0
+                    source: root.profilepic
+                FloatLayout:
+                    pos: root.height/6 + 10, 0
+                    size: root.width - 180 - root.height/6 - 10, root.height/6 - 10
+                    Label:
+                        pos: root.height/6 + 10, 20
+                        text: root.username
+                        font_size: 23 + self.height * 0.05
+                        text_size: self.size
+                        halign: "left"
+                        valign: "center"
+
+                    Label:
+                        pos: root.height/6 + 10, -20
+                        text: '#'+root.steamid
+                        color: 0.5, 0.5, 0.5, 1
+                        font_size: 17 + self.height * 0.05
+                        text_size: self.size
+                        halign: "left"
+                        valign: "center"
 
 
-<Dashboard>
+            BoxLayout:
+                size: root.width - 180, root.height -root.height/6 - 60
+                size_hint: None, None
+                orientation: 'vertical'
+                BoxLayout:
+                    RelativeLayout:
+                        totalgames: 'totalgames'
+                        canvas:
+                            Color:
+                                rgba: 0/255, 242/255, 255/255, 1
+                            Line:
+                                bezier: root.height* 0.05, self.height -root.height * 0.08, self.width -root.height* 0.05, self.height -root.height * 0.08
+                                width: 2.5
+                        Label:
+                            pos: 0, self.height/2 - root.height * 0.05
+                            text: 'Total Games Owned'
+                            font_size: 15 + self.height * 0.05
+                        Label:
+                            pos: 0, -20
+                            text: root.totalgames
+                            font_size: 30 + self.height * 0.05
+                    RelativeLayout:
+                        moneywasted: 'moneywasted'
+                        canvas:
+                            Color:
+                                rgba: 0/255, 242/255, 255/255, 1
+                            Line:
+                                bezier: root.height* 0.05, self.height -root.height * 0.08, self.width -root.height* 0.05, self.height -root.height * 0.08
+                                width: 2.5
+
+                        Label:
+                            pos: 0, self.height/2 - root.height * 0.05
+                            text: 'Total Money Wasted'
+                            font_size: 15 + self.height * 0.05
+                        Label:
+                            pos: 0, -20
+                            text: '~$'+root.moneywasted
+                            font_size: 30 + self.height * 0.05
+                BoxLayout:
+                    RelativeLayout:
+                        hours: 'hours'
+                        canvas:
+                            Color:
+                                rgba: 0/255, 242/255, 255/255, 1
+                            Line:
+                                bezier: root.height* 0.05, self.height -root.height * 0.08, self.width -root.height* 0.05, self.height -root.height * 0.08
+                                width: 2.5
+                            #y-as
+                            Line:
+                                bezier: 20, 20, 20, self.height -root.height * 0.1
+                            #x-as
+                            Line:
+                                bezier: 20, 20, self.width, 20
+
+                            Line:
+                                points:
+                                    (20, 20 +(((self.height -root.height * 0.1)-20)/max(root.hours) * root.hours[0]),
+                                    20 + (self.width-20)/6, 20 +(((self.height -root.height * 0.1)-20)/max(root.hours) * root.hours[1]),
+                                    20 + (self.width-20)/6 * 2, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours))* root.hours[2]),
+                                    20 + (self.width-20)/6 * 3, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[3]),
+                                    20 + (self.width-20)/6 * 4, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[4]),
+                                    20 + (self.width-20)/6 * 5, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[5]),
+                                    20 + (self.width-20)/6 * 6, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[6]))
+                            Line:
+                                width: 2
+                                circle: 20, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[0]), 2
+                            Line:
+                                width: 2
+                                circle: 20 + (self.width-20)/6, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[1]), 2
+                            Line:
+                                width: 2
+                                circle: 20 + (self.width-20)/6 * 2, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[2]), 2
+                            Line:
+                                width: 2
+                                circle: 20 + (self.width-20)/6 * 3, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[3]), 2
+                            Line:
+                                width: 2
+                                circle: 20 + (self.width-20)/6 * 4, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[4]), 2
+                            Line:
+                                width: 2
+                                circle: 20 + (self.width-20)/6 * 5, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[5]), 2
+                            Line:
+                                width: 2
+                                circle: 20 + (self.width-20)/6 * 6, 20 +(((self.height -root.height * 0.1)-20)/round(max(root.hours)) * root.hours[6]), 2
+
+
+
+                        Label:
+                            pos: -self.width/2+7, self.height/2 -root.height * 0.1
+                            text: str(round(max(root.hours)))
+                            font_size: 13
+
+                        Label:
+                            pos: -self.width/2+7, self.height/2 -root.height * 0.1 + 20 / 4 -self.height/4
+                            text: str(round(max(root.hours))/2)
+
+                            font_size: 13
+
+                        Label:
+                            pos: -self.width/2+7, -self.height/2 + 20
+                            text: '0'
+                            font_size: 13
+
+                        Label:
+                            pos: 20-self.width/2, -self.height/2
+                            text: '12-21'
+                            font_size: 13
+                        Label:
+                            pos: 20-self.width/2 + ((self.width - 20) / 6), -self.height/2
+                            text: '12-22'
+                            font_size: 13
+                        Label:
+                            pos: 20-self.width/2 + ((self.width - 20) / 6) * 2, -self.height/2
+                            text: '12-23'
+                            font_size: 13
+                        Label:
+                            pos: 20-self.width/2 + ((self.width - 20) / 6) * 3, -self.height/2
+                            text: '12-24'
+                            font_size: 13
+                        Label:
+                            pos: 20-self.width/2 + ((self.width - 20) / 6)* 4, -self.height/2
+                            text: '12-25'
+                            font_size: 13
+                        Label:
+                            pos: 20-self.width/2 + ((self.width - 20) / 6)* 5, -self.height/2
+                            text: '12-26'
+                            font_size: 13
+                        Label:
+                            pos: 20-self.width/2 + ((self.width - 20) / 6)* 6, -self.height/2
+                            text: '12-27'
+                            font_size: 13
+
+
+                        Label:
+                            pos: 0, self.height/2 - root.height * 0.05
+                            text: 'Time Played Last Week'
+                            font_size: 15 + self.height * 0.05
+
+
+                    RelativeLayout:
+                        timewasted: 'timewasted'
+                        canvas:
+                            Color:
+                                rgba: 0/255, 242/255, 255/255, 1
+                            Line:
+                                bezier: root.height* 0.05, self.height -root.height * 0.08, self.width -root.height* 0.05, self.height -root.height * 0.08
+                                width: 2.5
+                        Label:
+                            pos: 0, self.height/2 - root.height * 0.05
+                            text: 'Total Time Wasted'
+                            font_size: 15 + self.height * 0.05
+                        Label:
+                            pos: 0, -20
+                            text: root.timewasted + ' hours'
+                            font_size: 20 + self.height * 0.05
+
+                BoxLayout:
+                    RelativeLayout:
+                        totalfriends: 'totalfriends'
+                        canvas:
+                            Color:
+                                rgba: 0/255, 242/255, 255/255, 1
+                            Line:
+                                bezier: root.height* 0.05, self.height -root.height * 0.08, self.width -root.height* 0.05, self.height -root.height * 0.08
+                                width: 2.5
+                        Label:
+                            pos: 0, self.height/2 - root.height * 0.05
+                            text: 'Total Friends'
+                            font_size: 15 + self.height * 0.05
+                        Label:
+                            pos: 0, -20
+                            text: root.totalfriends
+                            font_size: 30 + self.height * 0.05
+                    RelativeLayout:
+                        totalbans: 'totalbans'
+                        canvas:
+                            Color:
+                                rgba: 0/255, 242/255, 255/255, 1
+                            Line:
+                                bezier: root.height* 0.05, self.height -root.height * 0.08, self.width -root.height* 0.05, self.height  - root.height * 0.08
+                                width: 2.5
+                        Label:
+                            pos: 0, self.height/2 - root.height * 0.05
+                            text: 'Total Bans'
+                            font_size: 15 + self.height * 0.05
+                        Label:
+                            pos: 0, -20
+                            text: root.totalbans
+                            font_size: 30 + self.height * 0.05
+
+
+<Dashboard>:
 
     BoxLayout:
         pos: 100, 0
@@ -484,6 +737,7 @@
     negativeratings: 'negative_ratings'
     releasedate: 'release_date'
     spacing: 10
+
     Label:
         id: name
         size_hint_x: 0.46
@@ -533,6 +787,7 @@
         orientation: 'horizontal'
         pos: root.pos
         size: root.size
+
         Label:
             halign: 'left'
             valign: 'middle'

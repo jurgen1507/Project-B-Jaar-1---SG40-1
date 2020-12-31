@@ -15,7 +15,8 @@ from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from friendlist import *
 from dashboard_recommended import *
-from dashboard_percentages import *
+import profile_stats
+import dashboard_percentages
 import json
 import urllib.request
 
@@ -106,15 +107,28 @@ class Friends(Widget):
 class Friendlist(RecycleView):
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
+
         self.data = [{'atavar': str(x), 'status': str('.\icons\status' +str(y)+'.png' )} for x, y in friendsavatar]
 
 
+class ProfileStats(Widget):
+    def __init__(self, **kwargs):
+        super(ProfileStats, self).__init__(**kwargs)
+        self.hours = [0, 0, 0,  0, 0.6,  0, 0]
+        self.profilepic = str(profile_stats.profilepic)
+        self.totalgames = str(profile_stats.games_count)
+        self.moneywasted = str(profile_stats.money_wasted)
+        self.totalfriends = str(profile_stats.friends_amount)
+        self.totalbans = str(profile_stats.player_bans)
+        self.timewasted = str(round(profile_stats.time_wasted/60))
+        self.steamid = str(profile_stats.steamid)
+        self.username = str(profile_stats.username)
 
 class Dashboard(Widget):
     def __init__(self, **kwargs):
         super(Dashboard, self).__init__(**kwargs)
-        self.angle = total_percentage_angle
-        self.percentage = str(round(total_percentage,2))+'%'
+        self.angle = dashboard_percentages.total_percentage_angle
+        self.percentage = str(round(dashboard_percentages.total_percentage,2)) + '%'
         self.game1 = games[0]
         self.game2 = games[3]
         self.game3 = games[6]
