@@ -19,9 +19,15 @@ def achievement_percentage():
 
 
     appid.sort(key=lambda x: x[0], reverse=True)
+    print(appid[1][1])
+    try:
+        response = urllib.request.urlopen(f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={appid[0][1]}&format=json')
+        achievements = json.loads(response.read())
 
-    response = urllib.request.urlopen(f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={appid[0][1]}&format=json')
-    achievements = json.loads(response.read())
+    except:
+        response = urllib.request.urlopen(
+            f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={appid[2][1]}&format=json')
+        achievements = json.loads(response.read())
     percentage = []
     for x in achievements['achievementpercentages']['achievements']:
         percentage.append(x['percent'])

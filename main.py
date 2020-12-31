@@ -1,6 +1,6 @@
 import json
 import kivy
-from Merge_sort import merge_sort
+import test
 from tkinter import *
 from operator import itemgetter
 import urllib.request
@@ -16,14 +16,13 @@ def main(*args):
     gamelijst.delete(0, 'end')
     response = urllib.request.urlopen(f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
     ownedgames = json.loads(response.read())
-    print(ownedgames)
 
     # Sorteert volgens de python functie sorted oplopend of aflopend
-    if ascdesc.get () == 'Descending':
-        merge_sort(data, 0, len(data) - 1, option)
+    if ascdesc.get() == 'Descending':
+        test.merge_sort(data, 0, len(data) - 1, option)
         sortedlist = data[::-1]
     else:
-        merge_sort(data, 0, len(data) - 1, option)
+        test.merge_sort(data, 0, len(data) - 1, option)
         sortedlist = data
 
     # Kijkt of het checkbutton knopje is aangekruisd, als dat zo is dan worden alleen de spellen in de speler library getoond
@@ -75,8 +74,8 @@ def callback(event):
         textLabel.insert(END,
             f'Release date: {game[2]}\n')
         textLabel.insert(END,
-            f'Average playtime: {game[14]}\n')
-
+            f'Average playtime: {game[14]}\n'
+        )
         # Als er statistieken zijn, dan voegt dit het toe in de infolijst
         try:
             for i in range(len(player_stats["playerstats"]["stats"])):
@@ -92,7 +91,7 @@ OptionList = [
     'Negative Ratings',
     'Name',
     'Release Date',
-    'Average Playtime',
+    'Average Playtime'
 
 ]
 
