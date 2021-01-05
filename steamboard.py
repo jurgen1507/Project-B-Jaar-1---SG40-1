@@ -8,9 +8,13 @@ from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.animation import Animation
+from kivy.uix.button import Button
 from kivy.uix.recycleview import RecycleView
 from kivy.properties import ObjectProperty
 from kivy.config import Config
+from kivy.uix.popup import Popup
+from kivy.uix.floatlayout import FloatLayout
+from kivy.graphics import Color, Rectangle
 from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 from friendlist import *
@@ -26,11 +30,11 @@ import urllib.request
 
 
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
-Window.size = (700, 600)
-Window.minimum_width, Window.minimum_height = 600, 400
+Window.size = (800, 600)
+Window.minimum_width, Window.minimum_height = 800, 500
 
 steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
-steamID = '76561198020792284'
+steamID = '76561198272503503'
 response = urllib.request.urlopen(
     f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
 
@@ -58,8 +62,40 @@ class SteamBoardNavBar(Widget):
         anim = Animation(pos=(0, 0), t='in_out_quad', duration=0.2)
         anim.start(self)
 
+class P(Popup):
+    def __init__(self, **kwargs):
+        super(P, self).__init__(**kwargs)
+
+
+class GamesPopup(Widget):
+    def show_popup(self, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners):
+        show = P()
+        show.name = name
+        show.appid = appid
+        show.categories = categories.replace(';', ', ')
+        show.genres = genres.replace(';', ', ')
+        show.price = price
+        show.steamspy = steamspy.replace(';', ', ')
+        show.release = release
+        show.achievements = achievements
+        show.english = english
+        show.positive = positive
+        show.developer = developer
+        show.negative = negative
+        show.publisher = publisher
+        show.percentage = str(round(int(positive) / (int(positive)+int(negative)) * 100, 2))
+        show.platforms = platforms.replace(';', ', ')
+        show.average = average
+        show.required = required
+        show.median = median
+        show.owners = owners
+        show.banner = f'http://cdn.akamai.steamstatic.com/steam/apps/{appid}/header.jpg'
+        show.open()
+
+
 class Tabel(BoxLayout):
-    pass
+    def btn(self, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners):
+        GamesPopup.show_popup(GamesPopup, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners)
 
 class GamesKnoppen(Widget):
     current_button = ''
@@ -67,15 +103,26 @@ class GamesKnoppen(Widget):
         if self.current_button == button and GK:
             descending = sort_list(test, button, 'down')
             self.parent.ids.GT.data = [
-                {'appid': str(x['appid']), 'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
-                 'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in descending]
+                {'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+                 'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']), 'appid' : str(x['appid']),
+                 'release' : str(x['release_date']),  'english': str(x['english']),  'developer': str(x['developer']),
+                 'publisher': str(x['publisher']),  'platforms': str(x['platforms']),  'required': str(x['required_age']),
+                 'categories': str(x['categories']),  'genres': str(x['genres']),  'steamspy': str(x['steamspy_tags']),
+                 'achievements': str(x['achievements']),  'average': str(x['average_playtime']),  'median': str(x['median_playtime']),
+                 'owners': str(x['owners'])} for x in descending]
             self.parent.ids.GT.refresh_from_data()
             self.current_button = ''
+
         else:
             global ascending
             ascending = sort_list(test, button, 'up')
-            self.parent.ids.GT.data = [{'appid': str(x['appid']), 'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
-                          'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in ascending]
+            self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+                 'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']), 'appid' : str(x['appid']),
+                 'release' : str(x['release_date']),  'english': str(x['english']),  'developer': str(x['developer']),
+                 'publisher': str(x['publisher']),  'platforms': str(x['platforms']),  'required': str(x['required_age']),
+                 'categories': str(x['categories']),  'genres': str(x['genres']),  'steamspy': str(x['steamspy_tags']),
+                 'achievements': str(x['achievements']),  'average': str(x['average_playtime']),  'median': str(x['median_playtime']),
+                 'owners': str(x['owners'])} for x in ascending]
             self.parent.ids.GT.refresh_from_data()
             self.current_button = button
 
@@ -104,11 +151,17 @@ class GamesSearch(Widget):
 class GamesTabel(RecycleView):
     def __init__(self, **kwargs):
         super(GamesTabel, self).__init__(**kwargs)
-        self.data = [{'appid': str(x['appid']), 'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
-              'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in test]
+        self.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+                 'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']),
+                 'appid' : str(x['appid']), 'release' : str(x['release_date']),  'english': str(x['english']),
+                 'developer': str(x['developer']),  'publisher': str(x['publisher']),  'platforms': str(x['platforms']),
+                 'required': str(x['required_age']), 'categories': str(x['categories']),  'genres': str(x['genres']),
+                 'steamspy': str(x['steamspy_tags']),  'achievements': str(x['achievements']),  'average': str(x['average_playtime']),
+                 'median': str(x['median_playtime']),  'owners': str(x['owners'])} for x in test]
 
 class Friends(Widget):
     pass
+
 class Friendlist(RecycleView):
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
@@ -122,7 +175,7 @@ class ProfileStats(Widget):
         self.hours = [0, 0, 0,  0, 0.6,  0, 0]
         self.profilepic = str(profile_stats.profilepic)
         self.totalgames = str(profile_stats.games_count)
-        self.moneywasted = str(profile_stats.money_wasted)
+        self.moneywasted = str('{0:.2f}'.format(profile_stats.money_wasted))
         self.totalfriends = str(profile_stats.friends_amount)
         self.totalbans = str(profile_stats.player_bans)
         self.timewasted = str(round(profile_stats.time_wasted/60))
@@ -153,6 +206,7 @@ class Achievements(RecycleView):
     def __init__(self, **kwargs):
         super(Achievements, self).__init__(**kwargs)
         self.data = [{'gamename':str(x[0]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x[0]["appid"]}/header.jpg') } for x in player_achievements]
+
 
 class Home(Screen):
     pass

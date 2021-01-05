@@ -10,6 +10,7 @@ def profilestats():
     response = urllib.request.urlopen(
         f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
     ownedgames = json.loads(response.read())
+    print(ownedgames)
     appids = []
     for game in ownedgames['response']['games']:
         appids.append(game['appid'])
