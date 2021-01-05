@@ -1,3 +1,4 @@
+#:import Factory kivy.factory.Factory
 <AsyncImage>:
     nocache: True
 
@@ -759,50 +760,348 @@
     positiveratings: 'positive_ratings'
     negativeratings: 'negative_ratings'
     releasedate: 'release_date'
-    spacing: 10
+    appid: 'appid'
+    release: 'release'
+    english: 'english'
+    developer: 'developer'
+    publisher: 'publisher'
+    platforms: 'platforms'
+    required: 'required'
+    categories: 'çategories'
+    genres: 'genres'
+    steamspy: 'steamspy'
+    achievements: 'achievements'
+    average: 'average'
+    median: 'median'
+    owners: 'owners'
+
 
     Label:
+        canvas:
+            Color:
+                rgba: 0/255, 242/255, 255/255, 1
+            Line:
+                points: (self.x, self.y, self.x + self.width, self.y)
         id: name
-        size_hint_x: 0.46
+        size_hint_x: 0.3
         text: root.name
         text_size: self.size
         halign: 'left'
         valign: 'top'
 
     Label:
+        canvas:
+            Color:
+                rgba: 0/255, 242/255, 255/255, 1
+            Line:
+                points: (self.x, self.y, self.x + self.width, self.y)
+
         id: price
-        size_hint_x: 0.08
+        size_hint_x: 0.1
         text: root.price
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'center'
     Label:
+        canvas:
+            Color:
+                rgba: 0/255, 242/255, 255/255, 1
+            Line:
+                points: (self.x, self.y, self.x + self.width, self.y)
         id: postiveratings
-        size_hint_x: 0.13
+        size_hint_x: 0.1
         text: root.positiveratings
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'center'
 
     Label:
+        canvas:
+            Color:
+                rgba: 0/255, 242/255, 255/255, 1
+            Line:
+                points: (self.x, self.y, self.x + self.width, self.y)
         id: negativeratings
-        size_hint_x: 0.13
+        size_hint_x: 0.1
         text: root.negativeratings
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'center'
 
     Label:
+        canvas:
+            Color:
+                rgba: 0/255, 242/255, 255/255, 1
+            Line:
+                points: (self.x, self.y, self.x + self.width, self.y)
         id: releasedate
         border:
         size_hint_x: 0.2
         text: root.releasedate
         text_size: self.size
         halign: 'left'
-        valign: 'top'
+        valign: 'center'
     Button:
         text: 'Details'
         size_hint_x: 0.2
+        on_release: root.btn(root.name, root.appid, root.categories, root.genres, root.price, root.steamspy, root.releasedate, root.achievements, root.english, root.positiveratings, root.developer, root.negativeratings, root.publisher, root.platforms, root.average, root.required, root.median, root.owners)
+
+<P>:
+    appid: 'appid'
+    name: 'name'
+    price: 'price'
+    release: 'release'
+    english: 'english'
+    developer: 'developer'
+    publisher: 'publisher'
+    platforms: 'platforms'
+    required: 'required'
+    categories: 'çategories'
+    genres: 'genres'
+    steamspy: 'steamspy'
+    achievements: 'achievements'
+    positive: 'positive'
+    negative: 'negative'
+    average: 'average'
+    median: 'median'
+    percentage: 'percentage'
+    owners: 'owners'
+    banner: 'banner'
+    size_hint: 0.8, 0.8
+    title: root.name
+    FloatLayout:
+        GridLayout:
+            spacing: 0, 5
+            orientation: 'vertical'
+            size_hint: 0.95, 0.92
+            pos_hint: {"x":0.025, "top":1}
+            cols: 2
+            AsyncImage:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                size_hint_y: 2.8
+                source: root.banner
+
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+
+                font_size: 25 + root.height*0.01
+                text_size: self.size
+                halign: 'left'
+                valign: 'top'
+                text: root.name
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'App ID: ' + root.appid
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Categories: ' +root.categories
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Genres: ' +root.genres
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Price: $' +root.price
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Steam spy tags: ' +root.steamspy
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Release date: ' +root.release
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Achievements: ' +root.achievements
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'English language: '+root.english
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Positive Ratings: ' + root.positive
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Developer: ' + root.developer
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Negative Ratings: ' + root.negative
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Publisher: ' + root.publisher
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Rating Percentage: ' + root.percentage + '%'
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Platforms: ' + root.platforms
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Average Playtime: ' + root.average
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Required Age: ' + root.required
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Median Playtime: ' + root.median
+            Label:
+                canvas:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                font_size: 8 + root.height*0.01
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
+                text: 'Owners: ' + root.owners
+
+
+        Button:
+            text: "Close"
+            size_hint: 0.8, 0.07
+            pos_hint: {"x":0.1, "y":0}
+            on_release: root.dismiss()
 
 <GamesSearch>:
     FloatLayout:
@@ -900,6 +1199,9 @@
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
+
+<GamesPopup>:
+    auto_dismiss: False
 
 <AchievementTabel>:
     orientation: 'horizontal'
