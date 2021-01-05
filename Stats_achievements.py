@@ -26,7 +26,7 @@ for app_id in appid:
             player_achievements.append(temp)
     except:
         pass
-print(player_achievements)
+
 
 for player_games in player_achievements:
     for AM in player_games[0]['achievements']:

@@ -67,14 +67,14 @@ class GamesKnoppen(Widget):
         if self.current_button == button and GK:
             descending = sort_list(test, button, 'down')
             self.parent.ids.GT.data = [
-                {'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+                {'appid': str(x['appid']), 'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in descending]
             self.parent.ids.GT.refresh_from_data()
             self.current_button = ''
         else:
             global ascending
             ascending = sort_list(test, button, 'up')
-            self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+            self.parent.ids.GT.data = [{'appid': str(x['appid']), 'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
                           'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in ascending]
             self.parent.ids.GT.refresh_from_data()
             self.current_button = button
@@ -104,7 +104,7 @@ class GamesSearch(Widget):
 class GamesTabel(RecycleView):
     def __init__(self, **kwargs):
         super(GamesTabel, self).__init__(**kwargs)
-        self.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+        self.data = [{'appid': str(x['appid']), 'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
               'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date'])} for x in test]
 
 class Friends(Widget):
@@ -153,7 +153,6 @@ class Achievements(RecycleView):
     def __init__(self, **kwargs):
         super(Achievements, self).__init__(**kwargs)
         self.data = [{'gamename':str(x[0]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x[0]["appid"]}/header.jpg') } for x in player_achievements]
-
 
 class Home(Screen):
     pass

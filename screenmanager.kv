@@ -362,8 +362,6 @@
 
 
 <Dashboard>:
-
-
     BoxLayout:
         pos: 100, 0
         size: root.width - 180, root.height -60
@@ -584,8 +582,7 @@
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: '.\icons\games.png'
             on_press: self.background_color = (1,1,1,1)
-            on_release: root.ChangeGamesWindow()
-            on_release: root.ids.Main_Window.pos = -100000, -100000
+            on_release: app.root.current = 'Games'
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
             size: (80, root.height/6)
@@ -848,7 +845,7 @@
 <GamesKnoppen>:
     canvas.before:
         Color:
-            rgba: (43/255, 71/255, 93/255, 0.6)
+            rgba: (43/255, 71/255, 93/255, 0.1)
         Rectangle:
             pos: self.pos
             size: self.size
@@ -856,38 +853,98 @@
         orientation: 'horizontal'
         pos: root.pos
         size: root.size
+
         Button:
-            size_hint_x: 0.35
-            text: 'name'
+            canvas:
+                Color:
+                    rgba: 0, 242/255, 255, 1
+                Line:
+                    width: 1
+                    rounded_rectangle:
+                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                Color:
+                    rgba: 0, 242/255, 1, 1
+                Rectangle:
+                    size: (120, 130) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 120/2.0, (self.pos[1]+self.size[1]/2.0) - 130/2.0
+                    source: '.\icons\Title.png'
+            background_color: (0,0,0,0)
+            size_hint_x: 0.2
             on_release: root.sorting('name', True)
+
         Button:
-            size_hint_x: 0.10
-            text: 'price'
-            text_size: self.size
-            halign: 'center'
-            valign: 'center'
+            canvas:
+                Color:
+                    rgba: 0, 242/255, 1, 1
+                Line:
+                    width: 1
+                    rounded_rectangle:
+                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                Color:
+                    rgba: 0, 242/255, 1, 1
+                Rectangle:
+                    size: (40, 40) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
+                    source: '.\icons\Price_up.png'
+            background_color: (0,0,0,0)
+            size_hint_x: 0.05
             on_release: root.sorting('price', True)
         Button:
-            size_hint_x: 0.15
-            text: 'positive ratings'
+            canvas:
+                Color:
+                    rgba: 0, 242/255, 255, 1
+                Line:
+                    width: 1
+                    rounded_rectangle:
+                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                Color:
+                    rgba: 0, 242/255, 255, 1
+                Rectangle:
+                    size: (40, 40) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
+                    source: '.\icons\ThumbsUp_up.png'
+            background_color: (0,0,0,0)
+            size_hint_x: 0.05
             on_release: root.sorting('positive_ratings', True)
-            text_size: self.size
-            halign: 'center'
-            valign: 'center'
+
+
         Button:
-            size_hint_x: 0.15
-            text: 'negative ratings'
+            canvas:
+                Color:
+                    rgba: 0, 242/255, 255, 1
+                Line:
+                    width: 1
+                    rounded_rectangle:
+                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                Color:
+                    rgba: 0, 242/255, 1, 1
+                Rectangle:
+                    size: (40, 40) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
+                    source: '.\icons\ThumbsDown_up.png'
+            background_color: (0,0,0,0)
+            size_hint_x: 0.05
             on_release: root.sorting('negative_ratings', True)
-            text_size: self.size
-            halign: 'center'
-            valign: 'center'
+
+
         Button:
-            size_hint_x: 0.2
-            text: 'release date'
+            canvas:
+                Color:
+                    rgba: 0, 242/255, 255, 1
+                Line:
+                    width: 1
+                    rounded_rectangle:
+                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                Color:
+                    rgba: 0, 242/255, 1, 1
+                Rectangle:
+                    size: (40, 40) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
+                    source: '.\icons\Date_up.png'
+            background_color: (0,0,0,0)
+            size_hint_x: 0.05
             on_release: root.sorting('release_date', True)
-            text_size: self.size
-            halign: 'center'
-            valign: 'center'
+
 
 <GamesTabel>:
     viewclass: 'Tabel'

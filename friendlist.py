@@ -26,7 +26,7 @@ def getfriendlist():
         urlHandler = urllib.request.urlopen(url)
         html = urlHandler.read()
         friendsinfo.append(json.loads(html)['response']['players'][0])
-        print ("'%s\' fetched in %ss" % (url, (time.time() - start)))
+
 
     threads = [threading.Thread(target=fetch_url, args=(url,)) for url in urls]
     for thread in threads:
@@ -43,7 +43,7 @@ def getfriendlist():
 
     for friend in friendsinfo:
         tupe = []
-        print(friend)
+
         tupe.append(friend["avatar"])
         tupe.append(friend["personastate"])
 
