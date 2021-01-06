@@ -62,14 +62,22 @@ class SteamBoardNavBar(Widget):
         anim = Animation(pos=(0, 0), t='in_out_quad', duration=0.2)
         anim.start(self)
 
-class P(Popup):
+class GamesInfoPopup(Popup):
     def __init__(self, **kwargs):
-        super(P, self).__init__(**kwargs)
+        super(GamesInfoPopup, self).__init__(**kwargs)
+
+class StatsInfoPopup(Popup):
+    pass
+
+class StatsPopup(Widget):
+    def show_statsinfo_popup(self):
+        popup = StatsInfoPopup()
+        popup.open()
 
 
 class GamesPopup(Widget):
-    def show_popup(self, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners):
-        show = P()
+    def show_gamesinfo_popup(self, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners):
+        show = GamesInfoPopup()
         show.name = name
         show.appid = appid
         show.categories = categories.replace(';', ', ')
@@ -95,13 +103,15 @@ class GamesPopup(Widget):
 
 class Tabel(BoxLayout):
     def btn(self, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners):
-        GamesPopup.show_popup(GamesPopup, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners)
+        GamesPopup.show_gamesinfo_popup(GamesPopup, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners)
 
 class GamesKnoppen(Widget):
     current_button = ''
     def sorting(self, button, GK):
         if self.current_button == button and GK:
             descending = sort_list(test, button, 'down')
+            self.sortbutton = button
+            self.updown = 'down'
             self.parent.ids.GT.data = [
                 {'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']), 'appid' : str(x['appid']),
@@ -116,6 +126,8 @@ class GamesKnoppen(Widget):
         else:
             global ascending
             ascending = sort_list(test, button, 'up')
+            self.sortbutton = button
+            self.updown = 'up'
             self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']), 'appid' : str(x['appid']),
                  'release' : str(x['release_date']),  'english': str(x['english']),  'developer': str(x['developer']),
@@ -200,7 +212,8 @@ class Games(Screen):
 class Stats(Screen):
     pass
 class AchievementTabel(BoxLayout):
-    pass
+    def btn(self):
+        StatsPopup.show_statsinfo_popup(StatsPopup)
 
 class Achievements(RecycleView):
     def __init__(self, **kwargs):
@@ -221,6 +234,8 @@ root = ScreenManager(transition=NoTransition())
 
 class ScreenManagerApp(App):
     def build(self):
+        self.icon = './icons/steamboardicon_small.png'
+        self.title = 'SteamBoard'
         root.add_widget(CustomScreen(name='CustomScreen'))
         root.add_widget(Games(name='Games'))
         root.add_widget(Home(name='Home'))

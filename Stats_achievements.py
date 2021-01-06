@@ -49,3 +49,4 @@ for game in games_achieved:
     for achievement in games_achieved[game]:
         achievement['name']+':', achievement['description']
 
+print(games_achievements)

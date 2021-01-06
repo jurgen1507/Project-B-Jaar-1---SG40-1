@@ -10,7 +10,7 @@ def profilestats():
     response = urllib.request.urlopen(
         f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
     ownedgames = json.loads(response.read())
-    print(ownedgames)
+
     appids = []
     for game in ownedgames['response']['games']:
         appids.append(game['appid'])
@@ -25,7 +25,7 @@ def profilestats():
     response = urllib.request.urlopen(
         f' http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={steamAPIkey}&steamids={steamID}')
     steaminfo = json.loads(response.read())
-    print(steaminfo)
+
 
     global profilepic
     profilepic = steaminfo['response']['players'][0]['avatarfull']
@@ -54,7 +54,7 @@ def profilestats():
 
     global player_bans
     player_bans = bans['players'][0]['NumberOfGameBans']
-    print(player_bans)
+
 
 
 

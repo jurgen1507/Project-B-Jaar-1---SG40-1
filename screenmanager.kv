@@ -443,7 +443,7 @@
                     valign: 'middle'
                     font_size: 17 + self.width * 0.03
                 Label:
-                    text: 'Price: $' + str(root.game1[2])+'\nGenre: '+root.game1[3]
+                    text: 'Price: $' + str(root.game1[2])+'/nGenre: '+root.game1[3]
                     size_hint: 0.45, 0.5
                     text_size: self.size
                     halign: 'left'
@@ -476,7 +476,7 @@
                     valign: 'middle'
                     font_size: 17 + self.width * 0.03
                 Label:
-                    text: 'Price: $' + str(root.game2[2])+'\nGenre: '+root.game2[3]
+                    text: 'Price: $' + str(root.game2[2])+'/nGenre: '+root.game2[3]
                     size_hint: 0.45, 0.5
                     text_size: self.size
                     halign: 'left'
@@ -507,7 +507,7 @@
                     valign: 'middle'
                     font_size: 17 + self.width * 0.03
                 Label:
-                    text: 'Price: $' + str(root.game3[2])+'\nGenre: '+root.game3[3]
+                    text: 'Price: $' + str(root.game3[2])+'/nGenre: '+root.game3[3]
                     size_hint: 0.45, 0.5
                     text_size: self.size
                     halign: 'left'
@@ -544,7 +544,7 @@
                 Rectangle:
                     size: (75, 75)
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\menu.png'
+                    source: './icons/menu.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
@@ -556,7 +556,7 @@
                 Rectangle:
                     size: (75, 75)
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\home.png'
+                    source: './icons/home.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
@@ -569,7 +569,7 @@
                 Rectangle:
                     size: (75, 75)
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\profile.png'
+                    source: './icons/profile.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
@@ -581,7 +581,7 @@
                 Rectangle:
                     size: (75, 75)
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\games.png'
+                    source: './icons/games.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: app.root.current = 'Games'
             on_release: self.background_color = (0,0,0,0)
@@ -594,7 +594,7 @@
                 Rectangle:
                     size: (75, 75)
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\stats.png'
+                    source: './icons/stats.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
@@ -606,7 +606,7 @@
                 Rectangle:
                     size: (75, 75)
                     pos: (self.pos[0]+self.size[0]/2.0) - 75/2.0, (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\settings.png'
+                    source: './icons/settings.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
@@ -629,7 +629,7 @@
                 Rectangle:
                     size: (225, 75)
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\menu_unfolded.png'
+                    source: './icons/menu_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -644,7 +644,7 @@
                 Rectangle:
                     size: (225, 75)
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\home_unfolded.png'
+                    source: './icons/home_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_release: app.root.current = 'Home'
             on_press: self.background_color = (1,1,1,1)
@@ -660,7 +660,7 @@
                 Rectangle:
                     size: (225, 75)
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\profile_unfolded.png'
+                    source: './icons/profile_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_release: app.root.current = 'Profile'
 
@@ -676,7 +676,7 @@
                 Rectangle:
                     size: (225, 75)
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\games_unfolded.png'
+                    source: './icons/games_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_release: app.root.current = 'Games'
             on_press: self.background_color = (1,1,1,1)
@@ -690,7 +690,7 @@
                 Rectangle:
                     size: (225, 75)
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\stats_unfolded.png'
+                    source: './icons/stats_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_release: app.root.current = 'Stats'
             on_press: self.background_color = (1,1,1,1)
@@ -705,7 +705,7 @@
                 Rectangle:
                     size: (225, 75)
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
-                    source: '.\icons\settings_unfolded.png'
+                    source: './icons/settings_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
             on_release: app.root.current = 'Settings'
             on_press: self.background_color = (1,1,1,1)
@@ -775,19 +775,24 @@
 
     Label:
         canvas:
+
             Color:
                 rgba: 0/255, 242/255, 255/255, 1
             Line:
                 points: (self.x, self.y, self.x + self.width, self.y)
         id: name
         size_hint_x: 0.3
-        text: root.name
+        text: ' '+root.name
         text_size: self.size
         halign: 'left'
         valign: 'top'
 
     Label:
         canvas:
+            Color:
+                rgba: 0, 242/255, 255, 0.1
+            Line:
+                points: (self.x,self.y,self.x,self.y + self.height)
             Color:
                 rgba: 0/255, 242/255, 255/255, 1
             Line:
@@ -797,10 +802,14 @@
         size_hint_x: 0.1
         text: root.price
         text_size: self.size
-        halign: 'left'
+        halign: 'center'
         valign: 'center'
     Label:
         canvas:
+            Color:
+                rgba: 0, 242/255, 255, 0.1
+            Line:
+                points: (self.x,self.y,self.x,self.y + self.height)
             Color:
                 rgba: 0/255, 242/255, 255/255, 1
             Line:
@@ -809,11 +818,15 @@
         size_hint_x: 0.1
         text: root.positiveratings
         text_size: self.size
-        halign: 'left'
+        halign: 'center'
         valign: 'center'
 
     Label:
         canvas:
+            Color:
+                rgba: 0, 242/255, 255, 0.1
+            Line:
+                points: (self.x,self.y,self.x,self.y + self.height)
             Color:
                 rgba: 0/255, 242/255, 255/255, 1
             Line:
@@ -822,11 +835,15 @@
         size_hint_x: 0.1
         text: root.negativeratings
         text_size: self.size
-        halign: 'left'
+        halign: 'center'
         valign: 'center'
 
     Label:
         canvas:
+            Color:
+                rgba: 0, 242/255, 255, 0.1
+            Line:
+                points: (self.x,self.y,self.x,self.y + self.height)
             Color:
                 rgba: 0/255, 242/255, 255/255, 1
             Line:
@@ -836,14 +853,42 @@
         size_hint_x: 0.2
         text: root.releasedate
         text_size: self.size
-        halign: 'left'
+        halign: 'center'
         valign: 'center'
     Button:
         text: 'Details'
+        background_color: 0,0,0,0
         size_hint_x: 0.2
+        canvas.before:
+            Color:
+                rgba: 32/255, 53/255, 69/255, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        canvas:
+            Color:
+                rgba: 0, 242/255, 255, 1
+            Line:
+                points: (self.x,self.y,self.x,self.y + self.height)
+            Line:
+                points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+            Line:
+                points: (self.x, self.y, self.x + self.width, self.y)
+
+        on_press: self.background_color = 1, 1, 1, 1
+        on_release: self.background_color = 0, 0, 0, 0
         on_release: root.btn(root.name, root.appid, root.categories, root.genres, root.price, root.steamspy, root.releasedate, root.achievements, root.english, root.positiveratings, root.developer, root.negativeratings, root.publisher, root.platforms, root.average, root.required, root.median, root.owners)
 
-<P>:
+<StatsInfoPopup>:
+    size_hint: 0.8, 0.8
+    FloatLayout:
+        Button:
+            text: "Close"
+            size_hint: 0.8, 0.07
+            pos_hint: {"x":0.1, "y":0}
+            on_release: root.dismiss()
+
+<GamesInfoPopup>:
     appid: 'appid'
     name: 'name'
     price: 'price'
@@ -1142,107 +1187,139 @@
 
 
 <GamesKnoppen>:
-    canvas.before:
-        Color:
-            rgba: (43/255, 71/255, 93/255, 0.1)
-        Rectangle:
-            pos: self.pos
-            size: self.size
+    sortbutton: 'sortbutton'
+    updown: 'updown'
+
     BoxLayout:
         orientation: 'horizontal'
         pos: root.pos
         size: root.size
 
         Button:
+            size_hint_x: 0.3
+
             canvas:
                 Color:
                     rgba: 0, 242/255, 255, 1
+
                 Line:
-                    width: 1
-                    rounded_rectangle:
-                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                    points: (self.x,self.y,self.x,self.y + self.height)
+                Line:
+                    points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+                Line:
+                    points: (self.x, self.y, self.x + self.width, self.y)
                 Color:
-                    rgba: 0, 242/255, 1, 1
+                    rgba: 0, 242/255, 255, 1
                 Rectangle:
-                    size: (120, 130) # choose a value of a which fit the most with your button
-                    pos: (self.pos[0]+self.size[0]/2.0) - 120/2.0, (self.pos[1]+self.size[1]/2.0) - 130/2.0
-                    source: '.\icons\Title.png'
+
+                    size: (140, 150) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 140/2.0, (self.pos[1]+self.size[1]/2.0) - 150/2.0
+                    source: f'./icons/name.png' if root.sortbutton != 'name' else f'./icons/name_down.png' if root.sortbutton == 'name' and root.updown == 'down' else f'./icons/name_up.png'
             background_color: (0,0,0,0)
-            size_hint_x: 0.2
+            on_press: self.background_color = 1, 1, 1, 1
+            on_release: self.background_color = 0, 0, 0, 0
             on_release: root.sorting('name', True)
 
         Button:
+            size_hint_x: 0.1
             canvas:
                 Color:
                     rgba: 0, 242/255, 1, 1
                 Line:
-                    width: 1
-                    rounded_rectangle:
-                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                    points: (self.x,self.y,self.x,self.y + self.height)
+                Line:
+                    points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+                Line:
+                    points: (self.x, self.y, self.x + self.width, self.y)
+
                 Color:
                     rgba: 0, 242/255, 1, 1
                 Rectangle:
-                    size: (40, 40) # choose a value of a which fit the most with your button
-                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
-                    source: '.\icons\Price_up.png'
+                    size: (45, 45) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 45/2.0, (self.pos[1]+self.size[1]/2.0) - 45/2.0
+                    source: f'./icons/price.png' if root.sortbutton != 'price' else f'./icons/price_down.png' if root.sortbutton == 'price' and root.updown == 'down' else f'./icons/price_up.png'
             background_color: (0,0,0,0)
-            size_hint_x: 0.05
+            on_press: self.background_color = 1, 1, 1, 1
+            on_release: self.background_color = 0, 0, 0, 0
             on_release: root.sorting('price', True)
         Button:
+            size_hint_x: 0.1
             canvas:
                 Color:
                     rgba: 0, 242/255, 255, 1
                 Line:
-                    width: 1
-                    rounded_rectangle:
-                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                    points: (self.x,self.y,self.x,self.y + self.height)
+                Line:
+                    points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+                Line:
+                    points: (self.x, self.y, self.x + self.width, self.y)
                 Color:
                     rgba: 0, 242/255, 255, 1
                 Rectangle:
-                    size: (40, 40) # choose a value of a which fit the most with your button
-                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
-                    source: '.\icons\ThumbsUp_up.png'
+                    size: (45, 45) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 45/2.0, (self.pos[1]+self.size[1]/2.0) - 45/2.0
+                    source: f'./icons/positive_ratings.png' if root.sortbutton != 'positive_ratings' else f'./icons/positive_ratings_down.png' if root.sortbutton == 'positive_ratings' and root.updown == 'down' else f'./icons/positive_ratings_up.png'
+
             background_color: (0,0,0,0)
-            size_hint_x: 0.05
+            on_press: self.background_color = 1, 1, 1, 1
+            on_release: self.background_color = 0, 0, 0, 0
             on_release: root.sorting('positive_ratings', True)
 
 
         Button:
+            size_hint_x: 0.1
             canvas:
                 Color:
-                    rgba: 0, 242/255, 255, 1
+                    rgba: 0, 242/255, 1, 1
                 Line:
-                    width: 1
-                    rounded_rectangle:
-                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                    points: (self.x,self.y,self.x,self.y + self.height)
+                Line:
+                    points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+                Line:
+                    points: (self.x, self.y, self.x + self.width, self.y)
+
                 Color:
                     rgba: 0, 242/255, 1, 1
                 Rectangle:
-                    size: (40, 40) # choose a value of a which fit the most with your button
-                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
-                    source: '.\icons\ThumbsDown_up.png'
+                    size: (45, 45) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 45/2.0, (self.pos[1]+self.size[1]/2.0) - 45/2.0
+                    source: f'./icons/negative_ratings.png' if root.sortbutton != 'negative_ratings' else f'./icons/negative_ratings_down.png' if root.sortbutton == 'negative_ratings' and root.updown == 'down' else f'./icons/negative_ratings_up.png'
             background_color: (0,0,0,0)
-            size_hint_x: 0.05
+            on_press: self.background_color = 1, 1, 1, 1
+            on_release: self.background_color = 0, 0, 0, 0
             on_release: root.sorting('negative_ratings', True)
 
 
         Button:
+            size_hint_x: 0.2
+
             canvas:
                 Color:
                     rgba: 0, 242/255, 255, 1
                 Line:
-                    width: 1
-                    rounded_rectangle:
-                        (self.x, self.y, self.width -2, self.height -2, 10, 100)
+                    points: (self.x,self.y,self.x,self.y + self.height)
+                Line:
+                    points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+                Line:
+                    points: (self.x, self.y, self.x + self.width, self.y)
                 Color:
-                    rgba: 0, 242/255, 1, 1
+                    rgba: 0, 242/255, 255, 1
+
                 Rectangle:
-                    size: (40, 40) # choose a value of a which fit the most with your button
-                    pos: (self.pos[0]+self.size[0]/2.0) - 40/2.0, (self.pos[1]+self.size[1]/2.0) - 40/2.0
-                    source: '.\icons\Date_up.png'
+                    size: (45, 45) # choose a value of a which fit the most with your button
+                    pos: (self.pos[0]+self.size[0]/2.0) - 45/2.0, (self.pos[1]+self.size[1]/2.0) - 45/2.0
+                    source: f'./icons/release_date.png' if root.sortbutton != 'release_date' else f'./icons/release_date_down.png' if root.sortbutton == 'release_date' and root.updown == 'down' else f'./icons/release_date_up.png'
             background_color: (0,0,0,0)
-            size_hint_x: 0.05
+            on_press: self.background_color = 1, 1, 1, 1
+            on_release: self.background_color = 0, 0, 0, 0
             on_release: root.sorting('release_date', True)
+        Label:
+            size_hint_x: 0.2
+            canvas:
+                Color:
+                    rgba: 0, 242/255, 255, 1
+                Line:
+                    points: (self.x,self.y,self.x +self.width,self.y)
 
 
 <GamesTabel>:
@@ -1260,31 +1337,35 @@
 <GamesPopup>:
     auto_dismiss: False
 
+<StatsPopup>:
+    auto_dismiss: False
+
 <AchievementTabel>:
     orientation: 'horizontal'
     gamename: 'gamename'
     banner: 'banner'
-    spacing: 10
+
     AsyncImage:
         source: root.banner
     Label:
         id: gamename
         text: root.gamename
+        font_size: 15 + root.height*0.05
         text_size: self.size
         halign: 'left'
         valign: 'center'
     Button:
         text: 'Details'
-        on_release:
+        on_release: root.btn()
 
 <Achievements>:
     viewclass: 'AchievementTabel'
+
     RecycleBoxLayout:
         touch_multiselect: True
-        id: gw
+
         default_size: None, dp(root.height * 0.12)
         default_size_hint: 1, None
-
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'

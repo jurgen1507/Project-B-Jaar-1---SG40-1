@@ -76,6 +76,6 @@ def dashboard_recommended():
                 if counter == 3:
                     counter = 0
                     break
-    print(games[0][5])
+
 
 dashboard_recommended()
