@@ -44,9 +44,9 @@ for games_achievements in player_achievements:
     games_achieved[games_achievements[0]['gameName']] = temp
 
 
-
 for game in games_achieved:
     for achievement in games_achieved[game]:
         achievement['name']+':', achievement['description']
 
-print(games_achievements)
+
+print(player_achievements)

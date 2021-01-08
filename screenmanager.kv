@@ -547,9 +547,10 @@
                     source: './icons/menu.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
+            on_release: root.UnFold()
             size_hint: (None, None)
             size: (80, root.height/6)
-            on_release: root.UnFold()
+
         Button: # Home
             background_color: (43/255, 71/255, 93/255, 0)
             canvas:
@@ -559,6 +560,8 @@
                     source: './icons/home.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Home'
+            on_release: root.Fold()
             size_hint: (None, None)
             size: (80, root.height/6)
 
@@ -572,6 +575,8 @@
                     source: './icons/profile.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Profile'
+            on_release: root.Fold()
             size_hint: (None, None)
             size: (80, root.height/6)
 
@@ -584,6 +589,7 @@
                     source: './icons/games.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: app.root.current = 'Games'
+            on_release: root.Fold()
             on_release: self.background_color = (0,0,0,0)
             size_hint: (None, None)
             size: (80, root.height/6)
@@ -597,6 +603,8 @@
                     source: './icons/stats.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Stats'
+            on_release: root.Fold()
             size_hint: (None, None)
             size: (80, root.height/6)
 
@@ -609,8 +617,11 @@
                     source: './icons/settings.png'
             on_press: self.background_color = (1,1,1,1)
             on_release: self.background_color = (0,0,0,0)
+            on_release: app.root.current = 'Settings'
+            on_release: root.Fold()
             size_hint: (None, None)
             size: (80, root.height/6)
+
     BoxLayout: #Unfolded Navbar
         pos:root.pos
         # Unfolded Nav
@@ -621,6 +632,7 @@
                 size: 225, root.height
                 pos: self.pos
         orientation: 'vertical'
+
         Button: #Menu
             size_hint: None, None
             size: 225, root.height/6
@@ -646,6 +658,7 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: './icons/home_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: root.Fold()
             on_release: app.root.current = 'Home'
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -662,8 +675,8 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: './icons/profile_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: root.Fold()
             on_release: app.root.current = 'Profile'
-
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
@@ -678,10 +691,12 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: './icons/games_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: root.Fold()
             on_release: app.root.current = 'Games'
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
             height: root.height/6
+
         Button: #Stats
             background_color: 0, 0, 0, 0
             size_hint: None, None
@@ -692,6 +707,7 @@
                     pos: self.pos[0], (self.pos[1]+self.size[1]/2.0) - 75/2.0
                     source: './icons/stats_unfolded.png'
             on_release: self.background_color = (0,0,0,0)
+            on_release: root.Fold()
             on_release: app.root.current = 'Stats'
             on_press: self.background_color = (1,1,1,1)
             size_hint_y: None
@@ -1356,6 +1372,16 @@
         valign: 'center'
     Button:
         text: 'Details'
+        background_color: 0, 0, 0, 0
+        canvas:
+            Color:
+                rgba: 0, 242/255, 255, 1
+            Line:
+                points: (self.x,self.y,self.x,self.y + self.height)
+            Line:
+                points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+            Line:
+                points: (self.x, self.y, self.x + self.width, self.y)
         on_release: root.btn()
 
 <Achievements>:
