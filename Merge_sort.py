@@ -1,9 +1,3 @@
-import json
-
-with open('steam.json') as steamdata:
-    data = json.load(steamdata)
-
-
 def merge_sort(array, left_index, right_index, option, option2):
     if left_index >= right_index:
         return

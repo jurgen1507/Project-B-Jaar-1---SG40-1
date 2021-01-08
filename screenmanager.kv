@@ -100,9 +100,10 @@
 <Settings>:
     Button:
         on_release: app.root.current = 'Games'
-<CustomScreen>:
+<LoginScreen>:
     Button:
-        on_release: app.root.current = 'Games'
+        on_release: root.btn()
+
 <Home>:
     canvas:
         Color:
@@ -1118,7 +1119,7 @@
                 halign: 'left'
                 valign: 'top'
                 text_size: self.size
-                text: 'English language: '+root.english
+                text: 'English language: '+ ('Yes' if root.english == '1' else 'No')
             Label:
                 canvas:
                     Color:
