@@ -41,7 +41,7 @@ response = urllib.request.urlopen(
 ownedgames = json.loads(response.read())
 with open('steam.json') as steamdata:
     test = json.load(steamdata)
-sort_list(test, 'price', 'up')
+sort_list(test, 'price', 'up', 'name')
 lijst_kopie = test.copy()
 
 class MainWindow(Widget):
@@ -70,8 +70,9 @@ class StatsInfoPopup(Popup):
     pass
 
 class StatsPopup(Widget):
-    def show_statsinfo_popup(self):
+    def show_statsinfo_popup(self, achievementdata):
         popup = StatsInfoPopup()
+        AchievementsRVPopup.adddata(AchievementsRVPopup, achievementdata)
         popup.open()
 
 
@@ -109,7 +110,7 @@ class GamesKnoppen(Widget):
     current_button = ''
     def sorting(self, button, GK):
         if self.current_button == button and GK:
-            descending = sort_list(test, button, 'down')
+            descending = sort_list(test, button, 'down', 'name')
             self.sortbutton = button
             self.updown = 'down'
             self.parent.ids.GT.data = [
@@ -125,7 +126,7 @@ class GamesKnoppen(Widget):
 
         else:
             global ascending
-            ascending = sort_list(test, button, 'up')
+            ascending = sort_list(test, button, 'up', 'name')
             self.sortbutton = button
             self.updown = 'up'
             self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
@@ -184,7 +185,7 @@ class Friendlist(RecycleView):
 class ProfileStats(Widget):
     def __init__(self, **kwargs):
         super(ProfileStats, self).__init__(**kwargs)
-        self.hours = [0, 0, 0,  0, 0.6,  0, 0]
+        self.hours = [3, 5, 18, 19, 12, 7, 4.986587]
         self.profilepic = str(profile_stats.profilepic)
         self.totalgames = str(profile_stats.games_count)
         self.moneywasted = str('{0:.2f}'.format(profile_stats.money_wasted))
@@ -212,13 +213,22 @@ class Games(Screen):
 class Stats(Screen):
     pass
 class AchievementTabel(BoxLayout):
-    def btn(self):
-        StatsPopup.show_statsinfo_popup(StatsPopup)
+    def btn(self, achievementdata):
+        StatsPopup.show_statsinfo_popup(StatsPopup, achievementdata)
+
+class RV(BoxLayout):
+    pass
+class AchievementsRVPopup(RecycleView):
+    def __init__(self, **kwargs):
+        super(AchievementsRVPopup, self).__init__(**kwargs)
+    def adddata(self, data):
+        self.data = [{'name' : str(x['name']), 'description': str(x['description']), 'achieved' : str(x['achieved'])} for x in eval(data)[0]['achievements']]
+
 
 class Achievements(RecycleView):
     def __init__(self, **kwargs):
         super(Achievements, self).__init__(**kwargs)
-        self.data = [{'gamename':str(x[0]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x[0]["appid"]}/header.jpg') } for x in player_achievements]
+        self.data = [{'gamename':str(x[0]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x[0]["appid"]}/header.jpg'), 'achievementdata' : str(x) } for x in player_achievements]
 
 
 class Home(Screen):

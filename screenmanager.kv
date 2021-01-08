@@ -375,24 +375,26 @@
                 percentage: 'percentage'
                 canvas:
                     Color:
-                        rgba: 0.4, 0.4, 0.4, 1
+                        rgba: 201/255, 215/255, 224/255, 1
                     Line:
-                        width: 10
-                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3)
+                        width: root.height * 0.025
+                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3.5)
                     Color:
-                        rgba: 1, 0, 0, 1
+                        rgba: 24/255, 158/255, 0/255, 1
                     Line:
-                        width: 10
-                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3, 0, root.angle)
+                        width: root.height * 0.025
+                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3.5, 0, root.angle)
                 Label:
                     text_size: self.size
                     pos: 0, 25
+                    font_size: 10 + root.height * 0.025
                     halign: 'center'
                     valign: 'center'
                     text: root.percentage
                 Label:
                     text_size: self.size
                     pos: 0, - self.height/2 +25
+                    font_size: 10 + root.height * 0.01
                     halign: 'center'
                     valign: 'center'
                     text: 'Achievements completed of most played game'
@@ -403,23 +405,45 @@
             RelativeLayout:
                 canvas:
                     Color:
-                        rgba: 0.4, 0.4, 0.4, 1
+                        rgba: 201/255, 215/255, 224/255, 1
                     Line:
-                        width: 10
-                        circle: (self.width/2, self.height/2, min(self.width, self.height) / 3)
+                        width: root.height * 0.025
+                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3.5)
                     Color:
-                        rgba: 1, 0, 0, 1
+                        rgba: 227/255, 161/255, 1/255, 1
                     Line:
-                        width: 10
-                        circle: (self.width/2, self.height/2, min(self.width, self.height) / 3, 0, root.angle)
+                        width: root.height * 0.025
+                        circle: (self.width/2, self.height/2 + 25, min(self.width, self.height) / 3.5, 0, root.angle)
+
+                Label:
+                    text_size: self.size
+                    pos: 0, 25
+                    font_size: 10 + root.height * 0.025
+                    halign: 'center'
+                    valign: 'center'
+                    text: root.percentage
+                Label:
+                    text_size: self.size
+                    pos: 0, - self.height/2 +25
+                    font_size: 10 + root.height * 0.01
+                    halign: 'center'
+                    valign: 'center'
+                    text: 'Achievements completed of most played game'
+
 
 
         BoxLayout:
             orientation: 'vertical'
             RelativeLayout:
-                size: root.width/2, 40
-                size_hint: None, None
+                height: 40
+                size_hint: 1, None
                 Label:
+                    canvas.after:
+                        Color:
+                            rgba: 0/255, 242/255, 255/255, 1
+                        Line:
+                            width: 2
+                            points: (self.x, self.y, self.x + self.width, self.y)
                     text_size: self.size
                     halign: 'justify'
                     valign: 'middle'
@@ -428,6 +452,14 @@
             RelativeLayout:
                 game1: 'game1'
                 game1_price: 'game1_price'
+                canvas.after:
+                    Color:
+                        rgba: 0/255, 242/255, 255/255, 1
+                    Line:
+                        points: (self.x, self.y, self.x + self.width, self.y)
+                    Line:
+                        points: (self.x, self.y, self.x, self.y + self.height)
+
                 AsyncImage:
                     source: root.game1[5]
                     pos_hint: {'left':1, 'top':1}
@@ -894,10 +926,54 @@
         on_press: self.background_color = 1, 1, 1, 1
         on_release: self.background_color = 0, 0, 0, 0
         on_release: root.btn(root.name, root.appid, root.categories, root.genres, root.price, root.steamspy, root.releasedate, root.achievements, root.english, root.positiveratings, root.developer, root.negativeratings, root.publisher, root.platforms, root.average, root.required, root.median, root.owners)
+<RV>:
+    orientation: 'horizontal'
+    name: 'name'
+    description : 'description'
+    achieved : 'achieved'
+    Label:
+        text: root.name
+        font_size: 15 + root.height*0.05
+        text_size: self.size
+        halign: 'left'
+        valign: 'center'
+    Label:
+        text: root.description
+        font_size: 15 - len(root.description)*0.05 + root.height*0.08
+        text_size: self.size
+        halign: 'left'
+        valign: 'center'
+    Label:
+        size_hint: 0.15, 1
+        canvas:
+            Color:
+                rgba: (0/255, 242/255, 255/255, 1) if root.achieved == '1' else (110/255, 110/255, 110/255, 1)
+            Rectangle:
+                size: (20, 20) # choose a value of a which fit the most with your button
+                pos: (self.pos[0]+self.size[0]/2.0) - 20/2.0, (self.pos[1]+self.size[1]/2.0) - 20/2.0
+                source: f'./icons/checkmark.png'
+        background_color: (0,0,0,0)
+
+
+
+<AchievementsRVPopup>:
+    viewclass: 'RV'
+    RecycleBoxLayout:
+        touch_multiselect: True
+        default_size: None, dp(root.height * 0.12)
+        default_size_hint: 1, None
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
 
 <StatsInfoPopup>:
-    size_hint: 0.8, 0.8
+    size_hint: 0.9, 0.8
+    description: 'description'
     FloatLayout:
+        AchievementsRVPopup:
+            size_hint: 0.9, 0.9
+            pos_hint: {'x': 0.05, 'top':1}
+
         Button:
             text: "Close"
             size_hint: 0.8, 0.07
@@ -1360,7 +1436,7 @@
     orientation: 'horizontal'
     gamename: 'gamename'
     banner: 'banner'
-
+    achievementdata: 'achievementdata'
     AsyncImage:
         source: root.banner
     Label:
@@ -1382,7 +1458,7 @@
                 points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
             Line:
                 points: (self.x, self.y, self.x + self.width, self.y)
-        on_release: root.btn()
+        on_release: root.btn(root.achievementdata)
 
 <Achievements>:
     viewclass: 'AchievementTabel'
