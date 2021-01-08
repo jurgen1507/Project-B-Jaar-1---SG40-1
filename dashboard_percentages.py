@@ -9,24 +9,25 @@ response = urllib.request.urlopen(
 
 ownedgames = json.loads(response.read())
 appid = []
-
+from Merge_sort import *
 def achievement_percentage():
     for x in ownedgames['response']['games']:
-        temp = []
-        temp.append(x['playtime_forever'])
-        temp.append(x['appid'])
+        temp = {}
+        temp['playtime'] = x['playtime_forever']
+        temp['appid'] = x['appid']
         appid.append(temp)
 
 
-    appid.sort(key=lambda x: x[0], reverse=True)
-
+    newlist = sort_list(appid, 'playtime', 'down', 'appid')
+    print(list(newlist))
     try:
-        response = urllib.request.urlopen(f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={appid[0][1]}&format=json')
+        response = urllib.request.urlopen(
+            f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={list(newlist)[0]["appid"]}&format=json')
         achievements = json.loads(response.read())
 
     except:
         response = urllib.request.urlopen(
-            f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={appid[2][1]}&format=json')
+            f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={list(newlist)[1]["appid"]}&format=json')
         achievements = json.loads(response.read())
     percentage = []
     for x in achievements['achievementpercentages']['achievements']:

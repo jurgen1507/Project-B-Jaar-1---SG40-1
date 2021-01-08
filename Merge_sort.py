@@ -4,16 +4,16 @@ with open('steam.json') as steamdata:
     data = json.load(steamdata)
 
 
-def merge_sort(array, left_index, right_index, option):
+def merge_sort(array, left_index, right_index, option, option2):
     if left_index >= right_index:
         return
 
     middle = (left_index + right_index)//2
-    merge_sort(array, left_index, middle, option)
-    merge_sort(array, middle + 1, right_index, option)
-    merge(array, left_index, right_index, middle, option)
+    merge_sort(array, left_index, middle, option, option2)
+    merge_sort(array, middle + 1, right_index, option, option2)
+    merge(array, left_index, right_index, middle, option, option2)
 
-def merge(array, left_index, right_index, middle, option):
+def merge(array, left_index, right_index, middle, option, option2):
     left_copy = array[left_index:middle + 1]
     right_copy = array[middle+1:right_index+1]
     left_copy_index = 0
@@ -21,7 +21,7 @@ def merge(array, left_index, right_index, middle, option):
     sorted_index = left_index
     while left_copy_index < len(left_copy) and right_copy_index < len(right_copy):
         if left_copy[left_copy_index][option] == right_copy[right_copy_index][option]:
-            if left_copy[left_copy_index]['name'] <= right_copy[right_copy_index]['name']:
+            if left_copy[left_copy_index][option2] <= right_copy[right_copy_index][option2]:
                 array[sorted_index] = left_copy[left_copy_index]
                 left_copy_index += 1
             else:
@@ -46,11 +46,11 @@ def merge(array, left_index, right_index, middle, option):
 
 
 
-def sort_list(list, option, order):
+def sort_list(list, option, order, option2):
     if order == 'up':
-        merge_sort(list, 0, len(list) - 1, option)
+        merge_sort(list, 0, len(list) - 1, option, option2)
         return list
     else: #down
-        merge_sort(list, 0, len(list) - 1, option)
+        merge_sort(list, 0, len(list) - 1, option, option2)
         return list[::-1]
 
