@@ -161,10 +161,26 @@ class Friends(Widget):
     pass
 
 class Friendlist(RecycleView):
+    friendsinfo_first = {}
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
         from friendlist import friendsavatar
-        self.data = [{'atavar': str(x), 'status': str('.\icons\status' +str(y)+'.png' )} for x, y in friendsavatar]
+        self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar[::-1]]
+        self.friendsinfo_first = friendsavatar
+        updatethread = threading.Thread(target=self.update)
+        updatethread.start()
+
+    def update(self):
+        while True:
+            from friendlist import friendsavatar
+            if friendsavatar != self.friendsinfo_first:
+                self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar[::-1]]
+                self.friendsinfo_first = friendsavatar
+                self.refresh_from_data()
+                print('geupdate!')
+
+            time.sleep(5)
+
 
 
 class ProfileStats(Widget):

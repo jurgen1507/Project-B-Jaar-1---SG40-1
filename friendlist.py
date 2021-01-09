@@ -1,37 +1,17 @@
-friendsavatar = []
+friendsavatar = {}
+from Merge_sort import sort_list
 def getfriendlist(friendsinfo):
     global friendsavatar
-    status0 = []
-    status1 = []
-    status2 = []
-    status3 = []
-    status4 = []
 
+    friendsavatar = []
     for friend in friendsinfo:
-        tupe = []
-        tupe.append(friend['response']['players'][0]["avatar"])
-        tupe.append(friend['response']['players'][0]["personastate"])
-        tupe = tuple(tupe)
-        if friend['response']['players'][0]["personastate"] == 0:
-            status0.append(tupe)
-        elif friend['response']['players'][0]["personastate"] == 1:
-            status1.append(tupe)
-        elif friend['response']['players'][0]["personastate"] == 2:
-            status2.append(tupe)
-        elif friend['response']['players'][0]["personastate"] == 3:
-            status3.append(tupe)
-        elif friend['response']['players'][0]["personastate"] == 4:
-            status4.append(tupe)
-    for i in status1:
-        friendsavatar.append(i)
-    for i in status4:
-        friendsavatar.append(i)
-    for i in status3:
-        friendsavatar.append(i)
-    for i in status2:
-        friendsavatar.append(i)
-    for i in status0:
-        friendsavatar.append(i)
+
+        friendsavatar.append({'steamid' : friend['response']['players'][0]["steamid"],
+                               'personastate' : friend['response']['players'][0]["personastate"] * 10 if friend['response']['players'][0]["personastate"] == 1 else friend['response']['players'][0]["personastate"],
+                               'avatar' : friend['response']['players'][0]["avatar"], 'username' : friend['response']['players'][0]['personaname']})
+
+    sort_list(friendsavatar, 'personastate', 'up', 'username')
+
 
 if __name__ == '__main__':
     getfriendlist()

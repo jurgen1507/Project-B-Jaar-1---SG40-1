@@ -73,10 +73,11 @@ def load_initializing_data(steamID):
 
     urls = []
     appids = []
-
+    friendslist_live = []
     for friend in friends['friendslist']['friends']:
         urls.append(
             f'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={steamAPIkey}&steamids={friend["steamid"]}')
+        friendslist_live.append(f'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={steamAPIkey}&steamids={friend["steamid"]}')
 
     for game in ownedgames['response']['games']:
         urls.append(f'http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid={game["appid"]}&key={steamAPIkey}&steamid={steamID}&l=en')
@@ -116,6 +117,24 @@ def load_initializing_data(steamID):
     friendlist.getfriendlist(friendsinfo)
     profile_stats.profilestats(steamjson, ownedgames, friends, bans, steaminfo)
     Stats_achievements.playerachievements(player_achievements, ownedgames)
+    live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
+    live_data_thread.start()
+
+def load_live_data(friendlist_live):
+    import time
+    while True:
+        friendsinfo = []
+        def fetch_url_live(url):
+            urlHandler = urllib.request.urlopen(url)
+            friendsinfo.append(json.loads(urlHandler.read()))
+        threads = [threading.Thread(target=fetch_url_live, args=(url,)) for url in friendlist_live]
+        for thread in threads:
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+        time.sleep(5)
+        friendlist.getfriendlist(friendsinfo)
 
 
 if __name__ == '__main__':
