@@ -207,9 +207,9 @@ class Dashboard(Widget):
 class CustomScreen(Screen):
     pass
 
+
 class Games(Screen):
     pass
-
 class Stats(Screen):
     pass
 class AchievementTabel(BoxLayout):

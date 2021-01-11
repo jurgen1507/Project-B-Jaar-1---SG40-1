@@ -101,8 +101,40 @@
     Button:
         on_release: app.root.current = 'Games'
 <CustomScreen>:
-    Button:
-        on_release: app.root.current = 'Games'
+    canvas:
+        Color:
+            rgba: (43/255, 71/255, 93/255, 0.6)
+        Rectangle:
+            size: root.size
+    BoxLayout:
+        orientation: 'vertical'
+        RelativeLayout:
+            size: self.size
+            Label:
+                text:"Steam profile link:"
+                font_size: 20
+
+        RelativeLayout:
+            size: self.size
+            TextInput:
+                id: link
+                pos: (self.width *0.5), self.height
+                post_hint: None, None
+                size: 450,35
+                size_hint: None, None
+                cursor_blink: True
+                font_size: 15
+                multiline: False
+
+        RelativeLayout:
+            size: self.size
+            Button:
+                pos: 400, 60
+                post_hint: None, None
+                size: 150, 50
+                size_hint: None, None
+                text: 'Login'
+                on_release: app.root.current = 'Games'
 <Home>:
     canvas:
         Color:
