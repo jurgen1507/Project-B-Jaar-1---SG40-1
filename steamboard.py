@@ -17,32 +17,17 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
-from friendlist import *
-from dashboard_recommended import *
 
-from Stats_achievements import *
-
-import profile_stats
-import dashboard_percentages
-
-import json
-import urllib.request
-
-
+from Merge_sort import sort_list
+from data_loading import *
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 Window.size = (800, 600)
 Window.minimum_width, Window.minimum_height = 800, 500
 
-steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
 steamID = '76561198272503503'
-response = urllib.request.urlopen(
-    f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
 
-ownedgames = json.loads(response.read())
-with open('steam.json') as steamdata:
-    test = json.load(steamdata)
-sort_list(test, 'price', 'up', 'name')
-lijst_kopie = test.copy()
+sort_list(steamjson, 'price', 'up', 'name')
+lijst_kopie = steamjson.copy()
 
 class MainWindow(Widget):
     def __init__(self, **kwargs):
@@ -110,7 +95,7 @@ class GamesKnoppen(Widget):
     current_button = ''
     def sorting(self, button, GK):
         if self.current_button == button and GK:
-            descending = sort_list(test, button, 'down', 'name')
+            descending = sort_list(steamjson, button, 'down', 'name')
             self.sortbutton = button
             self.updown = 'down'
             self.parent.ids.GT.data = [
@@ -126,7 +111,7 @@ class GamesKnoppen(Widget):
 
         else:
             global ascending
-            ascending = sort_list(test, button, 'up', 'name')
+            ascending = sort_list(steamjson, button, 'up', 'name')
             self.sortbutton = button
             self.updown = 'up'
             self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
@@ -142,7 +127,7 @@ class GamesKnoppen(Widget):
 
 class GamesSearch(Widget):
     def search_bar(self):
-        global test
+        global steamjson
         if self.ids.OwnedGamesSwitch.active:
             searched_games = []
             for term in lijst_kopie:
@@ -150,14 +135,14 @@ class GamesSearch(Widget):
                     if term['appid'] == owned['appid']:
                         if self.ids.search.text.lower() in term['name'].lower():
                             searched_games.append(term)
-            test = searched_games
+            steamjson = searched_games
             GamesKnoppen.sorting(self.parent.ids.GK, 'name', False)
         else:
             searched_games = []
             for term in lijst_kopie:
                 if self.ids.search.text.lower() in term['name'].lower():
                     searched_games.append(term)
-            test = searched_games
+            steamjson = searched_games
             GamesKnoppen.sorting(self.parent.ids.GK, 'name', False)
 
 
@@ -170,16 +155,32 @@ class GamesTabel(RecycleView):
                  'developer': str(x['developer']),  'publisher': str(x['publisher']),  'platforms': str(x['platforms']),
                  'required': str(x['required_age']), 'categories': str(x['categories']),  'genres': str(x['genres']),
                  'steamspy': str(x['steamspy_tags']),  'achievements': str(x['achievements']),  'average': str(x['average_playtime']),
-                 'median': str(x['median_playtime']),  'owners': str(x['owners'])} for x in test]
+                 'median': str(x['median_playtime']),  'owners': str(x['owners'])} for x in steamjson]
 
 class Friends(Widget):
     pass
 
 class Friendlist(RecycleView):
+    friendsinfo_first = {}
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
+        from friendlist import friendsavatar
+        self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar[::-1]]
+        self.friendsinfo_first = friendsavatar
+        updatethread = threading.Thread(target=self.update)
+        updatethread.start()
 
-        self.data = [{'atavar': str(x), 'status': str('.\icons\status' +str(y)+'.png' )} for x, y in friendsavatar]
+    def update(self):
+        while True:
+            from friendlist import friendsavatar
+            if friendsavatar != self.friendsinfo_first:
+                self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar[::-1]]
+                self.friendsinfo_first = friendsavatar
+                self.refresh_from_data()
+                print('geupdate!')
+
+            time.sleep(5)
+
 
 
 class ProfileStats(Widget):
@@ -197,6 +198,7 @@ class ProfileStats(Widget):
 
 class Dashboard(Widget):
     def __init__(self, **kwargs):
+        from dashboard_recommended import games
         super(Dashboard, self).__init__(**kwargs)
         self.angle = dashboard_percentages.total_percentage_angle
         self.percentage = str(round(dashboard_percentages.total_percentage,2)) + '%'
@@ -204,8 +206,16 @@ class Dashboard(Widget):
         self.game2 = games[3]
         self.game3 = games[6]
 
-class CustomScreen(Screen):
-    pass
+import time
+from kivy.uix.image import Image
+
+class LoginScreen(Screen):
+    def btn(self):
+        starttime = time.time()
+        load_initializing_data('76561198272503503')
+        print(time.time()-starttime)
+        ScreenManagerApp.startup(ScreenManagerApp)
+        self.parent.current = 'Home'
 
 
 class Games(Screen):
@@ -246,13 +256,16 @@ class ScreenManagerApp(App):
     def build(self):
         self.icon = './icons/steamboardicon_small.png'
         self.title = 'SteamBoard'
-        root.add_widget(CustomScreen(name='CustomScreen'))
+        root.add_widget(LoginScreen(name='LoginScreen'))
+        return root
+
+    def startup(self):
         root.add_widget(Games(name='Games'))
         root.add_widget(Home(name='Home'))
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
-        return root
+
 
 if __name__ == '__main__':
     ScreenManagerApp().run()

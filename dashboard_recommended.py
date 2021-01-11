@@ -1,18 +1,5 @@
-import urllib.request
-import json
-from Merge_sort import sort_list
-with open('steam.json') as steamdata:
-    steamjson = json.load(steamdata)
-
-
-def dashboard_recommended():
-    global games
-    steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
-    steamID = '76561198272503503'
-    response = urllib.request.urlopen(
-        f'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamAPIkey}&steamid={steamID}&format=json')
-
-    ownedgames = json.loads(response.read())
+games = []
+def dashboard_recommended(steamjson, ownedgames):
     appids = []
     for game in ownedgames['response']['games']:
         appids.append(game['appid'])
@@ -42,7 +29,8 @@ def dashboard_recommended():
     gameslist.sort(key=lambda x: x[1], reverse=True)
 
     found1 = False
-    games = []
+
+    global games
     counter = 0
 
     for i in gameslist:
@@ -54,7 +42,6 @@ def dashboard_recommended():
                 if counter == 3:
                     counter = 0
                     break
-
 
     for i in gameslist:
         if a[1][0] in i[3]:
@@ -77,5 +64,5 @@ def dashboard_recommended():
                     counter = 0
                     break
 
-
-dashboard_recommended()
+if __name__ == '__main__':
+    dashboard_recommended()
