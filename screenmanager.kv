@@ -1,4 +1,6 @@
 #:import Factory kivy.factory.Factory
+#: import ew kivy.uix.effectwidget
+
 <AsyncImage>:
     nocache: True
 
@@ -102,8 +104,50 @@
         on_release: app.root.current = 'Games'
 
 <LoginScreen>:
-    Button:
-        on_release: root.btn()
+    EffectWidget:
+
+        AsyncImage:
+            color: 1, 1, 1, 0.8
+            keep_ratio: False
+            allow_stretch:True
+            source: './icons/loginanime.gif'
+            anim_delay: 0.065
+    RelativeLayout:
+        Widget:
+            Label:
+                pos: 200, 300
+                text:"Steam profile link:"
+                font_size: 20
+                color: 0.7, 0.7, 0.7, 1
+
+
+        TextInput:
+            background_color: 0,0,0, .6
+
+            id: login
+            pos_hint: {'x': .05, 'y': .3}
+            size: 450,32
+            size_hint: None, None
+            cursor_blink: True
+            font_size: 16
+            multiline: False
+            text: 'https://'
+            foreground_color: 0.7, 0.7, 0.7, 1
+
+        Button:
+            pos: 200, 75
+            size: 100, 40
+            size_hint: None, None
+            text: 'Login'
+            color: 0.7, 0.7, 0.7, 1
+            background_color: 0,0,0,0
+            on_release: self.background_color = (0, 0, 0, 0)
+            on_release: root.btn()
+
+
+
+
+
 <Home>:
     canvas:
         Color:

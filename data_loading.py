@@ -10,13 +10,10 @@ from Merge_sort import *
 import socket
 import time
 import threading
-try:
-    s = socket.socket()
-    host = '192.168.1.139'# ip of raspberry pi
-    port = 12345
-    s.connect((host, port))
-except:
-    pass
+
+s = socket.socket()
+
+
 steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
 loaded = False
 ownedgames = {}
@@ -127,17 +124,21 @@ def load_initializing_data(steamID):
     friendlist.getfriendlist(friendsinfo)
     profile_stats.profilestats(steamjson, ownedgames, friends, bans, steaminfo)
     Stats_achievements.playerachievements(player_achievements, ownedgames)
-    try:
-        receivedatathread = threading.Thread(target=receive_data)
-        receivedatathread.start()
-        send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
-        send_data(
-            f'{int(dashboard_percentages.total_percentage / 10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
-        live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
-        live_data_thread.start()
-    except:
-        pass
-
+    # try:
+    #     global s
+    #     host = '192.168.1.139'  # ip of raspberry pi
+    #     port = 12345
+    #     s.connect((host, port))
+    #     receivedatathread = threading.Thread(target=receive_data)
+    #     receivedatathread.start()
+    #     send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
+    #     send_data(
+    #         f'{int(dashboard_percentages.total_percentage / 10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
+    #
+    # except:
+    #     pass
+    live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
+    live_data_thread.start()
 
 
 def load_live_data(friendlist_live):

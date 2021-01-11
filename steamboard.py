@@ -18,11 +18,12 @@ from kivy.graphics import Color, Rectangle
 from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 
+
+
 from Merge_sort import sort_list
 from data_loading import *
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
-Window.size = (800, 600)
-Window.minimum_width, Window.minimum_height = 800, 500
+
 
 steamID = '76561198272503503'
 
@@ -128,6 +129,7 @@ class GamesKnoppen(Widget):
 class GamesSearch(Widget):
     def search_bar(self):
         global steamjson
+        from data_loading import ownedgames
         if self.ids.OwnedGamesSwitch.active:
             searched_games = []
             for term in lijst_kopie:
@@ -176,11 +178,8 @@ class Friendlist(RecycleView):
             if friendsavatar != self.friendsinfo_first:
                 self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
                 self.friendsinfo_first = friendsavatar
-                try:
-                    send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
-                except:
-                    pass
                 self.refresh_from_data()
+                print('geupdate!')
 
             time.sleep(5)
 
@@ -214,26 +213,31 @@ from kivy.uix.image import Image
 
 class LoginScreen(Screen):
     def btn(self):
-        starttime = time.time()
-        load_initializing_data('76561198272503503')
-        print(time.time()-starttime)
-        ScreenManagerApp.startup(ScreenManagerApp)
-        self.parent.current = 'Home'
+        try:
+            Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
+            starttime = time.time()
+            print(Login[0])
+            load_initializing_data(Login[0])
+            print(time.time()-starttime)
+            ScreenManagerApp.startup(ScreenManagerApp)
+            self.parent.current = 'Home'
+        except:
+            print('Profile has been set to private')
+
+
+
 
 
 class Games(Screen):
     pass
-
 class Stats(Screen):
     pass
-
 class AchievementTabel(BoxLayout):
     def btn(self, achievementdata):
         StatsPopup.show_statsinfo_popup(StatsPopup, achievementdata)
 
 class RV(BoxLayout):
     pass
-
 class AchievementsRVPopup(RecycleView):
     def __init__(self, **kwargs):
         super(AchievementsRVPopup, self).__init__(**kwargs)
@@ -262,17 +266,23 @@ class ScreenManagerApp(App):
     def build(self):
         self.icon = './icons/steamboardicon_small.png'
         self.title = 'SteamBoard'
+        Window.size = (500, 400)
         root.add_widget(LoginScreen(name='LoginScreen'))
+
+
         return root
 
     def startup(self):
+        Window.size = (800, 600)
+        Window.minimum_width, Window.minimum_height = 800, 500
         root.add_widget(Games(name='Games'))
         root.add_widget(Home(name='Home'))
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
-    def showAFKpopup(self):
-        print(root.current_screen)
+
 
 if __name__ == '__main__':
+    print(time.time())
     ScreenManagerApp().run()
+    print(time.time())
