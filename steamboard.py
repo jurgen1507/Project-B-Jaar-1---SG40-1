@@ -223,14 +223,17 @@ class LoginScreen(Screen):
 
 class Games(Screen):
     pass
+
 class Stats(Screen):
     pass
+
 class AchievementTabel(BoxLayout):
     def btn(self, achievementdata):
         StatsPopup.show_statsinfo_popup(StatsPopup, achievementdata)
 
 class RV(BoxLayout):
     pass
+
 class AchievementsRVPopup(RecycleView):
     def __init__(self, **kwargs):
         super(AchievementsRVPopup, self).__init__(**kwargs)
