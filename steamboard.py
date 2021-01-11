@@ -17,12 +17,13 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Color, Rectangle
 from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
-
-
-
+import random
 from Merge_sort import sort_list
 from data_loading import *
+
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
+
+
 
 
 steamID = '76561198272503503'
@@ -100,7 +101,7 @@ class GamesKnoppen(Widget):
             self.sortbutton = button
             self.updown = 'down'
             self.parent.ids.GT.data = [
-                {'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+                {'name': str(x['name']), 'price': str('{0:.2f}'.format(x['price'])), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']), 'appid' : str(x['appid']),
                  'release' : str(x['release_date']),  'english': str(x['english']),  'developer': str(x['developer']),
                  'publisher': str(x['publisher']),  'platforms': str(x['platforms']),  'required': str(x['required_age']),
@@ -115,7 +116,7 @@ class GamesKnoppen(Widget):
             ascending = sort_list(steamjson, button, 'up', 'name')
             self.sortbutton = button
             self.updown = 'up'
-            self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+            self.parent.ids.GT.data = [{'name': str(x['name']), 'price': str('{0:.2f}'.format(x['price'])), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']), 'appid' : str(x['appid']),
                  'release' : str(x['release_date']),  'english': str(x['english']),  'developer': str(x['developer']),
                  'publisher': str(x['publisher']),  'platforms': str(x['platforms']),  'required': str(x['required_age']),
@@ -151,7 +152,7 @@ class GamesSearch(Widget):
 class GamesTabel(RecycleView):
     def __init__(self, **kwargs):
         super(GamesTabel, self).__init__(**kwargs)
-        self.data = [{'name': str(x['name']), 'price': str(x['price']), 'positiveratings': str(x['positive_ratings']),
+        self.data = [{'name': str(x['name']), 'price': str('{0:.2f}'.format(x['price'])), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']),
                  'appid' : str(x['appid']), 'release' : str(x['release_date']),  'english': str(x['english']),
                  'developer': str(x['developer']),  'publisher': str(x['publisher']),  'platforms': str(x['platforms']),
@@ -178,8 +179,11 @@ class Friendlist(RecycleView):
             if friendsavatar != self.friendsinfo_first:
                 self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
                 self.friendsinfo_first = friendsavatar
+                try:
+                    send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
+                except:
+                    pass
                 self.refresh_from_data()
-                print('geupdate!')
 
             time.sleep(5)
 
@@ -188,7 +192,8 @@ class Friendlist(RecycleView):
 class ProfileStats(Widget):
     def __init__(self, **kwargs):
         super(ProfileStats, self).__init__(**kwargs)
-        self.hours = [3, 5, 18, 19, 12, 7, 4.986587]
+        self.hours = [random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),]
+        print(self.hours)
         self.profilepic = str(profile_stats.profilepic)
         self.totalgames = str(profile_stats.games_count)
         self.moneywasted = str('{0:.2f}'.format(profile_stats.money_wasted))
@@ -212,6 +217,7 @@ import time
 from kivy.uix.image import Image
 
 class LoginScreen(Screen):
+
     def btn(self):
         try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
@@ -226,18 +232,19 @@ class LoginScreen(Screen):
 
 
 
-
-
 class Games(Screen):
     pass
+
 class Stats(Screen):
     pass
+
 class AchievementTabel(BoxLayout):
     def btn(self, achievementdata):
         StatsPopup.show_statsinfo_popup(StatsPopup, achievementdata)
 
 class RV(BoxLayout):
     pass
+
 class AchievementsRVPopup(RecycleView):
     def __init__(self, **kwargs):
         super(AchievementsRVPopup, self).__init__(**kwargs)
@@ -266,23 +273,20 @@ class ScreenManagerApp(App):
     def build(self):
         self.icon = './icons/steamboardicon_small.png'
         self.title = 'SteamBoard'
-        Window.size = (500, 400)
+        Window.size = (500,400)
         root.add_widget(LoginScreen(name='LoginScreen'))
-
-
         return root
 
     def startup(self):
-        Window.size = (800, 600)
+        Window.size = (800,600)
         Window.minimum_width, Window.minimum_height = 800, 500
         root.add_widget(Games(name='Games'))
         root.add_widget(Home(name='Home'))
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
-
+    def showAFKpopup(self):
+        print(root.current_screen)
 
 if __name__ == '__main__':
-    print(time.time())
     ScreenManagerApp().run()
-    print(time.time())

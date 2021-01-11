@@ -10,10 +10,7 @@ from Merge_sort import *
 import socket
 import time
 import threading
-
 s = socket.socket()
-
-
 steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
 loaded = False
 ownedgames = {}
@@ -35,6 +32,7 @@ def fetch_url(url, n):
     if n == 0:
         global ownedgames
         ownedgames = json.loads(urlHandler.read())
+
     if n == 1:
         global friends
         friends = json.loads(urlHandler.read())
@@ -132,13 +130,11 @@ def load_initializing_data(steamID):
     #     receivedatathread = threading.Thread(target=receive_data)
     #     receivedatathread.start()
     #     send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
-    #     send_data(
-    #         f'{int(dashboard_percentages.total_percentage / 10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
-    #
     # except:
     #     pass
     live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
     live_data_thread.start()
+
 
 
 def load_live_data(friendlist_live):
@@ -147,8 +143,11 @@ def load_live_data(friendlist_live):
     while True:
         friendsinfo = []
         def fetch_url_live(url):
-            urlHandler = urllib.request.urlopen(url)
-            friendsinfo.append(json.loads(urlHandler.read()))
+            try:
+                urlHandler = urllib.request.urlopen(url)
+                friendsinfo.append(json.loads(urlHandler.read()))
+            except:
+                pass
         threads = [threading.Thread(target=fetch_url_live, args=(url,)) for url in friendlist_live]
         for thread in threads:
             thread.start()
