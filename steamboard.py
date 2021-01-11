@@ -165,7 +165,7 @@ class Friendlist(RecycleView):
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
         from friendlist import friendsavatar
-        self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar[::-1]]
+        self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
         self.friendsinfo_first = friendsavatar
         updatethread = threading.Thread(target=self.update)
         updatethread.start()
@@ -174,10 +174,13 @@ class Friendlist(RecycleView):
         while True:
             from friendlist import friendsavatar
             if friendsavatar != self.friendsinfo_first:
-                self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar[::-1]]
+                self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
                 self.friendsinfo_first = friendsavatar
+                try:
+                    send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
+                except:
+                    pass
                 self.refresh_from_data()
-                print('geupdate!')
 
             time.sleep(5)
 
@@ -216,6 +219,7 @@ class LoginScreen(Screen):
         print(time.time()-starttime)
         ScreenManagerApp.startup(ScreenManagerApp)
         self.parent.current = 'Home'
+
 
 class Games(Screen):
     pass
@@ -265,7 +269,8 @@ class ScreenManagerApp(App):
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
-
+    def showAFKpopup(self):
+        print(root.current_screen)
 
 if __name__ == '__main__':
     ScreenManagerApp().run()

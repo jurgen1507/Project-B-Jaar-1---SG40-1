@@ -7,6 +7,16 @@ import Stats_achievements
 import urllib.request
 import threading
 from Merge_sort import *
+import socket
+import time
+import threading
+try:
+    s = socket.socket()
+    host = '192.168.1.139'# ip of raspberry pi
+    port = 12345
+    s.connect((host, port))
+except:
+    pass
 steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
 loaded = False
 ownedgames = {}
@@ -117,11 +127,22 @@ def load_initializing_data(steamID):
     friendlist.getfriendlist(friendsinfo)
     profile_stats.profilestats(steamjson, ownedgames, friends, bans, steaminfo)
     Stats_achievements.playerachievements(player_achievements, ownedgames)
-    live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
-    live_data_thread.start()
+    try:
+        receivedatathread = threading.Thread(target=receive_data)
+        receivedatathread.start()
+        send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
+        send_data(
+            f'{int(dashboard_percentages.total_percentage / 10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
+        live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
+        live_data_thread.start()
+    except:
+        pass
+
+
 
 def load_live_data(friendlist_live):
     import time
+
     while True:
         friendsinfo = []
         def fetch_url_live(url):
@@ -133,8 +154,26 @@ def load_live_data(friendlist_live):
 
         for thread in threads:
             thread.join()
-        time.sleep(5)
         friendlist.getfriendlist(friendsinfo)
+
+
+def send_data(data):
+    s.send(data.encode())
+
+
+
+def receive_data():
+    try:
+        while True:
+            data = s.recv(1024).decode()
+            if data == 'AFK':
+                import steamboard
+                from steamboard import ScreenManagerApp
+                steamboard.ScreenManagerApp.showAFKpopup(ScreenManagerApp)
+            time.sleep(1)
+
+    except:
+        pass
 
 
 if __name__ == '__main__':
