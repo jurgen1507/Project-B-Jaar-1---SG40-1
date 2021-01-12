@@ -8,7 +8,8 @@ def playerachievements(player_achievements, ownedgames):
         for AM in player_games[0]['achievements']:
             if AM['description'] == '':
                 AM['description'] = 'No description available'
-            player_games[0]['gameName']+':', AM['name'],'Description: '+ AM['description'] #games[0]['appid'] voor link
+            player_games[0]['gameName']+':', AM['name'],'Description: '+ AM['description']
+
 
     games_achieved = {}
     for games_achievements in player_achievements:
@@ -22,6 +23,7 @@ def playerachievements(player_achievements, ownedgames):
     for game in games_achieved:
         for achievement in games_achieved[game]:
             achievement['name']+':', achievement['description']
+
 
 if __name__ == '__main__':
     playerachievements()

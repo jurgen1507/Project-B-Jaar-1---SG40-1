@@ -20,6 +20,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 import random
 from Merge_sort import sort_list
 from data_loading import *
+from kivy.clock import Clock
 
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
@@ -217,18 +218,15 @@ import time
 from kivy.uix.image import Image
 
 class LoginScreen(Screen):
-
     def btn(self):
         try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
-            starttime = time.time()
-            print(Login[0])
             load_initializing_data(Login[0])
-            print(time.time()-starttime)
             ScreenManagerApp.startup(ScreenManagerApp)
             self.parent.current = 'Home'
         except:
-            print('Profile has been set to private')
+            self.error = '* Either the account has been set to private or the link provided is incorrect.'
+
 
 
 
@@ -249,7 +247,7 @@ class AchievementsRVPopup(RecycleView):
     def __init__(self, **kwargs):
         super(AchievementsRVPopup, self).__init__(**kwargs)
     def adddata(self, data):
-        self.data = [{'name' : str(x['name']), 'description': str(x['description']), 'achieved' : str(x['achieved'])} for x in eval(data)[0]['achievements']]
+        self.data = [{ 'name' : str(x['name']), 'description': str(x['description']), 'achieved' : str(x['achieved'])} for x in eval(data)[0]['achievements']]
 
 
 class Achievements(RecycleView):
@@ -274,6 +272,7 @@ class ScreenManagerApp(App):
         self.icon = './icons/steamboardicon_small.png'
         self.title = 'SteamBoard'
         Window.size = (500,400)
+
         root.add_widget(LoginScreen(name='LoginScreen'))
         return root
 

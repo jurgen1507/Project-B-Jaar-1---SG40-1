@@ -80,7 +80,7 @@
 
     Achievements:
         pos: 100, 0
-        size: root.width - 180, root.height -60
+        size: root.width - 180, root.height -100
         size_hint: None, None
 
     PlaceHolder:
@@ -104,14 +104,15 @@
         on_release: app.root.current = 'Games'
 
 <LoginScreen>:
+    error: ''
     EffectWidget:
-
         AsyncImage:
             color: 1, 1, 1, 0.8
             keep_ratio: False
             allow_stretch:True
             source: './icons/loginanime.gif'
             anim_delay: 0.065
+
     RelativeLayout:
         Widget:
             Label:
@@ -120,8 +121,6 @@
                 text:"Steam profile link:"
                 font_size: 20
                 color: 0.7, 0.7, 0.7, 1
-
-
         TextInput:
             background_color: 0,0,0, .6
 
@@ -136,6 +135,21 @@
             text: 'https://'
             foreground_color: 0.7, 0.7, 0.7, 1
 
+        Label:
+            pos: -50, -85
+            font_name: './icons/Arimo-Regular.ttf'
+            text: root.error
+            color: 1,0,0,1
+            font_size: 10
+
+        Label:
+            pos: 0, -175
+            font_name: './icons/Arimo-Regular.ttf'
+            text: 'Open your Steam client > Go to FRIENDS & CHAT > Open the profile you would like to track >\nRight click the profile page and select "Copy Page URL" > Paste into the text field'
+            color: 0.7, 0.7, 0.7, 1
+            font_size: 10
+
+
         Button:
             pos: 200, 75
             size: 100, 40
@@ -146,10 +160,6 @@
             background_color: 0,0,0,0
             on_release: self.background_color = (0, 0, 0, 0)
             on_release: root.btn()
-
-
-
-
 
 <Home>:
     canvas:
@@ -431,7 +441,6 @@
                             text: root.totalbans
                             font_size: 30 + self.height * 0.05
 
-
 <Dashboard>:
     BoxLayout:
         pos: 100, 0
@@ -471,9 +480,6 @@
                     valign: 'center'
                     text: 'Achievements completed of most played game'
 
-
-
-
             RelativeLayout:
                 canvas:
                     Color:
@@ -503,8 +509,6 @@
                     halign: 'center'
                     valign: 'center'
                     text: 'Achievements completed of most played game'
-
-
 
         BoxLayout:
             orientation: 'vertical'
@@ -672,7 +676,6 @@
                         halign: 'right'
                         valign: 'middle'
                         font_size: 15 + self.width * 0.025
-
 
 <SteamBoardNavBar>:
 
@@ -895,7 +898,6 @@
             size_hint: None, None
             size: 20, 20
 
-
 <Friendlist>:
     canvas.before:
         Color:
@@ -917,7 +919,6 @@
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
-
 
 <PlaceHolder>:
     canvas.before:
@@ -1070,6 +1071,12 @@
     name: 'name'
     description : 'description'
     achieved : 'achieved'
+    canvas:
+        Color:
+            rgba: 0/255, 242/255, 255/255, 1
+        Line:
+            points: (self.x, self.y, self.x + self.width - 5, self.y)
+
     Label:
         font_name: './icons/Arimo-Regular.ttf'
         text: root.name
@@ -1077,6 +1084,7 @@
         text_size: self.size
         halign: 'left'
         valign: 'center'
+
     Label:
         font_name: './icons/Arimo-Regular.ttf'
         text: root.description
@@ -1096,11 +1104,10 @@
                 source: f'./icons/checkmark.png'
         background_color: (0,0,0,0)
 
-
-
 <AchievementsRVPopup>:
     viewclass: 'RV'
     RecycleBoxLayout:
+
         touch_multiselect: True
         default_size: None, dp(root.height * 0.12)
         default_size_hint: 1, None
@@ -1112,10 +1119,10 @@
     size_hint: 0.9, 0.8
     description: 'description'
     FloatLayout:
+
         AchievementsRVPopup:
             size_hint: 0.9, 0.9
             pos_hint: {'x': 0.05, 'top':1}
-
         Button:
             text: "Close"
             size_hint: 0.8, 0.07
@@ -1447,7 +1454,6 @@
             size_hint_x: None
             pos: root.width -30, root.y - 7
 
-
 <GamesKnoppen>:
     sortbutton: 'sortbutton'
     updown: 'updown'
@@ -1584,7 +1590,6 @@
                 Line:
                     points: (self.x,self.y,self.x +self.width,self.y)
 
-
 <GamesTabel>:
     viewclass: 'Tabel'
     RecycleBoxLayout:
@@ -1610,6 +1615,7 @@
     achievementdata: 'achievementdata'
     AsyncImage:
         source: root.banner
+        size_hint: 0.9, 0.9
     Label:
         font_name: './icons/Arimo-Regular.ttf'
         id: gamename
@@ -1625,19 +1631,17 @@
             Color:
                 rgba: 0, 242/255, 255, 1
             Line:
-                points: (self.x,self.y,self.x,self.y + self.height)
-            Line:
-                points: (self.x+ self.width,self.y,self.x+ self.width,self.y + self.height)
+                points: (self.x, self.y, self.x, self.y + self.width)
             Line:
                 points: (self.x, self.y, self.x + self.width, self.y)
+
+
         on_release: root.btn(root.achievementdata)
 
 <Achievements>:
     viewclass: 'AchievementTabel'
-
     RecycleBoxLayout:
         touch_multiselect: True
-
         default_size: None, dp(root.height * 0.12)
         default_size_hint: 1, None
         size_hint_y: None
