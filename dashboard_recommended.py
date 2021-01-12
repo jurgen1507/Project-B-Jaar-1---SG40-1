@@ -39,7 +39,7 @@ def dashboard_recommended(steamjson, ownedgames):
                 games.append(i)
                 gameslist.remove(i)
                 counter +=1
-                if counter == 3:
+                if counter == 7:
                     counter = 0
                     break
 
@@ -49,7 +49,7 @@ def dashboard_recommended(steamjson, ownedgames):
                 games.append(i)
                 gameslist.remove(i)
                 counter += 1
-                if counter == 3:
+                if counter == 7:
                     counter = 0
                     break
 
@@ -60,7 +60,7 @@ def dashboard_recommended(steamjson, ownedgames):
                 games.append(i)
                 gameslist.remove(i)
                 counter += 1
-                if counter == 3:
+                if counter == 7:
                     counter = 0
                     break
 

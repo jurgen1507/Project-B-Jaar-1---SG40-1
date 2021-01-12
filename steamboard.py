@@ -221,7 +221,8 @@ class LoginScreen(Screen):
     def btn(self):
         try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
-            load_initializing_data(Login[0])
+            print(Login[0])
+            load_initializing_data('76561198272503503')
             ScreenManagerApp.startup(ScreenManagerApp)
             self.parent.current = 'Home'
         except:
@@ -247,13 +248,14 @@ class AchievementsRVPopup(RecycleView):
     def __init__(self, **kwargs):
         super(AchievementsRVPopup, self).__init__(**kwargs)
     def adddata(self, data):
-        self.data = [{ 'name' : str(x['name']), 'description': str(x['description']), 'achieved' : str(x['achieved'])} for x in eval(data)[0]['achievements']]
+        self.data = [{'name' : str(x['name']), 'description': str(x['description']), 'achieved' : str(x['achieved'])} for x in eval(data)['achievements']]
 
 
 class Achievements(RecycleView):
     def __init__(self, **kwargs):
         super(Achievements, self).__init__(**kwargs)
-        self.data = [{'gamename':str(x[0]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x[0]["appid"]}/header.jpg'), 'achievementdata' : str(x) } for x in player_achievements]
+        global achievements
+        self.data = [{'gamename':str(x["playerstats"]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x["playerstats"]["appid"]}/header.jpg'), 'achievementdata' : str(x["playerstats"])} for x in achievements]
 
 
 class Home(Screen):
@@ -284,8 +286,8 @@ class ScreenManagerApp(App):
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
-    def showAFKpopup(self):
-        print(root.current_screen)
+def logout():
+    ScreenManagerApp().stop()
 
 if __name__ == '__main__':
     ScreenManagerApp().run()

@@ -22,6 +22,7 @@ achievements = []
 globalachievements = []
 player_achievements = []
 favoritegame = []
+appids = []
 
 with open('steam.json') as steamdata:
     steamjson = json.load(steamdata)
@@ -48,15 +49,22 @@ def fetch_url2(url, n, elsevar):
         urlHandler = urllib.request.urlopen(url)
     except urllib.error.HTTPError:
         urlHandler = urllib.request.urlopen(f'http://api.steampowered.com/ISteamUserStats/GetGlobalAchievementPercentagesForApp/v0002/?gameid={elsevar}&format=json')
-    except:
-        pass
+
 
     if n < len(friends['friendslist']['friends']):
         global friendsinfo
         friendsinfo.append(json.loads(urlHandler.read()))
     elif n < len(friends['friendslist']['friends']) + len(ownedgames['response']['games']):
         global achievements
-        achievements.append(json.loads(urlHandler.read()))
+        global appids
+        temp = json.loads(urlHandler.read())
+        try:
+            if 'achievements' in temp['playerstats']:
+
+                temp['playerstats']['appid'] = appids[n - len(friends['friendslist']['friends'])]
+                achievements.append(temp)
+        except:
+            pass
 
     else:
         global globalachievements
@@ -77,7 +85,7 @@ def load_initializing_data(steamID):
         thread.join()
 
     urls = []
-    appids = []
+    global appids
     friendslist_live = []
     for friend in friends['friendslist']['friends']:
         urls.append(
@@ -108,20 +116,13 @@ def load_initializing_data(steamID):
 
     global player_achievements
 
-    for n, i in enumerate(achievements):
-        try:
-            if 'achievements' in i['playerstats']:
-                temp = []
-                i['playerstats']['appid'] = appids[n]
-                temp.append(i['playerstats'])
-                player_achievements.append(temp)
-        except:
-            pass
+
+
     dashboard_percentages.achievement_percentage(globalachievements)
     dashboard_recommended.dashboard_recommended(steamjson, ownedgames)
     friendlist.getfriendlist(friendsinfo)
     profile_stats.profilestats(steamjson, ownedgames, friends, bans, steaminfo)
-    Stats_achievements.playerachievements(player_achievements, ownedgames)
+    Stats_achievements.playerachievements(achievements, ownedgames)
     # try:
     #     global s
     #     host = '192.168.1.139'  # ip of raspberry pi
@@ -134,7 +135,7 @@ def load_initializing_data(steamID):
     #     pass
     live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
     live_data_thread.start()
-
+    # print(achievements)
 
 
 def load_live_data(friendlist_live):
@@ -166,10 +167,10 @@ def receive_data():
     try:
         while True:
             data = s.recv(1024).decode()
-            if data == 'AFK':
+            if data == 'FLASHBANG':
                 import steamboard
-                from steamboard import ScreenManagerApp
-                steamboard.ScreenManagerApp.showAFKpopup(ScreenManagerApp)
+                print('uerserub')
+                steamboard.logout()
             time.sleep(1)
 
     except:
