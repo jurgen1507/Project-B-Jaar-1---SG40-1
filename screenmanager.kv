@@ -156,9 +156,9 @@
         Widget:
             Label:
                 pos: 200, 300
-                font_name: './icons/Arimo-Regular.ttf'
-                text:"Steam profile link:"
-                font_size: 20
+                font_name: './icons/Primetime.ttf'
+                text:"Steam profile link"
+                font_size: 30
                 color: 0.7, 0.7, 0.7, 1
         TextInput:
             background_color: 0,0,0, .6
@@ -193,7 +193,7 @@
             pos: 200, 75
             size: 100, 40
             size_hint: None, None
-            text: 'Login'
+            text: 'SUBMIT'
             color: 0.7, 0.7, 0.7, 1
             font_name: './icons/Arimo-Regular.ttf'
             background_color: 0,0,0,0
@@ -967,11 +967,46 @@
             pos: self.pos
             size: self.size
     BoxLayout:
+        profilepicture: 'profilepicture'
+        profilename: 'profilename'
         orientation: 'horizontal'
-        size: self.size
-        pos: self.pos
-        Button:
+        size: root.size
+        pos: root.pos
+        Widget:
+            width: 10
+            size_hint_x: None
+        Label:
+            width:200
+            size_hint_x: None
+            font_name: './icons/Primetime.ttf'
+            font_size: 36
+            text_size: self.size
+            halign: 'left'
+            valign: 'center'
             text: app.root.current
+
+        Label:
+
+        AsyncImage:
+            width: 50
+            size_hint_x: None
+            source: root.profilepicture
+        Widget:
+            width: 10
+            size_hint: None, None
+
+        Label:
+            width:len(root.profilename) * 14
+            size_hint_x: None
+            color: 0.8, 0.8, 0.85, 1
+            text: root.profilename
+            font_name: './icons/Arimo-Regular.ttf'
+            font_size: 20
+            pos_hint: {'left':1, 'y': 0.15}
+            text_size: self.size
+
+
+
 
 <Tabel>:
     orientation: 'horizontal'

@@ -37,7 +37,12 @@ class MainWindow(Widget):
         super(MainWindow, self).__init__(**kwargs)
 
 class PlaceHolder(Widget):
-    pass
+    def __init__(self, **kwargs):
+        super(PlaceHolder, self).__init__(**kwargs)
+        print(str(profile_stats.profilepic))
+        print(str(profile_stats.username))
+        self.profilepicture = str(profile_stats.profilepic)
+        self.profilename = str(profile_stats.username)
 
 class SteamBoardNavBar(Widget):
     foldednavbar = ObjectProperty(None)
@@ -210,9 +215,9 @@ class Dashboard(Widget):
         super(Dashboard, self).__init__(**kwargs)
         self.angle = dashboard_percentages.total_percentage_angle
         self.percentage = str(round(dashboard_percentages.total_percentage,2)) + '%'
-        self.game1 = games[0]
-        self.game2 = games[3]
-        self.game3 = games[6]
+        self.game1 = games[random.randint(0,6)]
+        self.game2 = games[random.randint(7,13)]
+        self.game3 = games[random.randint(14,20)]
 
 import time
 from kivy.uix.image import Image
