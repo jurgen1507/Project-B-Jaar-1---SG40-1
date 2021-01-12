@@ -222,7 +222,7 @@ class LoginScreen(Screen):
         try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
             print(Login[0])
-            load_initializing_data('76561198272503503')
+            load_initializing_data(Login[0])
             ScreenManagerApp.startup(ScreenManagerApp)
             self.parent.current = 'Home'
         except:
@@ -257,6 +257,8 @@ class Achievements(RecycleView):
         global achievements
         self.data = [{'gamename':str(x["playerstats"]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x["playerstats"]["appid"]}/header.jpg'), 'achievementdata' : str(x["playerstats"])} for x in achievements]
 
+class AchievementHelp(BoxLayout):
+    pass
 
 class Home(Screen):
     pass

@@ -78,9 +78,14 @@
         Rectangle:
             size: root.size
 
+    AchievementHelp:
+        pos: 42, root.height-130
+        size: root.width-180, 70
+        size_hint: None, None
+
     Achievements:
         pos: 100, 0
-        size: root.width - 180, root.height -100
+        size: root.width - 180, root.height -130
         size_hint: None, None
 
     PlaceHolder:
@@ -1655,6 +1660,15 @@
     gamename: 'gamename'
     banner: 'banner'
     achievementdata: 'achievementdata'
+    canvas:
+        Color:
+            rgba: 0, 242/255, 255, 1
+        Line:
+            points: (self.x, self.y, self.x, self.y + self.width)
+        Line:
+            points: (self.x, self.y, self.x + self.width, self.y)
+        Line:
+            points: (self.x, self.y + self.height, self.x + self.width, self.y + self.height)
     AsyncImage:
         source: root.banner
         size_hint: 0.9, 0.9
@@ -1667,18 +1681,21 @@
         halign: 'left'
         valign: 'center'
     Button:
-        text: 'Details'
-        background_color: 0, 0, 0, 0
         canvas:
             Color:
                 rgba: 0, 242/255, 255, 1
             Line:
                 points: (self.x, self.y, self.x, self.y + self.width)
-            Line:
-                points: (self.x, self.y, self.x + self.width, self.y)
-
-
+        text: 'Details'
+        background_color: 0, 0, 0, 0
         on_release: root.btn(root.achievementdata)
+
+<AchievementHelp>:
+    Label:
+        font_name: './icons/Arimo-Regular.ttf'
+        text: 'Click details to get a detailed view of the achievements per game'
+        font_size: 15
+        color: 1,1,1,1
 
 <Achievements>:
     viewclass: 'AchievementTabel'
