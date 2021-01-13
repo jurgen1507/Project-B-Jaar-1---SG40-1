@@ -4,10 +4,10 @@ def playerachievements(player_achievements, ownedgames):
     # for owned_games in ownedgames['response']['games']:
     #     appid.append(owned_games['appid'])
 
-    # for player_games in player_achievements:
-    #     for AM in player_games[0]['achievements']:
-    #         if AM['description'] == '':
-    #             AM['description'] = 'No description available'
+    for player_games in player_achievements:
+        for AM in player_games['playerstats']['achievements']:
+            if AM['description'] == '':
+                AM['description'] = 'No description available'
             # player_games[0]['gameName']+':', AM['name'],'Description: '+ AM['description']
 
 

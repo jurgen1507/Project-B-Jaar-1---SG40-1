@@ -29,6 +29,7 @@ with open('steam.json') as steamdata:
 
 
 def fetch_url(url, n):
+    print(str(n) + ' ' + str(url))
     urlHandler = urllib.request.urlopen(url)
     if n == 0:
         global ownedgames
@@ -37,6 +38,7 @@ def fetch_url(url, n):
     if n == 1:
         global friends
         friends = json.loads(urlHandler.read())
+
     if n == 2:
         global bans
         bans = json.loads(urlHandler.read())
@@ -169,7 +171,6 @@ def receive_data():
             data = s.recv(1024).decode()
             if data == 'FLASHBANG':
                 import steamboard
-                print('uerserub')
                 steamboard.logout()
             time.sleep(1)
 

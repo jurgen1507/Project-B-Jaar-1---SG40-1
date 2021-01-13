@@ -550,6 +550,7 @@
                     text: 'Achievements completed of most played game'
 
         BoxLayout:
+
             orientation: 'vertical'
             RelativeLayout:
                 height: 40
@@ -562,14 +563,12 @@
                         Line:
                             points: (self.x, self.y, self.x + self.width, self.y)
                     text_size: self.size
-                    halign: 'justify'
-                    valign: 'middle'
+                    halign: 'left'
+                    valign: 'center'
                     font_size: 20
                     text: 'Recommended games:'
-            FloatLayout:
-                id: game1
-                pos:self.pos
-                size:self.size
+            BoxLayout:
+                orientation: 'vertical'
                 game1: 'game1'
                 game1_price: 'game1_price'
                 canvas.after:
@@ -579,55 +578,49 @@
                         points: (self.x, self.y, self.x + self.width, self.y)
                     Line:
                         points: (self.x, self.y, self.x, self.y + self.height)
+                BoxLayout:
+                    padding: (10, 10, 0, 0)
+                    spacing: 10
+                    orientation: 'horizontal'
+                    AsyncImage:
+                        source: root.game1[5]
+                        size_hint: 0.45, 1
 
-                AsyncImage:
-                    id: banner
+                    Label:
+                        font_name: './icons/Arimo-Regular.ttf'
+                        text: root.game1[0]
+                        text_size: self.size
+                        size_hint: 0.55, 1
+                        halign: 'left'
+                        valign: 'center'
+                        font_size: 15 + self.height * 0.05
+                BoxLayout:
+                    padding: (10,0,0,0)
+                    spacing: 10
+                    orientation: 'horizontal'
+                    Label:
+                        font_name: './icons/Arimo-Regular.ttf'
+                        text: 'Price: $' + str(root.game1[2])+'\nGenre: '+root.game1[3].replace(';', ', ')
+                        size_hint: 0.8, 1
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'center'
+                        font_size: 13 + self.height * 0.03
 
-                AsyncImage:
-                    source: root.game1[5]
-                    pos_hint: {'x':0.05, 'top':0.95}
-                    pos:0,0
-                    size: 460/5 + root.height*0.08, 215/5+ root.height*0.08
-                    size_hint: None, None
-
-
-                Label:
-                    font_name: './icons/Arimo-Regular.ttf'
-                    text: root.game1[0]
-
-                    pos_hint: {'x':0.05, 'top':0.95}
-                    pos: 460/5 + root.ids.game1.height*0.08,root.ids.game1.height * 0.95
-                    size: root.ids.game1.width- root.ids.banner.width - 40, 215/5+ root.ids.game1.height*0.08
-                    size_hint: None, None
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                    font_size: 17 + self.height * 0.03
-                Label:
-                    font_name: './icons/Arimo-Regular.ttf'
-                    text: 'Price: $' + str(root.game2[2])+'\nGenre: '+root.game2[3].replace(';', ', ')
-                    pos:0,0
-                    pos_hint: {'x':0.05, 'y':0.05}
-                    size: root.ids.game1.width*0.7 ,root.ids.game1.height - (215/5+ root.height*0.08)
-                    size_hint: None, None
-                    text_size: self.size
-                    halign: 'left'
-                    valign: 'center'
-                    font_size: 13 + self.height * 0.03
-
-                Label:
-                    font_name: './icons/Arimo-Regular.ttf'
-                    text: 'Rating: '+str(round(root.game1[1]*100,2))+'%'
-                    size_hint: 0.45, 0.5
-                    text_size: self.size
-                    pos_hint: {'x':0.95, 'bottom':0.95}
-                    halign: 'right'
-                    valign: 'middle'
-                    font_size: 13 + self.width * 0.025
+                    Label:
+                        font_name: './icons/Arimo-Regular.ttf'
+                        text: 'Rating: '+str(round(root.game1[1]*100,2))+'%'
+                        size_hint: 0.2, 1
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'middle'
+                        font_size: 13 + self.width * 0.025
 
 
-            RelativeLayout:
+            BoxLayout:
+                orientation: 'vertical'
                 game2: 'game2'
+                game2_price: 'game2_price'
                 canvas.after:
                     Color:
                         rgba: 0/255, 242/255, 255/255, 0.4
@@ -635,45 +628,48 @@
                         points: (self.x, self.y, self.x + self.width, self.y)
                     Line:
                         points: (self.x, self.y, self.x, self.y + self.height)
-
-                RelativeLayout:
-                    size_hint: 0.9, 0.9
-                    pos_hint: {'x': 0.05, 'y': 0.05}
+                BoxLayout:
+                    padding: (10, 10, 0, 0)
+                    spacing: 10
+                    orientation: 'horizontal'
                     AsyncImage:
                         source: root.game2[5]
-                        size_hint: 0.5, 0.5
-                        pos_hint: {'left':1, 'top':1}
+                        size_hint: 0.45, 1
 
                     Label:
                         font_name: './icons/Arimo-Regular.ttf'
                         text: root.game2[0]
-                        pos_hint: {'right':1, 'top':1}
-                        size_hint: 0.45, 0.5
                         text_size: self.size
+                        size_hint: 0.55, 1
                         halign: 'left'
-                        valign: 'middle'
-                        font_size: 17 + self.width * 0.03
+                        valign: 'center'
+                        font_size: 15 + self.height * 0.05
+                BoxLayout:
+                    padding: (10,0,0,0)
+                    spacing: 10
+                    orientation: 'horizontal'
                     Label:
                         font_name: './icons/Arimo-Regular.ttf'
-                        text: 'Price: $' + str(root.game2[2])+'/nGenre: '+root.game2[3]
-                        size_hint: 0.45, 0.5
+                        text: 'Price: $' + str(root.game2[2])+'\nGenre: '+root.game2[3].replace(';', ', ')
+                        size_hint: 0.8, 1
                         text_size: self.size
                         halign: 'left'
-                        valign: 'middle'
-                        font_size: 15 + self.width * 0.025
+                        valign: 'center'
+                        font_size: 13 + self.height * 0.03
 
                     Label:
                         font_name: './icons/Arimo-Regular.ttf'
                         text: 'Rating: '+str(round(root.game2[1]*100,2))+'%'
-                        size_hint: 0.45, 0.5
+                        size_hint: 0.2, 1
                         text_size: self.size
-                        pos_hint: {'right':1, 'middle':1}
-                        halign: 'right'
+                        halign: 'left'
                         valign: 'middle'
-                        font_size: 15 + self.width * 0.025
+                        font_size: 13 + self.width * 0.025
 
-            RelativeLayout:
+            BoxLayout:
+                orientation: 'vertical'
                 game3: 'game3'
+                game3_price: 'game3_price'
                 canvas.after:
                     Color:
                         rgba: 0/255, 242/255, 255/255, 0.4
@@ -681,40 +677,43 @@
                         points: (self.x, self.y, self.x + self.width, self.y)
                     Line:
                         points: (self.x, self.y, self.x, self.y + self.height)
-                RelativeLayout:
-                    size_hint: 0.9, 0.9
-                    pos_hint: {'x': 0.05, 'y': 0.05}
+                BoxLayout:
+                    padding: (10, 10, 0, 0)
+                    spacing: 10
+                    orientation: 'horizontal'
                     AsyncImage:
                         source: root.game3[5]
-                        size_hint: 0.5, 0.5
-                        pos_hint: {'left':1, 'top':1}
+                        size_hint: 0.45, 1
+
                     Label:
                         font_name: './icons/Arimo-Regular.ttf'
                         text: root.game3[0]
-                        pos_hint: {'right':1, 'top':1}
-                        size_hint: 0.45, 0.5
                         text_size: self.size
+                        size_hint: 0.55, 1
                         halign: 'left'
-                        valign: 'middle'
-                        font_size: 17 + self.width * 0.03
+                        valign: 'center'
+                        font_size: 15 + self.height * 0.05
+                BoxLayout:
+                    padding: (10,0,0,0)
+                    spacing: 10
+                    orientation: 'horizontal'
                     Label:
                         font_name: './icons/Arimo-Regular.ttf'
-                        text: 'Price: $' + str(root.game3[2])+'/nGenre: '+root.game3[3]
-                        size_hint: 0.45, 0.5
+                        text: 'Price: $' + str(root.game3[2])+'\nGenre: '+root.game3[3].replace(';', ', ')
+                        size_hint: 0.8, 1
                         text_size: self.size
                         halign: 'left'
-                        valign: 'middle'
-                        font_size: 15 + self.width * 0.025
+                        valign: 'center'
+                        font_size: 13 + self.height * 0.03
 
                     Label:
                         font_name: './icons/Arimo-Regular.ttf'
                         text: 'Rating: '+str(round(root.game3[1]*100,2))+'%'
-                        size_hint: 0.45, 0.5
+                        size_hint: 0.2, 1
                         text_size: self.size
-                        pos_hint: {'right':1, 'middle':1}
-                        halign: 'right'
+                        halign: 'left'
                         valign: 'middle'
-                        font_size: 15 + self.width * 0.025
+                        font_size: 13 + self.width * 0.025
 
 <SteamBoardNavBar>:
 

@@ -223,14 +223,14 @@ from kivy.uix.image import Image
 
 class LoginScreen(Screen):
     def btn(self):
-        try:
+        # try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
             print(Login[0])
             load_initializing_data(Login[0])
             ScreenManagerApp.startup(ScreenManagerApp)
             self.parent.current = 'Home'
-        except:
-            self.error = '* Either the account has been set to private or the link provided is incorrect.'
+        # except:
+        #     self.error = '* Either the account has been set to private or the link provided is incorrect.'
 
 
 
