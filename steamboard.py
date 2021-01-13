@@ -198,7 +198,6 @@ class ProfileStats(Widget):
     def __init__(self, **kwargs):
         super(ProfileStats, self).__init__(**kwargs)
         self.hours = [random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),]
-        print(self.hours)
         self.profilepic = str(profile_stats.profilepic)
         self.totalgames = str(profile_stats.games_count)
         self.moneywasted = str('{0:.2f}'.format(profile_stats.money_wasted))
@@ -225,7 +224,6 @@ class LoginScreen(Screen):
     def btn(self):
         # try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
-            print(Login[0])
             load_initializing_data(Login[0])
             ScreenManagerApp.startup(ScreenManagerApp)
             self.parent.current = 'Home'

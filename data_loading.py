@@ -29,7 +29,6 @@ with open('steam.json') as steamdata:
 
 
 def fetch_url(url, n):
-    print(str(n) + ' ' + str(url))
     urlHandler = urllib.request.urlopen(url)
     if n == 0:
         global ownedgames
@@ -137,7 +136,6 @@ def load_initializing_data(steamID):
     #     pass
     live_data_thread = threading.Thread(target=load_live_data, args=(friendslist_live,))
     live_data_thread.start()
-    # print(achievements)
 
 
 def load_live_data(friendlist_live):
