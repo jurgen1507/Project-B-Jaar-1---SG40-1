@@ -39,8 +39,6 @@ class MainWindow(Widget):
 class PlaceHolder(Widget):
     def __init__(self, **kwargs):
         super(PlaceHolder, self).__init__(**kwargs)
-        print(str(profile_stats.profilepic))
-        print(str(profile_stats.username))
         self.profilepicture = str(profile_stats.profilepic)
         self.profilename = str(profile_stats.username)
 
@@ -65,6 +63,7 @@ class StatsInfoPopup(Popup):
 class StatsPopup(Widget):
     def show_statsinfo_popup(self, achievementdata):
         popup = StatsInfoPopup()
+        popup.gamename = eval(achievementdata)['gameName']
         AchievementsRVPopup.adddata(AchievementsRVPopup, achievementdata)
         popup.open()
 
@@ -286,13 +285,14 @@ class ScreenManagerApp(App):
         return root
 
     def startup(self):
-        Window.size = (800,600)
+        Window.size = (800, 600)
         Window.minimum_width, Window.minimum_height = 800, 500
         root.add_widget(Games(name='Games'))
         root.add_widget(Home(name='Home'))
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
+
 def logout():
     ScreenManagerApp().stop()
 

@@ -1198,7 +1198,7 @@
 <StatsInfoPopup>:
     size_hint: 0.9, 0.8
     description: 'description'
-    gamename: 'gamename'
+    gamename: ''
     title: root.gamename
     FloatLayout:
 
@@ -1358,7 +1358,7 @@
                 halign: 'left'
                 valign: 'top'
                 text_size: self.size
-                text: 'English language: '+root.english
+                text: 'English language: '+ ('Yes' if root.english == '1' else 'No')
             Label:
                 font_name: './icons/Arimo-Regular.ttf'
                 canvas:
