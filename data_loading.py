@@ -11,7 +11,7 @@ import socket
 import time
 import threading
 s = socket.socket()
-steamAPIkey = 'FEBA5B4D2C77F02511D79C8DF42C1A57'
+steamAPIkey = 'E248982C26EF1A925059FD60765F8CE0'
 loaded = False
 ownedgames = {}
 friends = {}

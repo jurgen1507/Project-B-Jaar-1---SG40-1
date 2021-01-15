@@ -167,12 +167,13 @@ class GamesTabel(RecycleView):
 
 class Friends(Widget):
     pass
-
+from friendlist import friendsavatar
 class Friendlist(RecycleView):
+
     friendsinfo_first = {}
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
-        from friendlist import friendsavatar
+
         self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
         self.friendsinfo_first = friendsavatar
         updatethread = threading.Thread(target=self.update)
@@ -197,7 +198,7 @@ class Friendlist(RecycleView):
 class ProfileStats(Widget):
     def __init__(self, **kwargs):
         super(ProfileStats, self).__init__(**kwargs)
-        self.hours = [random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),random.uniform(0, 15),]
+        self.hours = [random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),]
         self.profilepic = str(profile_stats.profilepic)
         self.totalgames = str(profile_stats.games_count)
         self.moneywasted = str('{0:.2f}'.format(profile_stats.money_wasted))
@@ -222,13 +223,13 @@ from kivy.uix.image import Image
 
 class LoginScreen(Screen):
     def btn(self):
-        # try:
+        try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
             load_initializing_data(Login[0])
             ScreenManagerApp.startup(ScreenManagerApp)
             self.parent.current = 'Home'
-        # except:
-        #     self.error = '* Either the account has been set to private or the link provided is incorrect.'
+        except:
+            self.error = '* Either the account has been set to private or the link provided is incorrect.'
 
 
 
@@ -283,13 +284,13 @@ class ScreenManagerApp(App):
         return root
 
     def startup(self):
-        Window.size = (800, 600)
-        Window.minimum_width, Window.minimum_height = 800, 500
         root.add_widget(Games(name='Games'))
         root.add_widget(Home(name='Home'))
         root.add_widget(Profile(name='Profile'))
         root.add_widget(Settings(name='Settings'))
         root.add_widget(Stats(name='Stats'))
+        Window.size = (800, 600)
+        Window.minimum_width, Window.minimum_height = 800, 500
 
 def logout():
     ScreenManagerApp().stop()
