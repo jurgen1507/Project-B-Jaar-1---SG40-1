@@ -3,7 +3,8 @@ Dit is een project voor Oriëntatie op ICT in Blok B van leerjaar 1.
 
 In dit project zal een dashboard gemaakt worden voor steamgebruikers. <br>
 Gebruikers kunnen hier informatie vinden over spellen, vrienden, statistieken en nog veel andere dingen.<br><br>
-De code is te runnen door het steamboard.py te runnen in het mapje SteamBoard.
+De code is te runnen door het steamboard.py te runnen in het mapje SteamBoard.<br>
+De main.py code is de oude (eerste) versie van het project
 
 <h2>Videos:</h2>
 <h3>Demovideo:</h3>
