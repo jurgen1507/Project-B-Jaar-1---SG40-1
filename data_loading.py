@@ -156,6 +156,7 @@ def send_data(data):
 
 
 def receive_data():
+    import steamboard
     try:
         while True:
             data = s.recv(1024).decode()
