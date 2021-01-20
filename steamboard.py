@@ -1,46 +1,55 @@
-from kivy.uix.behaviors import FocusBehavior
-from kivy.uix.label import Label
-from kivy.uix.recycleboxlayout import RecycleBoxLayout
-from kivy.uix.recycleview.layout import LayoutSelectionBehavior
-from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.boxlayout import BoxLayout
 from kivy.animation import Animation
-from kivy.uix.button import Button
 from kivy.uix.recycleview import RecycleView
 from kivy.properties import ObjectProperty
 from kivy.config import Config
 from kivy.uix.popup import Popup
-from kivy.uix.floatlayout import FloatLayout
-from kivy.graphics import Color, Rectangle
-from kivy.uix.recycleview import RecycleViewBehavior
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 import random
+import threading
+import time
 from Merge_sort import sort_list
 from data_loading import *
-from kivy.clock import Clock
-
+from Stats_achievements import *
+from profile_stats import *
+from friendlist import *
+from dashboard_recommended import *
+from dashboard_percentages import *
+from friendlist import friendsavatar
+with open('steam.json') as steamdata:
+    steamjson = json.load(steamdata)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
-
-
-
-
-steamID = '76561198272503503'
 
 sort_list(steamjson, 'price', 'up', 'name')
 lijst_kopie = steamjson.copy()
+
 
 class MainWindow(Widget):
     def __init__(self, **kwargs):
         super(MainWindow, self).__init__(**kwargs)
 
-class PlaceHolder(Widget):
+
+class LoginScreen(Screen):
+    def btn(self):
+        # try:
+            Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
+            load_initializing_data(Login[0])
+            ScreenManagerApp.startup(ScreenManagerApp)
+            self.parent.current = 'Home'
+        # except:
+        #     self.error = '* Either the account has been set to private or the link provided is incorrect.'
+
+
+class TitleScreen(Widget):
     def __init__(self, **kwargs):
-        super(PlaceHolder, self).__init__(**kwargs)
+        super(TitleScreen, self).__init__(**kwargs)
+        import profile_stats
         self.profilepicture = str(profile_stats.profilepic)
         self.profilename = str(profile_stats.username)
+
 
 class SteamBoardNavBar(Widget):
     foldednavbar = ObjectProperty(None)
@@ -53,19 +62,22 @@ class SteamBoardNavBar(Widget):
         anim = Animation(pos=(0, 0), t='in_out_quad', duration=0.2)
         anim.start(self)
 
+
+class Dashboard(Widget):
+    def __init__(self, **kwargs):
+        from dashboard_recommended import games
+        from dashboard_percentages import total_percentage_angle, total_percentage
+        super(Dashboard, self).__init__(**kwargs)
+        self.angle = total_percentage_angle
+        self.percentage = str(round(total_percentage, 2)) + '%'
+        self.game1 = games[random.randint(0,len(games)/3-1)]
+        self.game2 = games[random.randint(len(games)/3,len(games)/3 * 2 -1 )]
+        self.game3 = games[random.randint(len(games)/3*2 ,len(games)-1)]
+
+
 class GamesInfoPopup(Popup):
     def __init__(self, **kwargs):
         super(GamesInfoPopup, self).__init__(**kwargs)
-
-class StatsInfoPopup(Popup):
-    pass
-
-class StatsPopup(Widget):
-    def show_statsinfo_popup(self, achievementdata):
-        popup = StatsInfoPopup()
-        popup.gamename = eval(achievementdata)['gameName']
-        AchievementsRVPopup.adddata(AchievementsRVPopup, achievementdata)
-        popup.open()
 
 
 class GamesPopup(Widget):
@@ -94,9 +106,10 @@ class GamesPopup(Widget):
         show.open()
 
 
-class Tabel(BoxLayout):
+class Table(BoxLayout):
     def btn(self, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners):
         GamesPopup.show_gamesinfo_popup(GamesPopup, name, appid, categories, genres, price, steamspy, release, achievements, english, positive, developer, negative, publisher, platforms, average, required, median, owners)
+
 
 class GamesKnoppen(Widget):
     current_button = ''
@@ -154,9 +167,9 @@ class GamesSearch(Widget):
             GamesKnoppen.sorting(self.parent.ids.GK, 'name', False)
 
 
-class GamesTabel(RecycleView):
+class GamesTable(RecycleView):
     def __init__(self, **kwargs):
-        super(GamesTabel, self).__init__(**kwargs)
+        super(GamesTable, self).__init__(**kwargs)
         self.data = [{'name': str(x['name']), 'price': str('{0:.2f}'.format(x['price'])), 'positiveratings': str(x['positive_ratings']),
                  'negativeratings': str(x['negative_ratings']), 'releasedate': str(x['release_date']),
                  'appid' : str(x['appid']), 'release' : str(x['release_date']),  'english': str(x['english']),
@@ -165,15 +178,11 @@ class GamesTabel(RecycleView):
                  'steamspy': str(x['steamspy_tags']),  'achievements': str(x['achievements']),  'average': str(x['average_playtime']),
                  'median': str(x['median_playtime']),  'owners': str(x['owners'])} for x in steamjson]
 
-class Friends(Widget):
-    pass
-from friendlist import friendsavatar
-class Friendlist(RecycleView):
 
+class Friendlist(RecycleView):
     friendsinfo_first = {}
     def __init__(self, **kwargs):
         super(Friendlist, self).__init__(**kwargs)
-
         self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
         self.friendsinfo_first = friendsavatar
         updatethread = threading.Thread(target=self.update)
@@ -186,66 +195,48 @@ class Friendlist(RecycleView):
                 self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
                 self.friendsinfo_first = friendsavatar
                 try:
-                    send_data(f'{int(dashboard_percentages.total_percentage/10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
+                    send_data(f'{int(total_percentage / 10)}, {int(friendlist.a[0])}, {int(friendlist.a[1])}, {int(friendlist.a[2])}, {int(friendlist.a[3])}')
                 except:
                     pass
                 self.refresh_from_data()
-
             time.sleep(5)
 
+
+class Friends(Widget):
+    pass
 
 
 class ProfileStats(Widget):
     def __init__(self, **kwargs):
         super(ProfileStats, self).__init__(**kwargs)
         self.hours = [random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),random.uniform(0, 10),]
+        import profile_stats
         self.profilepic = str(profile_stats.profilepic)
         self.totalgames = str(profile_stats.games_count)
         self.moneywasted = str('{0:.2f}'.format(profile_stats.money_wasted))
         self.totalfriends = str(profile_stats.friends_amount)
         self.totalbans = str(profile_stats.player_bans)
-        self.timewasted = str(round(profile_stats.time_wasted/60))
+        self.timewasted = str(round(profile_stats.time_wasted / 60))
         self.steamid = str(profile_stats.steamid)
         self.username = str(profile_stats.username)
 
-class Dashboard(Widget):
-    def __init__(self, **kwargs):
-        from dashboard_recommended import games
-        super(Dashboard, self).__init__(**kwargs)
-        self.angle = dashboard_percentages.total_percentage_angle
-        self.percentage = str(round(dashboard_percentages.total_percentage,2)) + '%'
-        self.game1 = games[random.randint(0,6)]
-        self.game2 = games[random.randint(7,13)]
-        self.game3 = games[random.randint(14,20)]
 
-import time
-from kivy.uix.image import Image
-
-class LoginScreen(Screen):
-    def btn(self):
-        try:
-            Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
-            load_initializing_data(Login[0])
-            ScreenManagerApp.startup(ScreenManagerApp)
-            self.parent.current = 'Home'
-        except:
-            self.error = '* Either the account has been set to private or the link provided is incorrect.'
-
-
-
-
-class Games(Screen):
+class StatsInfoPopup(Popup):
     pass
 
-class Stats(Screen):
-    pass
 
-class AchievementTabel(BoxLayout):
+class StatsPopup(Widget):
+    def show_statsinfo_popup(self, achievementdata):
+        popup = StatsInfoPopup()
+        popup.gamename = eval(achievementdata)['gameName']
+        AchievementsRVPopup.adddata(AchievementsRVPopup, achievementdata)
+        popup.open()
+
+
+class AchievementTable(BoxLayout):
     def btn(self, achievementdata):
         StatsPopup.show_statsinfo_popup(StatsPopup, achievementdata)
 
-class RV(BoxLayout):
-    pass
 
 class AchievementsRVPopup(RecycleView):
     def __init__(self, **kwargs):
@@ -257,22 +248,40 @@ class AchievementsRVPopup(RecycleView):
 class Achievements(RecycleView):
     def __init__(self, **kwargs):
         super(Achievements, self).__init__(**kwargs)
-        global achievements
+        from data_loading import achievements
         self.data = [{'gamename':str(x["playerstats"]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x["playerstats"]["appid"]}/header.jpg'), 'achievementdata' : str(x["playerstats"])} for x in achievements]
+
 
 class AchievementHelp(BoxLayout):
     pass
 
+
+class Games(Screen):
+    pass
+
+
+class Stats(Screen):
+    pass
+
+
+class RV(BoxLayout):
+    pass
+
+
 class Home(Screen):
     pass
+
 
 class Profile(Screen):
     pass
 
+
 class Settings(Screen):
     pass
 
+
 root = ScreenManager(transition=NoTransition())
+
 
 class ScreenManagerApp(App):
     def build(self):
@@ -292,8 +301,10 @@ class ScreenManagerApp(App):
         Window.size = (800, 600)
         Window.minimum_width, Window.minimum_height = 800, 500
 
+
 def logout():
     ScreenManagerApp().stop()
+
 
 if __name__ == '__main__':
     ScreenManagerApp().run()

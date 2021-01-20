@@ -1,6 +1,8 @@
 friendsavatar = {}
 a = []
 from Merge_sort import sort_list
+
+
 def getfriendlist(friendsinfo):
     global friendsavatar
     online = 0
@@ -29,7 +31,6 @@ def getfriendlist(friendsinfo):
     a.append(online/len(friendsinfo) * 8)
     from iteround import saferound
     a = saferound(a, places=0)
-
 
 
 if __name__ == '__main__':

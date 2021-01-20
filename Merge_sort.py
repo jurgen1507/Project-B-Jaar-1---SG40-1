@@ -1,3 +1,5 @@
+#https://stackabuse.com/merge-sort-in-python/
+
 def merge_sort(array, left_index, right_index, option, option2):
     if left_index >= right_index:
         return
@@ -6,6 +8,7 @@ def merge_sort(array, left_index, right_index, option, option2):
     merge_sort(array, left_index, middle, option, option2)
     merge_sort(array, middle + 1, right_index, option, option2)
     merge(array, left_index, right_index, middle, option, option2)
+
 
 def merge(array, left_index, right_index, middle, option, option2):
     left_copy = array[left_index:middle + 1]
@@ -37,7 +40,6 @@ def merge(array, left_index, right_index, middle, option, option2):
         array[sorted_index] = right_copy[right_copy_index]
         right_copy_index += 1
         sorted_index += 1
-
 
 
 def sort_list(list, option, order, option2):

@@ -1,3 +1,6 @@
+profilepic = ''
+username = ''
+
 def profilestats(steamjson, ownedgames, friends, bans, steaminfo):
     appids = []
     for game in ownedgames['response']['games']:
@@ -29,6 +32,7 @@ def profilestats(steamjson, ownedgames, friends, bans, steaminfo):
 
     global player_bans
     player_bans = bans['players'][0]['NumberOfGameBans']
+
 
 if __name__ == '__main__':
     profilestats()

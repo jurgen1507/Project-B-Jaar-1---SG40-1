@@ -11,7 +11,7 @@
         Rectangle:
             size: root.size
 
-    GamesTabel:
+    GamesTable:
         id: GT
         pos: 100, 0
         size: root.width - 180, root.height -150
@@ -29,7 +29,7 @@
         size: root.width -180, 45
         size_hint: None, None
 
-    PlaceHolder:
+    TitleScreen:
         pos: 80, root.height-60
         size: root.width - 80, 60
         size_hint: None, None
@@ -52,7 +52,7 @@
         Rectangle:
             size: root.size
 
-    PlaceHolder:
+    TitleScreen:
         pos: 80, root.height-60
         size: root.width - 80, 60
         size_hint: None, None
@@ -88,7 +88,7 @@
         size: root.width - 180, root.height -130
         size_hint: None, None
 
-    PlaceHolder:
+    TitleScreen:
         pos: 80, root.height-60
         size: root.width - 80, 60
         size_hint: None, None
@@ -125,7 +125,7 @@
             anim_delay: 0.065
 
 
-    PlaceHolder:
+    TitleScreen:
         pos: 80, root.height-60
         size: root.width - 80, 60
         size_hint: None, None
@@ -207,7 +207,7 @@
         Rectangle:
             size: root.size
 
-    PlaceHolder:
+    TitleScreen:
         pos: 80, root.height-60
         size: root.width - 80, 60
         size_hint: None, None
@@ -382,7 +382,7 @@
                         Label:
                             font_name: './icons/Arimo-Regular.ttf'
                             pos: 20-self.width/2, -self.height/2
-                            text: '12-21'
+                            text: '01-09'
                             font_size: 13
                         Label:
                             font_name: './icons/Arimo-Regular.ttf'
@@ -958,7 +958,7 @@
         height: self.minimum_height
         orientation: 'vertical'
 
-<PlaceHolder>:
+<TitleScreen>:
     canvas.before:
         Color:
             rgba: (46/255, 76/255, 99/255, 1)
@@ -1007,7 +1007,7 @@
 
 
 
-<Tabel>:
+<Table>:
     orientation: 'horizontal'
     name: 'name'
     price: 'price'
@@ -1671,8 +1671,8 @@
                 Line:
                     points: (self.x,self.y,self.x +self.width,self.y)
 
-<GamesTabel>:
-    viewclass: 'Tabel'
+<GamesTable>:
+    viewclass: 'Table'
     RecycleBoxLayout:
         touch_multiselect: True
         id: gw
@@ -1689,7 +1689,7 @@
 <StatsPopup>:
     auto_dismiss: False
 
-<AchievementTabel>:
+<AchievementTable>:
     orientation: 'horizontal'
     gamename: 'gamename'
     banner: 'banner'
@@ -1732,7 +1732,7 @@
         color: 1,1,1,1
 
 <Achievements>:
-    viewclass: 'AchievementTabel'
+    viewclass: 'AchievementTable'
     RecycleBoxLayout:
         touch_multiselect: True
         default_size: None, dp(root.height * 0.12)

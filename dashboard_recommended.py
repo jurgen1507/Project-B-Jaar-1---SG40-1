@@ -1,4 +1,6 @@
 games = []
+
+
 def dashboard_recommended(steamjson, ownedgames):
     appids = []
     for game in ownedgames['response']['games']:
@@ -10,7 +12,6 @@ def dashboard_recommended(steamjson, ownedgames):
             if appid == game['appid']:
                 for i in game['genres'].split(';'):
                     categories.append(i)
-
 
     favoritegenre = dict((i, categories.count(i)) for i in categories)
     a = list(sorted(favoritegenre.items(), key=lambda item: item[1], reverse=True))
@@ -27,9 +28,6 @@ def dashboard_recommended(steamjson, ownedgames):
             gameslist.append(temp)
 
     gameslist.sort(key=lambda x: x[1], reverse=True)
-
-    found1 = False
-
     global games
     counter = 0
 
@@ -53,7 +51,6 @@ def dashboard_recommended(steamjson, ownedgames):
                     counter = 0
                     break
 
-
     for i in gameslist:
         if a[2][0] in i[3]:
             if i[4] not in appids:
@@ -63,6 +60,7 @@ def dashboard_recommended(steamjson, ownedgames):
                 if counter == 7:
                     counter = 0
                     break
+
 
 if __name__ == '__main__':
     dashboard_recommended()
