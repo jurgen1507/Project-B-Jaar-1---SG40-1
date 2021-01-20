@@ -7,9 +7,9 @@ De code is te runnen door het steamboard.py te runnen in het mapje SteamBoard.
 
 <h2>Videos:</h2>
 <h3>Demovideo:</h3>
-
+https://www.youtube.com/watch?v=UpoX2FC8_3I&feature=youtu.be
 <h3>Presentatievideo:</h3>
-
+https://www.youtube.com/watch?v=w6PhrdgVqCg&feature=youtu.be
 <h2>Leden:</h2>
 <h3>Luca Franken:</h3>
 Studentnummer: 1781115<br>
