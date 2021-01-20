@@ -139,6 +139,7 @@ class GamesKnoppen(Widget):
 class GamesSearch(Widget):
     def search_bar(self):
         global steamjson
+        from data_loading import ownedgames
         if self.ids.OwnedGamesSwitch.active:
             searched_games = []
             for term in lijst_kopie:
