@@ -9,18 +9,9 @@ from kivy.config import Config
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen, NoTransition
 import random
-import threading
-import time
 from Merge_sort import sort_list
 from data_loading import *
-from Stats_achievements import *
-from profile_stats import *
-from friendlist import *
-from dashboard_recommended import *
-from dashboard_percentages import *
 from friendlist import friendsavatar
-with open('steam.json') as steamdata:
-    steamjson = json.load(steamdata)
 Config.set('input', 'mouse', 'mouse,disable_multitouch')
 
 sort_list(steamjson, 'price', 'up', 'name')
@@ -34,13 +25,13 @@ class MainWindow(Widget):
 
 class LoginScreen(Screen):
     def btn(self):
-        # try:
+        try:
             Login = self.ids.login.text.replace('https://steamcommunity.com/profiles/', '').split('/')
             load_initializing_data(Login[0])
             ScreenManagerApp.startup(ScreenManagerApp)
             self.parent.current = 'Home'
-        # except:
-        #     self.error = '* Either the account has been set to private or the link provided is incorrect.'
+        except:
+            self.error = '* Either the account has been set to private or the link provided is incorrect.'
 
 
 class TitleScreen(Widget):
@@ -70,9 +61,9 @@ class Dashboard(Widget):
         super(Dashboard, self).__init__(**kwargs)
         self.angle = total_percentage_angle
         self.percentage = str(round(total_percentage, 2)) + '%'
-        self.game1 = games[random.randint(0,len(games)/3-1)]
-        self.game2 = games[random.randint(len(games)/3,len(games)/3 * 2 -1 )]
-        self.game3 = games[random.randint(len(games)/3*2 ,len(games)-1)]
+        self.game1 = games[random.randint(0,int(len(games)/3-1))]
+        self.game2 = games[random.randint(int(len(games)/3),int(len(games)/3 * 2 -1 ))]
+        self.game3 = games[random.randint(int(len(games)/3*2) ,len(games)-1)]
 
 
 class GamesInfoPopup(Popup):
@@ -148,7 +139,6 @@ class GamesKnoppen(Widget):
 class GamesSearch(Widget):
     def search_bar(self):
         global steamjson
-        from data_loading import ownedgames
         if self.ids.OwnedGamesSwitch.active:
             searched_games = []
             for term in lijst_kopie:
@@ -248,7 +238,6 @@ class AchievementsRVPopup(RecycleView):
 class Achievements(RecycleView):
     def __init__(self, **kwargs):
         super(Achievements, self).__init__(**kwargs)
-        from data_loading import achievements
         self.data = [{'gamename':str(x["playerstats"]['gameName']), 'banner': str(f'http://cdn.akamai.steamstatic.com/steam/apps/{x["playerstats"]["appid"]}/header.jpg'), 'achievementdata' : str(x["playerstats"])} for x in achievements]
 
 

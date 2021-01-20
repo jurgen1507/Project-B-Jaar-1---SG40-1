@@ -1,5 +1,4 @@
 import json
-import steamboard
 import Stats_achievements
 import profile_stats
 import friendlist
@@ -11,7 +10,7 @@ import socket
 import time
 import threading
 s = socket.socket()
-steamAPIkey = 'E248982C26EF1A925059FD60765F8CE0'
+steamAPIkey = 'E5F8F89CD93853F7D63F7EC86955DC19'
 loaded = False
 ownedgames = {}
 friends = {}
@@ -58,12 +57,12 @@ def fetch_url2(url, n, elsevar):
         global achievements
         global appids
         temp = json.loads(urlHandler.read())
-        # try:
-        #     if 'achievements' in temp['playerstats']:
-        #         temp['playerstats']['appid'] = appids[n - len(friends['friendslist']['friends'])]
-        #         achievements.append(temp)
-        # except:
-        #     pass
+        try:
+            if 'achievements' in temp['playerstats']:
+                temp['playerstats']['appid'] = appids[n - len(friends['friendslist']['friends'])]
+                achievements.append(temp)
+        except:
+            pass
     else:
         global globalachievements
         globalachievements.append(json.loads(urlHandler.read()))

@@ -2,7 +2,6 @@ friendsavatar = {}
 a = []
 from Merge_sort import sort_list
 
-
 def getfriendlist(friendsinfo):
     global friendsavatar
     online = 0
