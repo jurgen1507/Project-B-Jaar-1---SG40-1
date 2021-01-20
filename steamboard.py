@@ -181,6 +181,7 @@ class Friendlist(RecycleView):
     def update(self):
         while True:
             from friendlist import friendsavatar
+            from dashboard_percentages import total_percentage
             if friendsavatar != self.friendsinfo_first:
                 self.data = [{'atavar': str(x["avatar"]), 'status': str('.\icons\status' +str(1 if x["personastate"] == 10 else x["personastate"])+'.png')} for x in friendsavatar]
                 self.friendsinfo_first = friendsavatar
